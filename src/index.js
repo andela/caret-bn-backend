@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 const fs = require("fs"),
     http = require("http"),
     path = require("path"),
@@ -14,7 +15,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // Create global app object
 const app = express();
-
+dotenv.config();
 app.use(cors());
 
 // Normal express config defaults
