@@ -1,0 +1,13 @@
+# nyc test coverage
+.nyc_output
+
+# Dependency directory
+node_modules
+
+# Npm package lock file
+package-lock.json
+
+
+# Seeders
+src/database/seeders
+
