@@ -1,3 +1,4 @@
+import routes from './routes'
 const fs = require("fs"),
     http = require("http"),
     path = require("path"),
@@ -7,15 +8,13 @@ const fs = require("fs"),
     session = require("express-session"),
     cors = require("cors"),
     passport = require("passport"),
-    errorhandler = require("errorhandler"),
-    mongoose = require("mongoose");
-
-const isProduction = process.env.NODE_ENV === "production";
+    errorhandler = require("errorhandler");
 
 // Create global app object
 const app = express();
 
 app.use(cors());
+
 
 // Normal express config defaults
 app.use(require("morgan")("dev"));
@@ -34,20 +33,11 @@ app.use(
     })
 );
 
-if (!isProduction) {
+if (!process.env.NODE_ENV !== 'production') {
     app.use(errorhandler());
 }
 
-if (isProduction) {
-    mongoose.connect(process.env.MONGODB_URI);
-} else {
-    mongoose.connect("mongodb://localhost/conduit");
-    mongoose.set("debug", true);
-}
-
-require("./models/User");
-
-app.use(require("./routes"));
+app.use(routes);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,7 +50,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (!isProduction) {
+if (!process.env.NODE_ENV !== 'production') {
     app.use(function(err, req, res, next) {
         console.log(err.stack);
 
