@@ -1,14 +1,9 @@
 import dotenv from 'dotenv';
 
-const fs = require('fs'),
-  http = require('http'),
-  path = require('path'),
-  methods = require('methods'),
-  express = require('express'),
+const express = require('express'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
   cors = require('cors'),
-  passport = require('passport'),
   errorhandler = require('errorhandler'),
   mongoose = require('mongoose');
 
