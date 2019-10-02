@@ -4,13 +4,28 @@
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --ext .js"
+    "dev": "NODE_ENV=development babel-watch src/index.js",
+    "lint": "eslint . --ext .js",
+    "test": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
+    "coveralls": "nyc report --reporter=text-lcov| coveralls"
+  },
+  "nyc": {
+    "exclude": [
+      "**/**/**/tests"
+    ]
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "babel-watch": "^7.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.4",
     "coveralls": "^3.0.6",
     "dotenv": "^6.0.0",
@@ -22,15 +37,18 @@
     "jsonwebtoken": "^8.3.0",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
+    "mocha": "^6.2.1",
     "mongoose": "^5.2.2",
     "mongoose-unique-validator": "^2.0.1",
+    "morgan": "^1.9.1",
+    "nyc": "^14.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "request": "^2.87.0",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "eslint": "^6.5.0",
+    "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
