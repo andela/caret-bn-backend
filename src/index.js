@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import routes from './routes'
 const fs = require("fs"),
     http = require("http"),
     path = require("path"),
@@ -8,15 +8,13 @@ const fs = require("fs"),
     session = require("express-session"),
     cors = require("cors"),
     passport = require("passport"),
-    errorhandler = require("errorhandler"),
-    mongoose = require("mongoose");
-
-const isProduction = process.env.NODE_ENV === "production";
+    errorhandler = require("errorhandler");
 
 // Create global app object
 const app = express();
 dotenv.config();
 app.use(cors());
+
 
 // Normal express config defaults
 app.use(require('morgan')('dev'));
