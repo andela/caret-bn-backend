@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development babel-watch src/index.js",
-    "lint": "eslint --fix. --ext .js",
+    "lint": "eslint . --ext .js",
     "test": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
     "coveralls": "nyc report --reporter=text-lcov| coveralls"
+  },
+  "nyc": {
+    "exclude": [
+      "**/**/**/tests"
+    ]
   },
   "nyc": {
     "exclude": [
@@ -56,7 +61,7 @@
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "eslint": "^6.5.0",
+    "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",

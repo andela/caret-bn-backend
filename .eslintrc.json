@@ -1,43 +1,37 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true,
-    "mocha": true
-  },
-  "extends": "airbnb-base",
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "rules": {
-    "one-var": 0,
-    "array-callback-return": 0,
-    "one-var-declaration-per-line": 0,
-    "new-cap": 0,
-    "consistent-return": 0,
-    "no-param-reassign": 0,
-    "comma-dangle": 0,
-    "default-case": 0,
-    "no-console": 1,
-    "indent": [ 1, 2 ],
-    "no-unreachable": 0,
-    "import/prefer-default-export": 0,
-    "curly": ["error", "multi-line"],
-    "import/no-unresolved": [2, { "commonjs": true }],
-    "no-shadow": ["error", { "allow": ["req", "res", "err"] }],
-    "valid-jsdoc": [
-      "error",
-      {
-        "requireReturn": true,
-        "requireReturnType": true,
-        "requireParamDescription": false,
-        "requireReturnDescription": true
-      }
-    ]
-  }
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "one-var": "off",
+        "array-callback-return": "off",
+        "one-var-declaration-per-line": "off",
+        "new-cap": "off",
+        "consistent-return":"off",
+        "no-param-reassign": "off", 
+        "comma-dangle": "off",
+        "default-case":"off",
+        "no-console":"warn",
+        "indent": ["error", 2],
+        "no-unreachable":"error",
+        "curly": ["off"],
+        "no-shadow":"off"
+    }
 }
+
+
+/**
+
+*/
