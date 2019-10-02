@@ -8,7 +8,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('server test', () => {
-  it('it should run the server ', (done) => {
+  it('it should run the server ', done => {
     chai.request(app)
       .get('/')
       .end((err, res) => {
@@ -20,7 +20,7 @@ describe('server test', () => {
 });
 
 describe('router test', () => {
-  it('it should test wrong routes ', (done) => {
+  it('it should test wrong routes ', done => {
     chai.request(app)
       .get('/pi')
       .end((err, res) => {
