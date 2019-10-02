@@ -5,8 +5,5 @@ module.exports = (sequelize, Datatypes) => {
   }, {
     tableName: 'users'
   });
-  Users.associate = function (models) {
-    // Put associatoins here
-  };
   return Users;
 };
