@@ -3,6 +3,6 @@ import database from '../database/models';
 export default class UserServices {
   static async allUsers() {
     database.users.findAll()
-      .then((users) => users).catch((err) => err);
+      .then(users => users).catch(err => err);
   }
 }
