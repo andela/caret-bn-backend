@@ -96,3 +96,6 @@ typings/
 
 # Coveralls
 .coveralls.yml
+
+# Docker files
+/pgdata
