@@ -1,5 +1,22 @@
+<<<<<<< HEAD
 import dotenv from 'dotenv';
 import express from 'express';
+=======
+const fs = require("fs"),
+    http = require("http"),
+    path = require("path"),
+    methods = require("methods"),
+    express = require("express"),
+    bodyParser = require("body-parser"),
+    session = require("express-session"),
+    cors = require("cors"),
+    passport = require("passport"),
+    errorhandler = require("errorhandler"),
+    mongoose = require("mongoose");
+
+const isProduction = process.env.NODE_ENV === "production";
+ 
+>>>>>>> CH(Docker): Set up Docker 168781673
 // Create global app object
 dotenv.config();
 
