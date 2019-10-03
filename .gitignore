@@ -98,4 +98,4 @@ typings/
 .coveralls.yml
 
 # Docker files
-/pgdata
+pgdata
