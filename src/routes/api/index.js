@@ -1,8 +1,11 @@
 import Router from 'express';
-import userRoutes from './users';
+import usersRoutes from './users';
+import swaggerRoute from '../swagger-doc';
+
 
 const router = new Router();
-router.use('/users', userRoutes);
+router.use('/users', usersRoutes);
+router.use('/api-docs', swaggerRoute);
 
 router.use((err, req, res, next) => {
   if (err.name === 'ValidationError') {

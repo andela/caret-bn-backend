@@ -1,12 +1,18 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import morgan from 'morgan';
+import allRoutes from './routes';
+
 // Create global app object
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(morgan('dev'));
+
 app.get('/', (req, res) => {
   res.status(200).json({
     status: 200,
@@ -14,14 +20,15 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/', allRoutes);
+
 app.use('*', (req, res) => {
-  res.status(400).json({
-    status: 400,
-    message: 'Sorry this router does not exist !',
+  res.status(404).json({
+    status: 404,
+    message: 'Sorry this route does not exist !',
   });
 });
-const port = process.env.PORT || 3000;
 // eslint-disable-next-line no-console
-app.listen(port, () => console.log(`Barefoot Nomad is runnig server On port ${port}...`));
+app.listen(port, () => console.log(`Barefoot Nomad is runnig server on port ${port}...`));
 
 export default app;
