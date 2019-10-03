@@ -16,7 +16,10 @@ const fs = require("fs"),
 
 const isProduction = process.env.NODE_ENV === "production";
  
+<<<<<<< HEAD
 >>>>>>> CH(Docker): Set up Docker 168781673
+=======
+>>>>>>> Rebase commit
 // Create global app object
 dotenv.config();
 
