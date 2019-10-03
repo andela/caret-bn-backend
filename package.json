@@ -14,6 +14,12 @@
       "**/**/**/tests"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run lint",
+      "pre-push": "npm test && npm run lint"
+    }
+  },
   "author": "Andela Simulations Programme",
   "license": "MIT",
   "dependencies": {
@@ -52,6 +58,7 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3"
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "husky": "^3.0.7"
   }
 }
