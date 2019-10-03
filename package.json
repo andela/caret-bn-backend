@@ -4,18 +4,28 @@
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "babel-watch src/index.js"
+    "dev": "NODE_ENV=development babel-watch src/index.js",
+    "lint": "eslint . --ext .js",
+    "test": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
+    "coveralls": "nyc report --reporter=text-lcov| coveralls"
+  },
+  "nyc": {
+    "exclude": [
+      "**/**/**/tests"
+    ]
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/polyfill": "^7.6.0",
-    "@babel/runtime": "^7.6.2",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
     "babel-watch": "^7.0.0",
-    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.4",
     "coveralls": "^3.0.6",
     "dotenv": "^6.0.0",
