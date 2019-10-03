@@ -7,14 +7,22 @@
     "dev": "NODE_ENV=development babel-watch src/index.js",
     "lint": "eslint . --ext .js",
     "migrate": "NODE_ENV=test sequelize db:migrate",
+    "rollback": "NODE_ENV=test sequelize db:migrate:undo:all",
     "seed": "NODE_ENV=test sequelize db:seed:all",
-    "test": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
+    "test": "npm run rollback && npm run migrate && npm run seed &&  npm run test-suite",
+    "test-suite": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
     "coveralls": "nyc report --reporter=text-lcov| coveralls"
   },
   "nyc": {
     "exclude": [
       "**/**/**/tests"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run lint",
+      "pre-push": "npm test && npm run lint"
+    }
   },
   "author": "Andela Simulations Programme",
   "license": "MIT",
@@ -58,6 +66,7 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3"
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "husky": "^3.0.7"
   }
 }
