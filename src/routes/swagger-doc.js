@@ -7,13 +7,15 @@ dotenv.config();
 
 const router = new Router();
 
+const swaggerUrl = process.env.NODE_ENV === 'development' ? `localhost:${process.env.PORT}` : 'barefoot-nomad-dev.herokuapp.com';
+
 const swaggerDefinition = {
   info: {
     title: '^Carets Barefoot Nomad API',
     version: '1.0.0',
     description: 'Barefoot Nomad - Making company travel and accomodation easy and convinient',
   },
-  host: `localhost:${process.env.PORT}`,
+  host: swaggerUrl,
   basePath: '/api/v1',
   securityDefinitions: {
     bearerAuth: {
