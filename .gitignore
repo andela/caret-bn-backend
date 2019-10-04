@@ -96,3 +96,7 @@ typings/
 
 # Coveralls
 .coveralls.yml
+
+# VSCode
+.DS_Store
+.vscode/
