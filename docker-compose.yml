@@ -3,13 +3,13 @@ services:
   db: 
     image: postgres
     environment: 
-      - POSTGRES_USER:${POSTGRES_USER}
-      - POSTGRES_PASSWORD:${POSTGRES_PASSWORD}
-      - POSTGRES_DB:${POSTGRES_DB}
+      - POSTGRES_USER:${DB_USERNAME}
+      - POSTGRES_PASSWORD:${DB_PASSWORD}
+      - POSTGRES_DB:${DEVELOPMENT_DB}
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     ports:
-      - "54320:5432"
+      - "${DATABASE_PORT}:5432"
       
   api:
     image: barefoot-nomad-api
@@ -17,6 +17,6 @@ services:
       - db
     build: .
     ports:
-      - "3000:3000"
+      - "${APPLICATION_PORT}:3000"
     volumes:
       - ./:/usr/src/app
