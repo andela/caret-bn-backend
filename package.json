@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "NODE_ENV=development babel-watch src/index.js",
     "lint": "eslint . --ext .js",
-    "test": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
+    "migrate": "NODE_ENV=test sequelize db:migrate",
+    "rollback": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "seed": "NODE_ENV=test sequelize db:seed:all",
+    "test": "npm run rollback && npm run migrate && npm run seed &&  npm run test-suite",
+    "test-suite": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
     "coveralls": "nyc report --reporter=text-lcov| coveralls"
   },
   "nyc": {
@@ -50,7 +54,13 @@
     "nyc": "^14.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
     "request": "^2.87.0",
+    "sequelize": "^5.19.1",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

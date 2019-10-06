@@ -26,8 +26,8 @@
         "no-console":"warn",
         "indent": ["error", 2],
         "no-unreachable":"error",
-        "curly": ["off"],
+        "arrow-parens": ["error", "as-needed"],
+        "import/no-dynamic-require":"off",
         "no-shadow":"off"
     }
 }
-

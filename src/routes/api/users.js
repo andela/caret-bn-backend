@@ -1,83 +1,53 @@
-const mongoose = require('mongoose');
-const router = require('express').Router();
-const passport = require('passport');
+import Router from 'express';
+// import userServices from '../../services/userServices';
 
-const User = mongoose.model('User');
+const router = new Router();
 
-router.get('/user', (req, res, next) => {
-  User.findById(req.payload.id)
-    .then((user) => {
-      if (!user) {
-        return res.sendStatus(401);
-      }
-      return res.json({ user: user.toAuthJSON() });
-    })
-    .catch(next);
+/**
+ * @swagger
+ * definitions:
+ *   UserSignup:
+ *     type: object
+ *     properties:
+ *       username:
+ *         type: string
+ *       email:
+ *         type: string
+ *       bio:
+ *         type: string
+ *       image:
+ *         type: string
+ *       password:
+ *         type: string
+ *         format: password
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ */
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *       - Authentication
+ *     name: Get All Users
+ *     summary: Get All Users
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       '200':
+ *         description: Users Retrieved Successfully
+ *       '404':
+ *         description: Users not found
+ */
+router.get('/', (req, res) => {
+  res.status(200).json({
+    status: 200,
+    message: 'Users retrieved successfully',
+  });
 });
 
-router.put('/user', (req, res, next) => {
-  User.findById(req.payload.id)
-    .then((user) => {
-      if (!user) {
-        return res.sendStatus(401);
-      }
-
-      // only update fields that were actually passed...
-      if (typeof req.body.user.username !== 'undefined') {
-        user.username = req.body.user.username;
-      }
-      if (typeof req.body.user.email !== 'undefined') {
-        user.email = req.body.user.email;
-      }
-      if (typeof req.body.user.bio !== 'undefined') {
-        user.bio = req.body.user.bio;
-      }
-      if (typeof req.body.user.image !== 'undefined') {
-        user.image = req.body.user.image;
-      }
-      if (typeof req.body.user.password !== 'undefined') {
-        user.setPassword(req.body.user.password);
-      }
-
-      return user.save().then(() => res.json({ user: user.toAuthJSON() }));
-    })
-    .catch(next);
-});
-
-router.post('/users/login', (req, res, next) => {
-  if (!req.body.user.email) {
-    return res.status(422).json({ errors: { email: "can't be blank" } });
-  }
-
-  if (!req.body.user.password) {
-    return res.status(422).json({ errors: { password: "can't be blank" } });
-  }
-  passport.authenticate('local', { session: false }, (
-    err,
-    user,
-    info
-  ) => {
-    if (err) {
-      return next(err);
-    }
-
-    if (user) {
-      return res.json({ user: user.toAuthJSON() });
-    }
-    return res.status(422).json(info);
-  })(req, res, next);
-});
-
-router.post('/users', (req, res, next) => {
-  const user = new User();
-
-  user.username = req.body.user.username;
-  user.email = req.body.user.email;
-  user.setPassword(req.body.user.password);
-
-  user.save()
-    .then(() => res.json({ user: user.toAuthJSON() }))
-    .catch(next);
-});
-
-module.exports = router;
+export default router;
