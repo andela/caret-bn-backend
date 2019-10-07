@@ -97,6 +97,9 @@ typings/
 # Coveralls
 .coveralls.yml
 
+# PG DATA
+pgdata
+
 # VSCode
 .DS_Store
 .vscode/

@@ -7,7 +7,7 @@ dotenv.config();
 
 const router = new Router();
 
-const swaggerUrl = process.env.NODE_ENV === 'development' ? `localhost:${process.env.PORT}` : 'barefoot-nomad-dev.herokuapp.com';
+const swaggerUrl = process.env.NODE_ENV === 'development' ? `localhost:${process.env.PORT}` : 'caret-bn-backend.herokuapp.com';
 
 const swaggerDefinition = {
   info: {

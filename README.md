@@ -9,4 +9,4 @@ Barefoot Nomad - Making company travel and accomodation easy and convinient.
 Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web.
 
 ---
-For API documentation, please visit https://barefoot-nomad-dev.herokuapp.com/api/v1/api-docs/
+For API documentation, please visit https://caret-bn-backend.herokuapp.com/api/v1/api-docs/
