@@ -97,6 +97,12 @@ typings/
 # Coveralls
 .coveralls.yml
 
+# Docker files
+pgdata
+
+
+# Build files
+build
 # VSCode
 .DS_Store
 .vscode/
