@@ -4,9 +4,8 @@
   "description": "A Social platform for the creative at heart",
   "main": "index.js",
   "scripts": {
-    "start:prod": "node --require @babel/register src/index.js",
     "dev": "NODE_ENV=development babel-watch src/index.js",
-    "production": "NODE_ENV=production babel-watch src/index.js",
+    "production": "babel src --out-dir build && node build/index.js",
     "lint": "eslint . --ext .js",
     "db:refresh": "NODE_ENV=production sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "db:seed": "NODE_ENV=production sequelize db:seed:all",

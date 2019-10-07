@@ -5,6 +5,6 @@ services:
       -  NODE_ENV=production
     ports:
       - ${PRODUCTION_PORT}:3000
-    command: "npm run start:prod"
+    command: npm run production
     restart: always
 
