@@ -14,8 +14,7 @@ Make company global travel and accommodation easy and convenient for the strong 
 # Setting Up The Application
 
 
-## Docker
-
+## A. Docker
 
 1. Install Docker on your local machine by following [these](https://docs.docker.com/install/) instructions.
 
@@ -24,32 +23,33 @@ Make company global travel and accommodation easy and convenient for the strong 
 3. Configure your environment with the following as follows:
 
 ```
-# DATABASE APPLICATION
-
 # DATABASE CONFIG
-DB_USERNAME=your_database_username
-DB_PASSWORD=your_database_password
+DB_USERNAME=
+DB_PASSWORD=
 
 # DEVELOPMENT DATABASE
-DEVELOPMENT_DB=your_development_database
+DEVELOPMENT_DB=
 
 # TEST DATABASE
-TEST_DB=your_test_database
+TEST_DB=
 
 # PRODUCTION DATABASE
 PRODUCTION_DB=
+PRODUCTION_PORT=
+DATABASE_PRODUCTION_HOST=
+DATABASE_PRODUCTION_PORT=
 
-# DATABASE HOST // Default to localhost if you are not sure
-DATABASE_HOST=database_host
+# DATABASE HOST // Default to localhost
+DATABASE_HOST=localhost
 
 # DOCKER CONFIG
 
 # DOCKER DB CONFIG
-DATABASE_PORT=port_to_run_databases
+DATABASE_PORT= 
 
 # APPLICATION
 
-APPLICATION_PORT=port_to_run_application
+APPLICATION_PORT=port_your_application_will_run_on
 
 ```
 
@@ -57,7 +57,7 @@ APPLICATION_PORT=port_to_run_application
 
 5. If you have no errors run ` docker-compose up `. 
 
-6. Access ` http://localhost:<:APPLICATION_PORT>/ ` in Postman, if docker is running correctly, you will be returned with a message:
+6. Access ` http://localhost:<:APPLICATION_PORT> ` in Postman, if docker is running correctly, you will be returned with a message:
 
     ```javascript
    { 
@@ -77,3 +77,5 @@ APPLICATION_PORT=port_to_run_application
 10. Run the command sequelize ` db:seed:all `
 
 11. Check your database to ensure proper functionality and correctness. 
+
+12. To run a production version of the application, set up environment variables and execute the command ` docker-compose -f docker-compose.yml -f docker-compose.prod.yml up `
