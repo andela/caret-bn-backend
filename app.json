@@ -1,0 +1,21 @@
+{
+    "name": "caret-bn-backend",
+    "scripts": {},
+    "env": {},
+    "formation": {
+      "web": {
+        "quantity": 1
+      }
+    },
+    "addons": [
+        {
+            "plan": "heroku-postgresql:hobby-dev"
+          }
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ],
+    "stack": "heroku-18"
+  }
