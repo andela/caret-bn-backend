@@ -1,6 +1,6 @@
 language: node_js
 
-node_js: "stable"
+node_js: "node"
 
 install: npm install
 
@@ -12,4 +12,5 @@ services:
 
 before_script:
   - npm install -g sequelize-cli
+  - npm install strip-ansi --save
   - psql -c 'create database barefoot_nomad_test;' -U postgres
