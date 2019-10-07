@@ -10,9 +10,11 @@ Make company global travel and accommodation easy and convenient for the strong 
 
 ---
 
+## Documentation
+
+For API documentation, please visit https://caret-bn-backend.herokuapp.com//api/v1/api-docs/
 
 # Setting Up The Application
-
 
 ## A. Docker
 
@@ -79,3 +81,4 @@ APPLICATION_PORT=port_your_application_will_run_on
 11. Check your database to ensure proper functionality and correctness. 
 
 12. To run a production version of the application, set up environment variables and execute the command ` docker-compose -f docker-compose.yml -f docker-compose.prod.yml up `
+

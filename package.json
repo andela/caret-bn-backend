@@ -6,6 +6,7 @@
   "scripts": {
     "start:prod": "node --require @babel/register src/index.js",
     "dev": "NODE_ENV=development babel-watch src/index.js",
+    "production": "NODE_ENV=production babel-watch src/index.js",
     "lint": "eslint . --ext .js",
     "db:refresh": "NODE_ENV=production sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "db:seed": "NODE_ENV=production sequelize db:seed:all",
@@ -74,5 +75,8 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "husky": "^3.0.7"
+  },
+  "engines":{
+    "node": "10.15.3"
   }
 }
