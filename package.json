@@ -14,12 +14,14 @@
     "rollback": "NODE_ENV=test sequelize db:migrate:undo:all",
     "seed": "NODE_ENV=test sequelize db:seed:all",
     "test": "npm run rollback && npm run migrate && npm run seed &&  npm run test-suite",
-    "test-suite": "nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
+    "test-suite": "NODE_ENV=test nyc --reporter=html --reporter=text mocha src/tests/*.js --require @babel/register  --timeout 1000 --exit",
     "coveralls": "nyc report --reporter=text-lcov| coveralls"
   },
   "nyc": {
     "exclude": [
-      "**/**/**/tests"
+      "**/**/**/tests",
+      "**/**/**/index.js",
+      "**/**/**/swagger-doc.js"
     ]
   },
   "husky": {
@@ -35,9 +37,13 @@
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
+    "@babel/runtime": "^7.6.2",
+    "@hapi/joi": "^16.1.7",
     "babel-watch": "^7.0.0",
+    "bcrypt": "^3.0.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cors": "^2.8.4",
@@ -48,7 +54,7 @@
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^8.5.1",
     "method-override": "^2.3.10",
     "methods": "^1.1.2",
     "mocha": "^6.2.1",
