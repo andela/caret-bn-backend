@@ -30,14 +30,3 @@ describe('router test', () => {
       });
   });
 });
-
-describe('Users Route Test', () => {
-  it('Should Get All Users By Returning 200 Status Code', done => {
-    chai.request(app)
-      .get('/api/v1/users')
-      .end((err, res) => {
-        res.should.have.property('status').eql(200);
-        done();
-      });
-  });
-});

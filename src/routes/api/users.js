@@ -1,5 +1,8 @@
 import Router from 'express';
-// import userServices from '../../services/userServices';
+import SignupController from '../../controllers/signupController';
+import checkSignup from '../../middlewares/checkSignup';
+import verifyExist from '../../middlewares/verifyExist';
+import confirmPassword from '../../middlewares/confirmPassword';
 
 const router = new Router();
 
@@ -11,15 +14,18 @@ const router = new Router();
  *     properties:
  *       username:
  *         type: string
+ *         example: krinkun09
  *       email:
  *         type: string
- *       bio:
- *         type: string
- *       image:
- *         type: string
+ *         example: krinkun09@gmail.com
  *       password:
  *         type: string
+ *         format: string
+ *         example: Pa$sW0rd
+ *       confirmPassword:
+ *         type: string
  *         format: password
+ *         example: Pa$sW0rd
  *       required:
  *         - username
  *         - email
@@ -27,27 +33,27 @@ const router = new Router();
  */
 /**
  * @swagger
- * /users:
- *   get:
+ * /users/register:
+ *   post:
  *     tags:
  *       - Authentication
- *     name: Get All Users
- *     summary: Get All Users
+ *     name: Signup a new User
+ *     summary: Signup a new User
  *     consumes:
  *       - application/json
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *          $ref: '#/definitions/UserSignup'
  *     responses:
  *       '200':
  *         description: Users Retrieved Successfully
  *       '404':
  *         description: Users not found
  */
-router.get('/', (req, res) => {
-  res.status(200).json({
-    status: 200,
-    message: 'Users retrieved successfully',
-  });
-});
+router.post('/register', checkSignup, verifyExist, confirmPassword, (req, res) => SignupController.signupController(req, res));
 
 export default router;
