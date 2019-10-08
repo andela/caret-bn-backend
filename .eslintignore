@@ -11,3 +11,5 @@ package-lock.json
 # Seeders
 src/database/seeders
 
+# Migrations
+/src/database/migrations
