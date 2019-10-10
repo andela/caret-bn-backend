@@ -1,10 +1,12 @@
 import Router from 'express';
-import SignupController from '../../controllers/signupController';
+import UserController from '../../controllers/userController';
 import checkSignup from '../../middlewares/checkSignup';
 import verifyExist from '../../middlewares/verifyExist';
 import confirmPassword from '../../middlewares/confirmPassword';
 
 const router = new Router();
+
+const { signup } = UserController;
 
 /**
  * @swagger
@@ -54,6 +56,6 @@ const router = new Router();
  *       '404':
  *         description: Users not found
  */
-router.post('/register', checkSignup, verifyExist, confirmPassword, (req, res) => SignupController.signupController(req, res));
-
+router.post('/register', checkSignup, verifyExist, confirmPassword, signup);
+router.get('/verify/:token', UserController.userVerify);
 export default router;

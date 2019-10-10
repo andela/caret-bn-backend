@@ -1,9 +1,9 @@
-import responseUtil from '../utils/responseUtil';
 import strings from '../utils/stringsUtil';
+import responseError from '../utils/responseError';
 
-export default function confirmPassword({ body: { password, confirmPassword } }, res, next) {
+const confirmPassword = ({ body: { password, confirmPassword } }, res, next) => {
   if (password !== confirmPassword) {
-    return responseUtil(
+    return responseError(
       res,
       400,
       strings.users.error.BAD_SIGNUP_REQUEST,
@@ -11,4 +11,6 @@ export default function confirmPassword({ body: { password, confirmPassword } },
     );
   }
   return next();
-}
+};
+
+export default confirmPassword;

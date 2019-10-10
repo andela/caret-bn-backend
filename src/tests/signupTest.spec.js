@@ -13,7 +13,7 @@ describe('Signup Test Suite', () => {
       .post('/api/v1/users/register')
       .send(testdata.validSignup)
       .end((err, res) => {
-        res.should.have.property('status').eql(200);
+        res.should.have.property('status').eql(201);
         done();
       });
   });

@@ -1,16 +1,22 @@
 import validateSignup from '../validation/validateSignup';
-import responseUtil from '../utils/responseUtil';
+import responseError from '../utils/responseError';
 import strings from '../utils/stringsUtil';
 
-export default function checkSignup({ body }, res, next) {
+const checkSignup = ({ body }, res, next) => {
   const { error } = validateSignup(body);
   if (error) {
-    return responseUtil(
+    const errorMessages = [];
+    error.details.forEach(detail => {
+      errorMessages.push(detail.message);
+    });
+    return responseError(
       res,
       400,
       strings.users.error.BAD_SIGNUP_REQUEST,
-      { error: error.details[0].message }
+      errorMessages
     );
   }
   return next();
-}
+};
+
+export default checkSignup;

@@ -3,11 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export default function generateToken(user) {
+const generateToken = user => {
   const token = JWT.sign(
     {
       payload: {
         id: user.id,
+        isVerified: user.isVerified,
       },
     },
     process.env.JWT_SECRET,
@@ -16,4 +17,6 @@ export default function generateToken(user) {
     }
   );
   return token;
-}
+};
+
+export default generateToken;
