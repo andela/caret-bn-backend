@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import sgMail from '@sendgrid/mail';
+import bcrypt from 'bcrypt';
 import models from '../database/models';
 import responseUtil from '../utils/responseUtil';
+import responseError from '../utils/responseError';
 import strings from '../utils/stringsUtil';
 import hashPassword from '../utils/hashPassword';
 import generateToken from '../utils/generateToken';
@@ -67,5 +69,30 @@ export default class UserController {
     } catch (error) {
       return responseUtil(res, 500, strings.users.error.SOMETHING_WRONG);
     }
+  }
+
+  static async signIn(req, res) {
+    const { email, password } = req.body;
+    const user = await models.users.findOne({ where: { email } });
+
+    if (!user) {
+      return responseError(res, 400, strings.users.error.LOGIN_FAILURE);
+    }
+
+    const match = bcrypt.compareSync(password, user.password);
+    if (!match) {
+      return responseError(res, 400, strings.users.error.LOGIN_FAILURE);
+    }
+    if (user.isVerified === false) {
+      return responseError(res, 400, strings.users.error.VERIFY_FIRST);
+    }
+    const userToken = generateToken(user);
+    const userInfo = {
+      userID: user.id,
+      username: user.username,
+      email: user.email,
+      token: userToken
+    };
+    return responseUtil(res, 200, strings.users.success.SUCCESSFUL_LOGIN, userInfo);
   }
 }

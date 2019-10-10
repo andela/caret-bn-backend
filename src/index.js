@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime';
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
