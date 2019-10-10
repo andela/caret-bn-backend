@@ -5,7 +5,6 @@ import app from '../index';
 import strings from '../utils/stringsUtil';
 import mockData from './mockData/mockData';
 
-
 chai.should();
 chai.use(chaiHttp);
 
