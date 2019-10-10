@@ -5,18 +5,18 @@
 Barefoot Nomad - Making company travel and accomodation easy and convinient.
 =======
 
-## Vision
+## Vision :telescope:
 Make company global travel and accommodation easy and convenient for the strong workforce of savvy members of staff, by leveraging the modern web.
 
 ---
 
-## Documentation
+## Documentation :book:
 
 For API documentation, please visit https://caret-bn-backend.herokuapp.com//api/v1/api-docs/
 
-# Setting Up The Application
+## Setting Up The Application :wrench:
 
-## A. Docker
+### A. Docker
 
 1. Install Docker on your local machine by following [these](https://docs.docker.com/install/) instructions.
 
@@ -82,3 +82,17 @@ APPLICATION_PORT=port_your_application_will_run_on
 
 12. To run a production version of the application, set up environment variables and execute the command ` docker-compose -f docker-compose.yml -f docker-compose.prod.yml up `
 
+## API Endpoints :droplet:
+
+- #### Sign up endpoint
+| Endpoint | Request Method | Request parameter |
+| ---------- |----------- | ------------- |
+| [/api/v1/users/register](https://caret-bn-backend.herokuapp.com//api/v1/users/register) | POST | { "email": "krinkunyf@gmail.com", "username": "KrinkYF", "password": "Kun376$$#$", "confirmPassword": "Kun376$$#$" } |
+
+
+# Bugs :bug:
+No known bugs.
+If you spot one, let us know
+
+# Author :computer:
+[Andela Rwanda's](https://www.andela.com) Team ^CARET 
