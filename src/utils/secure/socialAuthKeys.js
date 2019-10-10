@@ -4,7 +4,6 @@ dotenv.config();
 
 const baseUrl = `${process.env.APPLICATION_HOST}:${process.env.APPLICATION_PORT}`;
 
-
 const socialAuthKeys = {
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID,

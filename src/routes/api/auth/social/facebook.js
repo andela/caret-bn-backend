@@ -7,6 +7,7 @@ import tokenMiddleware from '../../../../middlewares/auth/tokenMiddleware';
 dotenv.config();
 
 const router = new Router();
+<<<<<<< HEAD
 /**
  * @swagger
 * definitions:
@@ -46,5 +47,9 @@ router.post(
   socialAuthenticationController.authenticateUser,
   errorHandler
 );
+=======
+
+router.post('/', passport.authenticate('facebook-token', { scope: 'email' }), tokenMiddleware, socialAuthenticationController.authenticateUser);
+>>>>>>> FT(Social Login): A user must login via Facebook & Google
 
 export default router;

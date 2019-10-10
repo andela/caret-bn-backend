@@ -5,7 +5,6 @@ import FacebookTokenStrategy from 'passport-facebook-token';
 import utilities from '../../utils/index';
 import services from '../../services/userServices';
 
-
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
