@@ -1,8 +1,11 @@
 import database from '../database/models';
 
-export default class UserServices {
-  static async allUsers() {
-    database.users.findAll()
-      .then(users => users).catch(err => err);
-  }
-}
+
+const findOrCreate = (query, scope = null) => database.users.scope(scope)
+  .findOrCreate(query).then(response => {
+    const user = response[0];
+    return user;
+  }).catch(err => err);
+module.exports = {
+  findOrCreate
+};

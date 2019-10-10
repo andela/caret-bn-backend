@@ -6,8 +6,17 @@ module.exports = (sequelize, Datatypes) => {
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
-    }
+    },
+    googleId: Datatypes.STRING,
+    facebookId: Datatypes.STRING,
   }, {
+    scopes: {
+      responseScope: {
+        attributes: {
+          exclude: ['googleId', 'facebookId', 'isValid'],
+        },
+      }
+    },
     tableName: 'users'
   });
   return Users;
