@@ -4,6 +4,9 @@
 # Dependency directory
 node_modules
 
+# Build Files
+build
+
 # Npm package lock file
 package-lock.json
 
@@ -11,3 +14,5 @@ package-lock.json
 # Seeders
 src/database/seeders
 
+# tests
+src/tests

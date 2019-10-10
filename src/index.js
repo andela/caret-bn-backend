@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
+import passport from 'passport';
 import allRoutes from './routes';
 
 // Create global app object
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(passport.initialize());
 
 app.get('/', (req, res) => {
   res.status(200).json({
