@@ -4,6 +4,9 @@
 # Dependency directory
 node_modules
 
+# Build Files
+build
+
 # Npm package lock file
 package-lock.json
 
@@ -13,3 +16,5 @@ src/database/seeders
 
 # Migrations
 /src/database/migrations
+# tests
+src/tests

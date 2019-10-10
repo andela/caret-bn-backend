@@ -11,10 +11,13 @@ services:
     ports:
       - "${DATABASE_PORT}:5432"
       
+      
   api:
     image: barefoot-nomad-api
     depends_on:
       - db
+    links:
+      - "db:database"
     build: .
     ports:
       - "${APPLICATION_PORT}:3000"
