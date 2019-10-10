@@ -3,7 +3,7 @@ const GoogleStrategyQuery = profile => {
   const query = {
     defaults: {
       googleId: profile.id,
-      isValid: true,
+      isVerified: true,
       email: profile.emails[0].value,
       username: profile.displayName
     },
@@ -15,7 +15,7 @@ const GoogleStrategyQuery = profile => {
 const FacebookStrategyQuery = profile => {
   const query = {
     defaults: {
-      facebookId: profile.id, isValid: true, username: profile.displayName
+      facebookId: profile.id, isVerified: true, username: profile.displayName
     },
     where: { facebookId: profile.id },
   };

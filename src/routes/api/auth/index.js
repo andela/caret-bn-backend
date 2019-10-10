@@ -6,6 +6,7 @@ import '../../../config/social/config';
 
 const router = new Router();
 
+
 router.use('/google', googleRoutes);
 router.use('/facebook', facebookRoutes);
 

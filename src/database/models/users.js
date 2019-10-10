@@ -4,7 +4,11 @@ module.exports = (sequelize, Datatypes) => {
     email: Datatypes.STRING,
     googleId: Datatypes.STRING,
     facebookId: Datatypes.STRING,
-    isValid: Datatypes.BOOLEAN
+    password: Datatypes.STRING,
+    isVerified: {
+      type: Datatypes.BOOLEAN,
+      defaultValue: false,
+    }
   }, {
     scopes: {
       responseScope: {
