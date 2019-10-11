@@ -17,13 +17,18 @@ async function getUser(query, done, scope = null) {
 
 passport.use(
   new GooglePlusTokenStrategy(
-    utilities.strategy(utilities.keys.google.clientID,
+    utilities.strategy(
+      utilities.keys.google.clientID,
       utilities.keys.google.clientSecret,
-      utilities.keys.google.callbackUrl),
+      utilities.keys.google.callbackUrl
+    ),
     (
       (request, accessToken, refreshToken, profile, done) => {
-        getUser(utilities.strategyQueries.GoogleStrategyQuery(profile),
-          done, utilities.queryScopes.users.responseScope);
+        getUser(
+          utilities.strategyQueries.GoogleStrategyQuery(profile),
+          done,
+          utilities.queryScopes.users.responseScope
+        );
       }
     )
   )
@@ -31,13 +36,18 @@ passport.use(
 
 passport.use(
   new FacebookTokenStrategy(
-    utilities.strategy(utilities.keys.facebook.clientID,
+    utilities.strategy(
+      utilities.keys.facebook.clientID,
       utilities.keys.facebook.clientSecret,
-      utilities.keys.facebook.callbackUrl),
+      utilities.keys.facebook.callbackUrl
+    ),
     (
       (request, accessToken, refreshToken, profile, done) => {
-        getUser(utilities.strategyQueries.FacebookStrategyQuery(profile),
-          done, utilities.queryScopes.users.responseScope);
+        getUser(
+          utilities.strategyQueries.FacebookStrategyQuery(profile),
+          done,
+          utilities.queryScopes.users.responseScope
+        );
       }
     )
   )
