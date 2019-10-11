@@ -3,7 +3,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.sequelize.transaction(t => Promise.all([
     queryInterface.addColumn('users', 'password', {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     }, { transaction: t }),
     queryInterface.addColumn('users', 'isVerified', {
       type: Sequelize.BOOLEAN,
