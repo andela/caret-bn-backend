@@ -14,3 +14,11 @@ before_script:
   - npm install -g sequelize-cli
   - npm install strip-ansi --save
   - psql -c 'create database barefoot_nomad_test;' -U postgres
+
+env:
+  - GOOGLE_CLIENT_ID=187094110790-i79hlolkav2se8e4s135dvsdcc78m20b.apps.googleusercontent.com
+  - GOOGLE_CLIENT_SECRET=ZYjqoQT9Kg2HA9t52xl1M1vM
+  - GOOGLE_ACCESS_TOKEN=ya29.Il-bB-M1SmwYYNjfnj_Xb2VdaTPn5H-vSm5lpGOteIriHoN77cwYrvheaXjEKP5WWelp60YCcfU0aY5MXsZs54ldAzHcU_njhTBvxMdth8mhU0OOwH8nZmdO5PbvwwGonA
+  - FACEBOOK_CLIENT_ID=2619143904814570
+  - FACEBOOK_CLIENT_SECRET=bc033f1f3a0608900efcf0fce19b5949
+  - FACEBOOK_ACCESS_TOKEN=EAAlOGPYP5eoBAPXBhQNGkD9sGhmzrK9vI3WoOBONEdLYWTQqj6tYXaZCypWiyjhEid6JqOwK2cZCSy1vAZCC1QcbZBnHGacwMgxF0QlU1yrToEJw3v4bCsZBUENZBUWAHsgIvi9KdSsX5FnQk4fO3qU0ZAM43FnH6MiDZA4JMT3BMQZDZD

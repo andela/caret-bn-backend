@@ -27,6 +27,18 @@ describe('login using social sites', () => {
       });
   }).timeout(4000);
 
+  it('Should not authenticate with Google successfully, Bad Access Token', done => {
+    chai.request(app)
+      .post('/api/v1/auth/google/')
+      .send({ access_token: 'mdmdmd92n' })
+      .end((err, res) => {
+        expect(res.status).to.be.eql(401, 'Incorrect Status Code Returned');
+        expect(res.body.data).to.be.a('object', 'Incorrect Data Type Returned');
+        expect(res.body).to.have.property('message', 'Invalid Credentials');
+        done();
+      });
+  }).timeout(4000);
+
 
   it('Should authenticate with Facebook Successfully', done => {
     chai.request(app)
@@ -41,6 +53,18 @@ describe('login using social sites', () => {
         expect(res.body.data).to.have.property('email');
         expect(res.body.data).to.have.property('createdAt');
         expect(res.body.data).to.have.property('updatedAt');
+        done();
+      });
+  }).timeout(4000);
+
+  it('Should not authenticate with Facebook successfully, Bad Access Token', done => {
+    chai.request(app)
+      .post('/api/v1/auth/facebook/')
+      .send({ access_token: 'mdmdmd92n' })
+      .end((err, res) => {
+        expect(res.status).to.be.eql(400, 'Incorrect Status Code Returned');
+        expect(res.body.data).to.be.a('object', 'Incorrect Data Type Returned');
+        expect(res.body).to.have.property('message', 'Failed to fetch user profile');
         done();
       });
   }).timeout(4000);

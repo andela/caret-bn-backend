@@ -3,6 +3,8 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import socialAuthenticationController from '../../../../controllers/auth/socialAuthenticationController';
 import tokenMiddleware from '../../../../middlewares/auth/tokenMiddleware';
+import errorHandler from '../../../../middlewares/errorHandler';
+
 
 dotenv.config();
 
@@ -43,6 +45,7 @@ const router = new Router();
  *         description: Authenticated User Successfully
  */
 
-router.post('/', passport.authenticate('google-plus-token', { session: false, scope: ['profile', 'email'] }), tokenMiddleware, socialAuthenticationController.authenticateUser);
+router.post('/', passport.authenticate('google-plus-token',
+  { session: false, scope: ['profile', 'email'] }), tokenMiddleware, socialAuthenticationController.authenticateUser, errorHandler);
 
 export default router;

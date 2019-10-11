@@ -10,11 +10,6 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
-  const selector = { where: { id } };
-  done(null, await services.findOne(selector));
-});
-
 async function getUser(query, done, scope = null) {
   done(null, await services.findOrCreate(query, scope));
 }

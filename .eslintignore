@@ -16,3 +16,5 @@ src/database/seeders
 
 # tests
 src/tests
+# Migrations
+/src/database/migrations

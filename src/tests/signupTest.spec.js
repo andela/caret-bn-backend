@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { describe, it } from 'mocha';
 import app from '../index';
-import testdata from './mockdata';
+import testdata from './mockData/signupMockdata';
 
 chai.should();
 chai.use(chaiHttp);
