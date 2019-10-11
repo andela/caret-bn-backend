@@ -13,16 +13,16 @@ const { users } = models;
 
 dotenv.config();
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const { APP_URL_BACKEND } = process.env;
 
 export default class UserController {
-  static signup({ body: { username, email, password } }, res) {
+  static signup(req, res) {
+    const { username, email, password } = req.body;
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
     const user = models.users.build({
       username,
       email,
       password: hashPassword(password)
     });
-
     user.save().then(user => {
       const token = generateToken(user);
       const msg = {
@@ -44,9 +44,6 @@ export default class UserController {
         user_id: user.id,
         username: user.username,
         email: user.email,
-        created_at: user.createdAt.toString(),
-        updated_at: user.updatedAt.toString(),
-        token,
       });
     });
   }
@@ -64,7 +61,7 @@ export default class UserController {
       );
 
       if (updatedUser) {
-        return responseUtil(res, 200, strings.users.success.SUCCESS_VERIFIED);
+        return responseUtil(res, 200, strings.users.success.SUCCESS_VERIFIED, { token });
       }
     } catch (error) {
       return responseUtil(res, 500, strings.users.error.SOMETHING_WRONG);

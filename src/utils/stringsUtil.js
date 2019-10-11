@@ -1,7 +1,7 @@
 const strings = {
   users: {
     success: {
-      SIGNUP_SUCCESS: 'User Created Successfully',
+      SIGNUP_SUCCESS: 'User Created Successfully, please check your email for verification',
       SUCCESS_VERIFIED: 'You have been verified',
       SUCCESSFUL_LOGIN: 'User logged in successfully!'
     },
