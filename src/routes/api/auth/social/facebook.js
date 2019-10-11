@@ -42,6 +42,8 @@ const router = new Router();
  *       '200':
  *         description: Authenticated User Successfully
  */
-router.post('/', passport.authenticate('facebook-token', { scope: 'email' }), tokenMiddleware, socialAuthenticationController.authenticateUser, errorHandler);
+router.post('/', passport.authenticate(
+  'facebook-token', { scope: 'email' }
+), tokenMiddleware, socialAuthenticationController.authenticateUser, errorHandler);
 
 export default router;

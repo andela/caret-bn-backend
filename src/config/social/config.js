@@ -1,10 +1,10 @@
-
+import 'regenerator-runtime';
 import passport from 'passport';
 import GooglePlusTokenStrategy from 'passport-google-plus-token';
 import FacebookTokenStrategy from 'passport-facebook-token';
 import utilities from '../../utils/index';
 import services from '../../services/userServices';
-import 'regenerator-runtime';
+
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -13,6 +13,7 @@ passport.serializeUser((user, done) => {
 async function getUser(query, done, scope = null) {
   done(null, await services.findOrCreate(query, scope));
 }
+
 
 passport.use(new GooglePlusTokenStrategy(utilities.strategy(utilities.keys.google.clientID,
   utilities.keys.google.clientSecret,

@@ -3,7 +3,7 @@ import strategy from './secure/socialStrategy';
 import queryScopes from './db/queryScopes';
 import stringsHelper from './strings';
 import responseHelper from './responseHelper';
-import tokenHelper from './tokenHelper';
+import tokenHelper from './generateToken';
 import strategyQueries from './passport/strategyQueries';
 
 module.exports = {
