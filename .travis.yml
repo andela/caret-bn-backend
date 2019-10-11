@@ -4,6 +4,7 @@ node_js: "node"
 
 install:
   - npm ci
+  - npm install
 cache:
   directories:
     - "$HOME/.npm"
