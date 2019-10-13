@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development babel-watch src/index.js",
-    "production": "babel src --out-dir build && node build/index.js",
+    "production": "NODE_ENV=production babel src --out-dir build && node build/index.js",
     "lint": "eslint . --ext .js",
     "db:refresh": "NODE_ENV=production sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "db:seed": "NODE_ENV=production sequelize db:seed:all",
@@ -42,6 +42,7 @@
     "@babel/register": "^7.4.4",
     "@babel/runtime": "^7.6.2",
     "@hapi/joi": "^16.1.7",
+    "@sendgrid/mail": "^6.4.0",
     "babel-watch": "^7.0.0",
     "bcrypt": "^3.0.6",
     "chai": "^4.2.0",

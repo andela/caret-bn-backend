@@ -6,6 +6,8 @@ const testdata = {
     confirmPassword: 'Pa$5W0rd',
   },
 
+  verifyUser: { id: 3, isVerified: false },
+
   missingEmail: {
     username: 'caretdevs1',
     password: 'Pa$5W0rd',

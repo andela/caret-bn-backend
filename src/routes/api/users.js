@@ -92,9 +92,30 @@ const router = express.Router();
  *         description: User logged in successfully!
  *       '400':
  *         description: Incorrect email or password!
- *
+ */
+/**
+ * @swagger
+ * /users/verify/{token}:
+ *   get:
+ *     tags:
+ *       - Authentication
+ *     name: Email Verification
+ *     summary: Email Verification
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: token
+ *         in: path
+ *     responses:
+ *       '200':
+ *         description: User successfully verified!
+ *       '404':
+ *         description: User no registered!
  */
 router.post('/register', checkSignup, verifyExist, confirmPassword, signup);
+router.get('/verify/:token', UserController.userVerify);
 router.post('/login', checkLogin, signIn);
 
 export default router;

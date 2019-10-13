@@ -8,6 +8,7 @@ const generateToken = user => {
     {
       payload: {
         id: user.id,
+        isVerified: user.isVerified,
       },
     },
     process.env.JWT_SECRET,
