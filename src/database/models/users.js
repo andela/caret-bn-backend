@@ -8,9 +8,7 @@ module.exports = (sequelize, Datatypes) => {
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
-    },
-    googleId: Datatypes.STRING,
-    facebookId: Datatypes.STRING,
+    }
   }, {
     scopes: {
       responseScope: {

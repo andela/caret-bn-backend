@@ -5,22 +5,10 @@ import FacebookTokenStrategy from 'passport-facebook-token';
 import utilities from '../../utils/index';
 import services from '../../services/userServices';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-<<<<<<< HEAD
-passport.deserializeUser(async (id, done) => {
-  const selector = { where: { id } };
-  done(null, await services.findOne(selector));
-});
-
-=======
->>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 async function getUser(query, done, scope = null) {
   done(null, await services.findOrCreate(query, scope));
 }

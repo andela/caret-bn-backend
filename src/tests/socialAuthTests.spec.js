@@ -27,8 +27,6 @@ describe('login using social sites', () => {
       });
   }).timeout(4000);
 
-<<<<<<< HEAD
-=======
   it('Should not authenticate with Google successfully, Bad Access Token', done => {
     chai.request(app)
       .post('/api/v1/auth/google/')
@@ -41,7 +39,6 @@ describe('login using social sites', () => {
       });
   }).timeout(4000);
 
->>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 
   it('Should authenticate with Facebook Successfully', done => {
     chai.request(app)
@@ -59,8 +56,6 @@ describe('login using social sites', () => {
         done();
       });
   }).timeout(4000);
-<<<<<<< HEAD
-=======
 
   it('Should not authenticate with Facebook successfully, Bad Access Token', done => {
     chai.request(app)
@@ -73,5 +68,4 @@ describe('login using social sites', () => {
         done();
       });
   }).timeout(4000);
->>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 });
