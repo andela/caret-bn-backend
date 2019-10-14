@@ -1,27 +1,27 @@
-
-const GoogleStrategyQuery = profile => {
+const GoogleStrategyQuery = ({ id, emails, displayName }) => {
   const query = {
     defaults: {
-      googleId: profile.id,
+      googleId: id,
       isVerified: true,
-      email: profile.emails[0].value,
-      username: profile.displayName
+      email: emails[0].value,
+      username: displayName
     },
-    where: { googleId: profile.id }
+    where: { googleId: id }
   };
   return query;
 };
 
-const FacebookStrategyQuery = profile => {
+const FacebookStrategyQuery = ({ id, displayName }) => {
   const query = {
     defaults: {
-      facebookId: profile.id, isVerified: true, username: profile.displayName
+      facebookId: id,
+      isVerified: true,
+      username: displayName
     },
-    where: { facebookId: profile.id },
+    where: { facebookId: id },
   };
   return query;
 };
-
 
 module.exports = {
   GoogleStrategyQuery, FacebookStrategyQuery

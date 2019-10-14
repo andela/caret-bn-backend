@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import googleRoutes from './social/google';
 import facebookRoutes from './social/facebook';
 import '../../../config/social/config';

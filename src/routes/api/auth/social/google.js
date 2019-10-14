@@ -5,12 +5,9 @@ import socialAuthenticationController from '../../../../controllers/auth/socialA
 import tokenMiddleware from '../../../../middlewares/auth/tokenMiddleware';
 import errorHandler from '../../../../middlewares/errorHandler';
 
-
 dotenv.config();
 
 const router = new Router();
-
-
 /**
  * @swagger
 * definitions:
