@@ -5,14 +5,9 @@ import FacebookTokenStrategy from 'passport-facebook-token';
 import utilities from '../../utils/index';
 import services from '../../services/userServices';
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
 async function getUser(query, done, scope = null) {
   done(null, await services.findOrCreate(query, scope));
 }
-
 
 passport.use(new GooglePlusTokenStrategy(
   utilities.strategy(

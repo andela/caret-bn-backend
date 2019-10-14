@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import Utilities from '../../utils/index';
 
 export default class SocialAuthController {
@@ -6,7 +7,7 @@ export default class SocialAuthController {
       res,
       Utilities.stringsHelper.auth.social.SUCCESSFULLY_AUTHENTICATED,
       user,
-      200
+      user._options.isNewRecord ? 201 : 200
     );
   }
 }

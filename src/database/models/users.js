@@ -13,7 +13,7 @@ module.exports = (sequelize, Datatypes) => {
     scopes: {
       responseScope: {
         attributes: {
-          exclude: ['googleId', 'facebookId', 'isValid'],
+          exclude: ['googleId', 'facebookId', 'isVerified', 'password'],
         },
       }
     },
