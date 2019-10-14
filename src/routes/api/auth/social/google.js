@@ -3,6 +3,11 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import socialAuthenticationController from '../../../../controllers/auth/socialAuthenticationController';
 import tokenMiddleware from '../../../../middlewares/auth/tokenMiddleware';
+<<<<<<< HEAD
+=======
+import errorHandler from '../../../../middlewares/errorHandler';
+
+>>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 
 dotenv.config();
 

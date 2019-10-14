@@ -3,11 +3,15 @@ import chaiHttp from 'chai-http';
 import { describe, it } from 'mocha';
 import strings from '../utils/stringsUtil';
 import app from '../index';
+<<<<<<< HEAD
 import testdata from './mockdata';
 import generateToken from '../utils/generateToken';
 
 
 const token = generateToken(testdata.verifyUser);
+=======
+import testdata from './mockData/signupMockdata';
+>>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 
 chai.should();
 chai.use(chaiHttp);

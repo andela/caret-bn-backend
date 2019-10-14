@@ -3,11 +3,19 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import socialAuthenticationController from '../../../../controllers/auth/socialAuthenticationController';
 import tokenMiddleware from '../../../../middlewares/auth/tokenMiddleware';
+<<<<<<< HEAD
+=======
+import errorHandler from '../../../../middlewares/errorHandler';
+
+>>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 
 dotenv.config();
 
 const router = new Router();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 /**
  * @swagger
 * definitions:
@@ -47,9 +55,12 @@ router.post(
   socialAuthenticationController.authenticateUser,
   errorHandler
 );
+<<<<<<< HEAD
 =======
 
 router.post('/', passport.authenticate('facebook-token', { scope: 'email' }), tokenMiddleware, socialAuthenticationController.authenticateUser);
 >>>>>>> FT(Social Login): A user must login via Facebook & Google
+=======
+>>>>>>> 40b062c5083669c4634ae34b9d1bdb69765b8240
 
 export default router;
