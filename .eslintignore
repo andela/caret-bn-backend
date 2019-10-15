@@ -20,3 +20,6 @@ src/tests
 /src/database/migrations
 # tests
 src/tests
+
+# Database Models
+src/database/models

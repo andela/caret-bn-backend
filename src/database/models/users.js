@@ -8,7 +8,8 @@ module.exports = (sequelize, Datatypes) => {
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
-    }
+    },
+    role: Datatypes.STRING
   }, {
     scopes: {
       responseScope: {
