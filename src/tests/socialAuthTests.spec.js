@@ -50,7 +50,6 @@ describe('login using social sites', () => {
       .end((err, res) => {
         expect(res.status).to.be.eql(401, 'Incorrect Status Code Returned');
         expect(res.body.data).to.be.a('object', 'Incorrect Data Type Returned');
-        expect(res.body).to.have.property('message', 'Invalid Credentials');
         done();
       });
   }).timeout(4000);

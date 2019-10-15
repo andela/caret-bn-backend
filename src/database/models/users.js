@@ -19,5 +19,11 @@ module.exports = (sequelize, Datatypes) => {
     },
     tableName: 'users'
   });
+  Users.associate = function (models) {
+    Users.hasMany(models.requests, {
+      targetKey: 'userId',
+      sourceKey: 'id'
+    });
+  };
   return Users;
 };

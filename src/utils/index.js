@@ -5,7 +5,15 @@ import stringsHelper from './strings';
 import responseHelper from './responseHelper';
 import tokenHelper from './generateToken';
 import strategyQueries from './passport/strategyQueries';
+import requestQueries from './db/queries/requestQueries';
 
 module.exports = {
-  keys, strategy, queryScopes, stringsHelper, responseHelper, tokenHelper, strategyQueries
+  keys,
+  strategy,
+  queryScopes,
+  stringsHelper,
+  responseHelper,
+  tokenHelper,
+  strategyQueries,
+  requestQueries
 };
