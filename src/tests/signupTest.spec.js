@@ -3,14 +3,13 @@ import chaiHttp from 'chai-http';
 import { describe, it } from 'mocha';
 import strings from '../utils/stringsUtil';
 import app from '../index';
-import testdata from './mockdata';
+import testdata from './mockData/signupMockdata';
 import generateToken from '../utils/generateToken';
-
-
-const token = generateToken(testdata.verifyUser);
 
 chai.should();
 chai.use(chaiHttp);
+
+const token = generateToken(testdata.verifyUser);
 
 describe('Signup Test Suite', () => {
   it('Should signup a user successfully by return 201 status code', done => {
