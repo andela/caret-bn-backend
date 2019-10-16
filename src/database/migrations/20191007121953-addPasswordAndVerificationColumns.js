@@ -9,11 +9,17 @@ module.exports = {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    }, { transaction: t }),
+    queryInterface.addColumn('users', 'role', {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: 'requester'
     }, { transaction: t })
   ])),
 
   down: queryInterface => queryInterface.sequelize.transaction(t => Promise.all([
     queryInterface.removeColumn('users', 'password', { transaction: t }),
     queryInterface.removeColumn('users', 'isVerified', { transaction: t }),
+    queryInterface.removeColumn('users', 'role', { transaction: t }),
   ])),
 };

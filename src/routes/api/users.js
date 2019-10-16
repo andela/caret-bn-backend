@@ -3,11 +3,12 @@ import UserController from '../../controllers/userController';
 import checkSignup from '../../middlewares/checkSignup';
 import EmailToken from '../../utils/EmailToken';
 import validateResetpassword from '../../middlewares/checkResetpassword';
-import checkLogin from '../../middlewares/checkLogin';
 import verifyExist from '../../middlewares/verifyExist';
 import confirmPassword from '../../middlewares/confirmPassword';
+import inputValidation from '../../middlewares/inputValidation';
 
 const { signup, signIn } = UserController;
+const { validateLogin } = inputValidation;
 
 const router = express.Router();
 /**
@@ -203,6 +204,6 @@ router.post('/register', checkSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
 router.post('/forgotpassword', validateResetpassword.checkEmail, UserController.Providelink);
 router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword.checkReset, UserController.Changepassword);
-router.post('/login', checkLogin, signIn);
+router.post('/login', validateLogin, signIn);
 
 export default router;

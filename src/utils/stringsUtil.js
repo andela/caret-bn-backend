@@ -21,9 +21,29 @@ const strings = {
       BAD_LOGIN_REQUEST: 'Bad Request, Unable to login user',
       LOGIN_FAILURE: 'Incorrect email or password!',
       VERIFY_FIRST: 'Please verify your email first!',
+      INVALID_INPUT: 'Please provide valid inputs!',
+      NO_ACCESS: 'Access denied! Insufficient permissions!'
     },
   },
-
+  token: {
+    INVALID_TOKEN: 'Invalid token!',
+    SIGN_IN_FIRST: 'Please login first!'
+  },
+  accommodation: {
+    success: {
+      CREATED: 'New accommodation facility added successfully!',
+      NO_INFO_YET: 'You have not added any accommodation facilities yet!',
+      NO_ACCOMMODATION: 'No accommodatin facilities were found',
+      RETRIEVED: 'Accommodation facilities are retrieved successfully!',
+    },
+    error: {
+      EXISTING: 'This accommodation already exists!',
+    }
+  },
+  images: {
+    NO_IMAGE: 'No image file(s) selected!',
+    BAD_FORMAT: 'The selected file is not an image!'
+  }
 };
 
 export default strings;
