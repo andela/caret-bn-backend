@@ -1,6 +1,8 @@
 import express from 'express';
 import UserController from '../../controllers/userController';
 import checkSignup from '../../middlewares/checkSignup';
+import EmailToken from '../../utils/EmailToken';
+import validateResetpassword from '../../middlewares/checkResetpassword';
 import checkLogin from '../../middlewares/checkLogin';
 import verifyExist from '../../middlewares/verifyExist';
 import confirmPassword from '../../middlewares/confirmPassword';
@@ -114,8 +116,93 @@ const router = express.Router();
  *       '404':
  *         description: User no registered!
  */
+/**
+ * @swagger
+ * definitions:
+ *   forgotpassword:
+ *     type: object
+ *     properties:
+ *       email:
+ *         type: string
+ *         example: krinkun09@gmail.com
+ */
+/**
+ * @swagger
+ * users/forgotpassword:
+ *   post:
+ *     tags:
+ *       - Authentication
+ *     name: Forgotpassword
+ *     summary: Send link on Email
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *          $ref: '#/definitions/forgotpassword'
+ *     responses:
+ *       '200':
+ *         description: please check your email to see the link for reseting password
+ *       '400':
+ *         description: can not find that user
+ */
+/**
+ * @swagger
+ * definitions:
+ *   resetpassword:
+ *     type: object
+ *     properties:
+ *       email:
+ *         type: string
+ *         example: krinkun09@gmail.com
+ *       newpassword:
+ *         type: string
+ *         format: string
+ *         example: Pa55W0rd
+ *       confirmpassword:
+ *         type: string
+ *         format: string
+ *         example: Pa55W0rd
+ */
+/**
+ * @swagger
+ * users/resetpassword/{token}:
+ *   patch:
+ *     tags:
+ *       - Authentication
+ *     name: Reset password
+ *     summary: change password of the user
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: token
+ *         in: path
+ *       - name: body
+ *         in: body
+ *         schema:
+ *          $ref: '#/definitions/resetpassword'
+ *     responses:
+ *       '200':
+ *         description: password changed successfully'
+ *       '404':
+ *         description: can not find that user
+ *       '409':
+ *         description: you can not change password with old password
+ *       '403':
+ *         description: you are not authorized to access this endpoint
+ *       '400':
+ *         description: Token expired request a new one
+ */
+
 router.post('/register', checkSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
+router.post('/forgotpassword', validateResetpassword.checkEmail, UserController.Providelink);
+router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword.checkReset, UserController.Changepassword);
 router.post('/login', checkLogin, signIn);
 
 export default router;

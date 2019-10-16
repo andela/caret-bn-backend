@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     reasons: DataTypes.STRING,
     isFinal: DataTypes.BOOLEAN
   }, {});
+  // eslint-disable-next-line func-names
   destinations.associate = function (models) {
     // associations can be defined here
     destinations.belongsTo(models.locations, {

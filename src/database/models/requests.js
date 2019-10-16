@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     locationId: DataTypes.INTEGER,
     statusId: DataTypes.INTEGER
   }, {});
+  // eslint-disable-next-line func-names
   requests.associate = function (models) {
     // associations can be defined here
     requests.belongsTo(models.tripTypes, {

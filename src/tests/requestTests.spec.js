@@ -2,7 +2,6 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
 import mockData from './mockData/mockData';
-import { requestsModel, destinationsModel } from './mockData/models/requestsModels';
 
 chai.use(chaiHttp);
 
@@ -24,16 +23,11 @@ describe('Request Tests', () => {
         .timeout(4000);
 
         chai.request(app)
-        .post('/api/v1/auth/facebook/')
-        .send({ access_token: facebookAccessToken })
+        .post('/api/v1/users/login')
+        .send(mockData.registeredUser)
         .end((err, res) => {
             const { body } = res;
             tokenForRequests = body.data.token;
-            const request = requestsModel(body.data.id);
-            request.save().then((request) => {
-                const destination = destinationsModel(request.id);
-                destination.save();
-            })
             done();
         });
     });

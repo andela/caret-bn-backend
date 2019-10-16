@@ -17,6 +17,14 @@ module.exports = {
       isVerified: true,
       createdAt: new Date(),
       updatedAt: new Date()
+    },
+    {
+      username: 'g-host',
+      email: 'ghost@caretbn.com',
+      password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
+      isVerified: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
   ])
   ]),

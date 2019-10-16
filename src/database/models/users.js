@@ -19,6 +19,7 @@ module.exports = (sequelize, Datatypes) => {
     },
     tableName: 'users'
   });
+  // eslint-disable-next-line func-names
   Users.associate = function (models) {
     Users.hasMany(models.requests, {
       targetKey: 'userId',

@@ -14,21 +14,21 @@ const userRequests = ({ id }) => {
             model: database.tripTypes,
             as: 'type',
             attributes: [
-              'name'
+              'id', 'name'
             ],
           },
           {
             model: database.requestStatus,
             as: 'status',
             attributes: [
-              'name'
+              'id', 'name'
             ],
           },
           {
             model: database.locations,
             as: 'origin',
             attributes: [
-              'name', 'country'
+              'id', 'name', 'country'
             ],
           },
           {
@@ -40,7 +40,7 @@ const userRequests = ({ id }) => {
               {
                 model: database.locations,
                 attributes: [
-                  'name', 'country'
+                  'id', 'name', 'country'
                 ],
                 as: 'location'
               }

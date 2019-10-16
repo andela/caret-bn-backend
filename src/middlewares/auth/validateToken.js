@@ -13,9 +13,11 @@ export default (req, res, next) => {
     req.user = verifiedUser;
     return next();
   } catch (error) {
-    return Utilities.responseHelper(res,
+    return Utilities.responseHelper(
+      res,
       Utilities.stringsHelper.auth.token.UNABLE_TO_PROCESS,
       null,
-      400);
+      400
+    );
   }
 };
