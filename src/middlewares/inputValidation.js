@@ -22,7 +22,8 @@ export default class InputValidation {
         .message('Name should be at least 10 character and not more than 100 characters!')
         .required(),
       description: Joi.string().min(10).max(250).required(),
-      location: Joi.string().max(50).required(),
+      location: Joi.number().integer().min(1).max(20)
+        .required(),
       availableSpace: Joi.number().integer().min(1).max(99990)
         .required(),
       cost: Joi.number().integer().min(1).max(99999)
@@ -57,5 +58,36 @@ export default class InputValidation {
       return responseError(res, 409, strings.accommodation.error.EXISTING);
     }
     return next();
+  }
+
+  static validateSignup(req, res, next) {
+    const schema = Joi.object({
+      username: Joi.string().trim().regex(/^[a-zA-Z0-9]{3,20}$/).message('username field should be at least 3 alphanumeric characters long.')
+        .required(),
+      email: Joi.string().email({ minDomainSegments: 2 }).message('email field should be a valid email address. e.g: johndoe@gmail.com.').required(),
+      password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/).message('password field should contain at least 8 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
+      confirmPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/).message('confirmPassword field should contain at least 8 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
+    });
+    validation(req, res, schema, next);
+  }
+
+  static validateAccommodationEdit(req, res, next) {
+    const schema = Joi.object({
+      name: Joi.string().trim().min(10).max(100)
+        .message('name should be at least 10 character and not more than 100 characters!'),
+      description: Joi.string().min(10).max(250)
+        .message('description should be at least 10 character and not more than 250 characters!'),
+      location: Joi.number().integer().min(1).max(20)
+        .message('location should be a number between 1 and 20!'),
+      availableSpace: Joi.number().integer().min(1).max(99999)
+        .message('availableSpace should be a number between 1 and 99999!'),
+      cost: Joi.number().integer().min(1).max(99999)
+        .message('cost should be a number between 1 and 99999!'),
+      highlights: Joi.string().min(10).max(250)
+        .message('highlights should be at least 10 character and not more than 250 characters!'),
+      amenities: Joi.string().min(10).max(250)
+        .message('amenities should be at least 10 character and not more than 250 characters!'),
+    });
+    validation(req, res, schema, next);
   }
 }

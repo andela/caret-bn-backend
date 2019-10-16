@@ -55,7 +55,7 @@ describe('login using social sites', () => {
   }).timeout(4000);
 
 
-  it('Should authenticate with Facebook Successfully. New users return 200 status code', done => {
+  it('Should authenticate with Facebook Successfully. New users return 201 status code', done => {
     chai.request(app)
       .post('/api/v1/auth/facebook/')
       .send({ access_token: facebookAccessToken })

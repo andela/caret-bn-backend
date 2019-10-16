@@ -1,6 +1,5 @@
 import express from 'express';
 import UserController from '../../controllers/userController';
-import checkSignup from '../../middlewares/checkSignup';
 import EmailToken from '../../utils/EmailToken';
 import validateResetpassword from '../../middlewares/checkResetpassword';
 import verifyExist from '../../middlewares/verifyExist';
@@ -8,7 +7,7 @@ import confirmPassword from '../../middlewares/confirmPassword';
 import inputValidation from '../../middlewares/inputValidation';
 
 const { signup, signIn } = UserController;
-const { validateLogin } = inputValidation;
+const { validateLogin, validateSignup } = inputValidation;
 
 const router = express.Router();
 /**
@@ -200,7 +199,7 @@ const router = express.Router();
  *         description: Token expired request a new one
  */
 
-router.post('/register', checkSignup, verifyExist, confirmPassword, signup);
+router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
 router.post('/forgotpassword', validateResetpassword.checkEmail, UserController.Providelink);
 router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword.checkReset, UserController.Changepassword);

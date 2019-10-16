@@ -3,23 +3,17 @@ import models from '../database/models';
 import strings from '../utils/stringsUtil';
 import responseUtil from '../utils/responseUtil';
 import responseError from '../utils/responseError';
-import imagesHelper from '../helpers/imagesHelper';
+import imageUploader from '../helpers/imageUploader';
 
 cloudinary.config({ CLOUDINARY_URL: process.env.CLOUDINARY_URL });
 
-const { uploadImages, uploadSingle } = imagesHelper;
-
 export default class AccommodationController {
   static async createAccommodation(req, res) {
-    let images = [];
     const {
       name, description, location, availableSpace, cost, highlights, amenities
     } = req.body;
 
-    if (req.files.image.length > 1) { images = await uploadImages(req.files.image); } else {
-      images = await uploadSingle(req, res);
-      images = images.url;
-    }
+    const images = await imageUploader(req, res);
 
     const accommodation = {
       name: name.toLowerCase(),
@@ -58,5 +52,45 @@ export default class AccommodationController {
       return responseUtil(res, 200, strings.accommodation.success.NO_ACCOMMODATION);
     }
     return responseUtil(res, 200, strings.accommodation.success.RETRIEVED, allAccommodations);
+  }
+
+  static async editAccommodation(req, res) {
+    const { body, files } = req;
+
+    if (Object.keys(body).length === 0) {
+      return responseError(res, 400, 'There is nothing to update! Provide some information!');
+    }
+
+    let images;
+
+    if (Object.keys(files).length > 0) {
+      images = await imageUploader(req, res);
+    }
+
+    const editAccommodation = (images) ? { ...body, images } : { ...body };
+    const { accommodation } = req;
+
+    models.accommodations.update(editAccommodation, {
+      where: {
+        id: accommodation.id,
+      },
+      returning: true,
+      plain: true
+    }).then(updatedAccommodation => {
+      updatedAccommodation[1].dataValues.owner = accommodation.ownerUser;
+      responseUtil(
+        res,
+        200,
+        strings.accommodations.success.ACCOMMODATION_UPDATED,
+        updatedAccommodation[1].dataValues,
+      );
+    });
+  }
+
+  static deleteAccommodation(req, res) {
+    const { accommodation } = req;
+    models.accommodations.destroy({ where: { id: accommodation.id } }).then(() => {
+      responseUtil(res, 200, strings.accommodations.success.ACCOMMODATION_DELETED);
+    });
   }
 }
