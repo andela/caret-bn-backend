@@ -2,16 +2,23 @@ const strings = {
   users: {
     success: {
       SIGNUP_SUCCESS: 'User Created Successfully, please check your email for verification',
+      ALL: 'users found',
+      FOUND: 'roles found',
       SUCCESS_VERIFIED: 'You have been verified',
       SEND_EMAIL: 'please check your email to see the link for reseting password',
       PASSWORD_CHANGED: 'password changed successfully',
       SUCCESS_UPDATE: 'User Updated',
-      SUCCESSFUL_LOGIN: 'User logged in successfully!'
+      SUCCESSFUL_LOGIN: 'User logged in successfully!',
+      SUCCESSFUL_ASSIGN: 'you assign the role to user',
+      ROLE_ADDED: 'role added successfully'
     },
     error: {
       BAD_SIGNUP_REQUEST: 'Input Error please check error!',
       ANAUTHORIZED: 'you are not authorized to access this endpoint',
       EXPERED: 'Token expired request a new one',
+      ROLE_NOTFOUND: 'role not found',
+      ROLE_ALREADY_IN: 'role already exist',
+      ROLE_ALREADY_EXISTS: 'user already has this role',
       USER_ALREADY_EXISTS: 'User with this email already exists',
       USE_NOT_REGISTERED: 'user not registered',
       USERNAME_ALREADY_EXISTS: 'User with this username already exists',
