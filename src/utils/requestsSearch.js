@@ -104,7 +104,6 @@ const requestsSearch = async options => {
     requests.forEach(request => {
       const { departureDate } = request.dataValues;
       let { returnDate } = request.dataValues;
-
       if (!returnDate) {
         // eslint-disable-next-line max-len
         const lastDestination = request.dataValues.destinations[request.dataValues.destinations.length - 1].dataValues;
