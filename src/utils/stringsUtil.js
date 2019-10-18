@@ -35,7 +35,7 @@ const strings = {
       ACCESS_TOKEN_NEEDED: 'Access token is needed',
       INVALID_INPUT: 'Please provide valid inputs!',
       USER_SAME_EMAIL: 'this email is not for this token',
-      NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!'
+      NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
     },
   },
   token: {
