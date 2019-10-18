@@ -36,11 +36,13 @@ export default class InputValidation {
         .message('Name should be at least 10 character and not more than 100 characters!')
         .required(),
       description: Joi.string().min(10).max(250).required(),
-      location: Joi.number().integer().min(1).max(20)
+      locationId: Joi.number().integer().min(1).max(20)
         .required(),
       availableSpace: Joi.number().integer().min(1).max(99990)
         .required(),
       cost: Joi.number().integer().min(1).max(99999)
+        .required(),
+      currency: Joi.string().regex(/^(rwf|RWF|ksh|KSH|ugx|UGX|usd|USD)/).message('Currency should only be RWF, KSH, UGX or USD!')
         .required(),
       highlights: Joi.string().min(10).max(250).required(),
       amenities: Joi.string().min(10).max(250).required()
@@ -71,10 +73,9 @@ export default class InputValidation {
   }
 
   static async validateExistence(req, res, next) {
-    let { name, location } = req.body;
+    let { name } = req.body;
     name = name.toLowerCase();
-    location = location.toLowerCase();
-    const foundAccommodation = await models.accommodations.findOne({ where: { name, location } });
+    const foundAccommodation = await models.accommodations.findOne({ where: { name } });
     if (foundAccommodation) {
       return responseError(res, 409, strings.accommodation.error.EXISTING);
     }
@@ -98,7 +99,7 @@ export default class InputValidation {
         .message('name should be at least 10 character and not more than 100 characters!'),
       description: Joi.string().min(10).max(250)
         .message('description should be at least 10 character and not more than 250 characters!'),
-      location: Joi.number().integer().min(1).max(20)
+      locationId: Joi.number().integer().min(1).max(20)
         .message('location should be a number between 1 and 20!'),
       availableSpace: Joi.number().integer().min(1).max(99999)
         .message('availableSpace should be a number between 1 and 99999!'),
