@@ -21,6 +21,7 @@ const swaggerDefinition = {
     bearerAuth: {
       type: 'apiKey',
       name: 'Authorization',
+      description: 'First login to get a {JWT_Token} then paste it as "Bearer {JWT_Token}"',
       scheme: 'bearer',
       in: 'header',
     },

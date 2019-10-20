@@ -1,7 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  const locations = sequelize.define('locations', {
+  const Locations = sequelize.define('locations', {
     name: DataTypes.STRING,
     country: DataTypes.STRING
-  }, {});
-  return locations;
+  }, {
+    tableName: 'locations'
+  });
+  return Locations;
 };

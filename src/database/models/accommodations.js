@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const accommodations = sequelize.define('accommodations', {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    location: DataTypes.STRING,
+    location: DataTypes.INTEGER,
     availableSpace: DataTypes.STRING,
     cost: DataTypes.INTEGER,
     highlights: DataTypes.STRING,
@@ -10,10 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     owner: DataTypes.INTEGER,
     images: DataTypes.JSONB
   }, { tableName: 'accommodations' });
-  accommodations.associate = function (models) {
+  accommodations.associate = models => {
     // associations can be defined here
     accommodations.belongsTo(models.users, {
+      as: 'ownerUser',
       foreignKey: 'owner',
+      targetKey: 'id',
+    });
+    accommodations.belongsTo(models.locations, {
+      as: 'accommodationLocation',
+      foreignKey: 'location',
       targetKey: 'id',
     });
   };

@@ -43,7 +43,25 @@ const strings = {
   images: {
     NO_IMAGE: 'No image file(s) selected!',
     BAD_FORMAT: 'The selected file is not an image!'
-  }
+  },
+  accommodations: {
+    success: {
+      ACCOMMODATION_UPDATED: 'Accommodation Successfully Updated!',
+      ACCOMMODATION_DELETED: 'Accommodation Successfully Deleted!'
+    },
+    error: {
+      ACCOMMODATION_NOT_FOUND: 'Ooops! This accommodation id does not exist!',
+      ACCOMMODATION_BAD_REQUEST: 'Bad Request, The accommodation information is invalid',
+      NOT_OWNER: 'Oops! You are not the owner of this accommodation!',
+      EMPTY_FORM: 'Oops! You have submitted an empty form! Make sure to add information to the form-data!',
+    },
+  },
+  id: {
+    error: {
+      ID_INVALID: 'Invalid id, id should be an integer',
+    },
+  },
+
 };
 
 export default strings;
