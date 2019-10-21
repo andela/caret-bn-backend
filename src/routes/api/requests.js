@@ -1,9 +1,13 @@
 import { Router } from 'express';
 import requestController from '../../controllers/requestController';
 import validateToken from '../../middlewares/auth/validateToken';
+import verifyRelationships from '../../middlewares/requests/relationVerification';
 
 const router = new Router();
 
-router.get('/', validateToken, (req, res) => requestController.viewRequests(req, res));
+router.use(validateToken);
+
+router.get('/', (req, res) => requestController.viewRequests(req, res));
+router.post('/', verifyRelationships, (req, res) => requestController.storeRequest(req, res));
 
 export default router;

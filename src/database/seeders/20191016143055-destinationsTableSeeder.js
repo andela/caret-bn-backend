@@ -5,7 +5,7 @@ module.exports = {
     queryInterface.bulkInsert('destinations', [
       {
         locationId: 5,
-        accomodationId: 1,
+        bookingId: 1,
         arrivalDate: '10-10-2019',
         departureDate: '10-25-2019',
         requestId: 1,
@@ -16,7 +16,7 @@ module.exports = {
       },
       {
         locationId: 6,
-        accomodationId: 2,
+        bookingId: 2,
         arrivalDate: '10-25-2019',
         departureDate: '10-27-2019',
         requestId: 1,
@@ -27,7 +27,7 @@ module.exports = {
       },
       {
         locationId: 6,
-        accomodationId: 2,
+        bookingId: 2,
         arrivalDate: '10-27-2019',
         departureDate: '11-02-2019',
         requestId: 1,

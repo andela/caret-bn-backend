@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const destinations = sequelize.define('destinations', {
     locationId: DataTypes.INTEGER,
-    accomodationId: DataTypes.INTEGER,
+    bookingId: DataTypes.INTEGER,
     arrivalDate: DataTypes.DATEONLY,
     departureDate: DataTypes.DATEONLY,
     requestId: DataTypes.INTEGER,
