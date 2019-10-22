@@ -149,7 +149,7 @@ describe('Signup Test Suite', () => {
       });
   });
 
-  it('user Should not reset password with exist Invalid password ', done => {
+  it('user Should not reset password with  Invalid password ', done => {
     chai.request(app)
       .patch(`/api/v1/users/resetpassword/${validTroken}`)
       .send(testdata.Invalidpassword)

@@ -11,7 +11,7 @@ module.exports = {
         cost: 100,
         highlights: 'Lorem Ipsum',
         amenities: 'Lorem Ipasum',
-        owner: 2,
+        owner: 4,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8luasp8j.png"',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
         cost: 50,
         highlights: 'Kampolama',
         amenities: 'Kampolama',
-        owner: 2,
+        owner: 4,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8laspg8j.png"',
         createdAt: new Date(),
         updatedAt: new Date()

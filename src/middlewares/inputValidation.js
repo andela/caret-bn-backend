@@ -63,6 +63,13 @@ export default class InputValidation {
     validation(req, res, schema, next);
   }
 
+  static validateRole(req, res, next) {
+    const schema = Joi.object({
+      Role: Joi.string().required().valid('Super Administrator', 'Travel Administrator', 'Travel Team Member', 'supplier', 'Manager', 'Requester'),
+    });
+    validation(req, res, schema, next);
+  }
+
   static async validateExistence(req, res, next) {
     let { name, location } = req.body;
     name = name.toLowerCase();

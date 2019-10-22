@@ -18,6 +18,7 @@ module.exports = {
         }
       }
     },
+    
     phone: {
       type: Sequelize.STRING,
       unique: false
@@ -48,6 +49,10 @@ module.exports = {
     },
     department:{
       type: Sequelize.STRING,
+      allowNull: true
+    },
+    lineManager:{
+      type: Sequelize.INTEGER,
       allowNull: true
     },
     email: {
