@@ -36,6 +36,7 @@ const strings = {
       INVALID_INPUT: 'Please provide valid inputs!',
       USER_SAME_EMAIL: 'this email is not for this token',
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
+      SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
     },
   },
   token: {
@@ -75,14 +76,12 @@ const strings = {
     NOT_FOUND: 'No request was found',
     MANAGERS_ONLY: 'Unable to proceed! This is reserved for managers only',
     SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
-
   },
   id: {
     error: {
       ID_INVALID: 'Invalid id, id should be an integer',
     },
   },
-
 };
 
 export default strings;

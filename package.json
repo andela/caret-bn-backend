@@ -23,7 +23,8 @@
       "**/**/**/tests",
       "**/**/**/index.js",
       "**/**/**/swagger-doc.js",
-      "**/**/**/**/passport"
+      "**/**/**/**/passport",
+      "**/**/**/**/config"
     ]
   },
   "husky": {

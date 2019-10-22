@@ -39,9 +39,9 @@ module.exports = (sequelize, Datatypes) => {
       sourceKey: 'id'
     });
     Users.belongsTo(models.Role, {
-      as: 'Role',
-      foreignKey: 'role',
-      targetKey: 'id',
+      as: 'Role',
+      foreignKey: 'role',
+      targetKey: 'id',
     });
   };
   return Users;
