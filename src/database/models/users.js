@@ -5,10 +5,19 @@ module.exports = (sequelize, Datatypes) => {
     googleId: Datatypes.STRING,
     facebookId: Datatypes.STRING,
     password: Datatypes.STRING,
+    phone: Datatypes.STRING,
+    gender: Datatypes.STRING,
+    dob: Datatypes.DATE,
+    country: Datatypes.STRING,
+    language: Datatypes.STRING,
+    currency: Datatypes.STRING,
+    company: Datatypes.STRING,
+    department: Datatypes.STRING,
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
-    }
+    },
+    role: Datatypes.STRING
   }, {
     scopes: {
       responseScope: {
@@ -19,5 +28,12 @@ module.exports = (sequelize, Datatypes) => {
     },
     tableName: 'users'
   });
+  // eslint-disable-next-line func-names
+  Users.associate = function (models) {
+    Users.hasMany(models.requests, {
+      targetKey: 'userId',
+      sourceKey: 'id'
+    });
+  };
   return Users;
 };

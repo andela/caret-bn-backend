@@ -22,6 +22,15 @@ const testdata = {
     password: 'Pa$5W0rd',
     confirmPassword: 'Pa$5W0rd',
   },
+  userProfile: {
+    id: '11',
+    username: 'caretdevs',
+    email: 'team11@gmail.com',
+    password: 'Pa$5W0rd',
+    confirmPassword: 'Pa$5W0rd',
+    language: 'lingala',
+    isVerified: true,
+  },
 
   missingEmail: {
     username: 'caretdevs1',

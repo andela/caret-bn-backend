@@ -28,6 +28,7 @@
         "no-unreachable":"error",
         "arrow-parens": ["error", "as-needed"],
         "import/no-dynamic-require":"off",
-        "no-shadow":"off"
+        "no-shadow":"off",
+        "padded-blocks": "off"
     }
 }

@@ -50,13 +50,12 @@ describe('login using social sites', () => {
       .end((err, res) => {
         expect(res.status).to.be.eql(401, 'Incorrect Status Code Returned');
         expect(res.body.data).to.be.a('object', 'Incorrect Data Type Returned');
-        expect(res.body).to.have.property('message', 'Invalid Credentials');
         done();
       });
   }).timeout(4000);
 
 
-  it('Should authenticate with Facebook Successfully. New users return 200 status code', done => {
+  it('Should authenticate with Facebook Successfully. New users return 201 status code', done => {
     chai.request(app)
       .post('/api/v1/auth/facebook/')
       .send({ access_token: facebookAccessToken })
