@@ -7,5 +7,7 @@ const mockData = {
   missingData:{name: '', location: ''},
   requester:{email: 'mateso@caretbn.com', password: 'Pa55w0rd' },
   admin:{email: 'alain@caretbn.com', password: 'Pa55w0rd' },
+  fakeGender: { gender: 'xxxx' },
+  missingFields: { email: '', password: '' }
 };
 export default mockData;

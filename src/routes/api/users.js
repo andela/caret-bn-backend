@@ -1,13 +1,18 @@
 import express from 'express';
 import UserController from '../../controllers/userController';
+import profile from '../../controllers/profileController';
 import EmailToken from '../../utils/EmailToken';
 import validateResetpassword from '../../middlewares/checkResetpassword';
 import verifyExist from '../../middlewares/verifyExist';
+import validateToken from '../../middlewares/auth/validateToken';
+import InputValidation from '../../middlewares/inputValidation';
 import confirmPassword from '../../middlewares/confirmPassword';
-import inputValidation from '../../middlewares/inputValidation';
+import user from '../../middlewares/users';
 
 const { signup, signIn } = UserController;
-const { validateLogin, validateSignup } = inputValidation;
+const { updateProfile, getProfile } = profile;
+const { validateProfile, validateLogin, validateSignup } = InputValidation;
+
 
 const router = express.Router();
 /**
@@ -128,7 +133,7 @@ const router = express.Router();
  */
 /**
  * @swagger
- * users/forgotpassword:
+ * /users/forgotpassword:
  *   post:
  *     tags:
  *       - Authentication
@@ -169,7 +174,7 @@ const router = express.Router();
  */
 /**
  * @swagger
- * users/resetpassword/{token}:
+ * /users/resetpassword/{token}:
  *   patch:
  *     tags:
  *       - Authentication
@@ -198,11 +203,60 @@ const router = express.Router();
  *       '400':
  *         description: Token expired request a new one
  */
+/**
+ * @swagger
+ * definitions:
+ *   updateprofile:
+ *     type: object
+ *     properties:
+ *       language:
+ *         type: string
+ *         example: kinyarwanda
+ *       newpassword:
+ *         type: string
+ *         format: string
+ *         example: Pa55W0rd
+ *       confirmpassword:
+ *         type: string
+ *         format: string
+ *         example: Pa55W0rd
+ */
+/**
+ * @swagger
+ * /users/{email}:
+ *   patch:
+ *     tags:
+ *       - Authentication
+ *     name: profile
+ *     summary: user profile page setting
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: email
+ *         in: path
+ *       - name: body
+ *         in: body
+ *         schema:
+ *          $ref: '#/definitions/updateprofile'
+ *     responses:
+ *       '200':
+ *         description: profile successfully updated
+ *       '404':
+ *         description: can not find that user
+ *       '500':
+ *         description: interrnal server error
+ *       '400':
+ *         description: invalid data
+ */
 
 router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
 router.post('/forgotpassword', validateResetpassword.checkEmail, UserController.Providelink);
 router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword.checkReset, UserController.Changepassword);
+router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
 router.post('/login', validateLogin, signIn);
+router.get('/profile/:email', validateToken, user.compareData, getProfile);
 
 export default router;

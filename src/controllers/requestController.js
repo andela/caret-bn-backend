@@ -29,12 +29,6 @@ export default class requestController {
 
   static async storeRequest({ body, user }, res) {
     const request = await requestServices.createRequest(body, user.payload.id);
-    const destinations = await destinationController.storeDestination(body, request.id);
-    return Utilities.responseHelper(
-      res,
-      'Successfully Placed Request',
-      destinations,
-      201
-    );
+    return destinationController.storeDestination(res, body, request);
   }
 }
