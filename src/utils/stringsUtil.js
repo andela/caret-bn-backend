@@ -69,6 +69,14 @@ const strings = {
       EMPTY_FORM: 'Oops! You have submitted an empty form! Make sure to add information to the form-data!',
     },
   },
+  requests: {
+    APPROVED: 'Request approved successfully!',
+    REJECTED: 'Request rejected!',
+    NOT_FOUND: 'No request was found',
+    MANAGERS_ONLY: 'Unable to proceed! This is reserved for managers only',
+    SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
+
+  },
   id: {
     error: {
       ID_INVALID: 'Invalid id, id should be an integer',

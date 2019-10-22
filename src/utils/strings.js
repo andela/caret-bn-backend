@@ -11,10 +11,11 @@ const strings = {
   },
   user: {
     requests: {
-      SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests',
-      NO_REQUESTS: 'No requests registered',
-    }
-  }
+      SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
+      NO_REQUESTS: 'No requests were found',
+      ASSIGNED_REQUESTS: 'All requests assigned to you are retrived successfully!'
+    },
+  },
 };
 
 export default strings;

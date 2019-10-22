@@ -8,6 +8,7 @@ module.exports = {
         email: 'johndoe@test.com',
         password: '$2b$10$vQp2ahUwAnRS.HHxNLK0pOQ/E41TRnxtlDJL.5vVRHsvL7DC9svNm',
         isVerified: false,
+        lineManager: 8,
         role: 6,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -37,6 +38,7 @@ module.exports = {
       email: 'ghost@caretbn.com',
       password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
       isVerified: true,
+      lineManager: 8,
       role: 6,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -46,6 +48,7 @@ module.exports = {
       email: 'user@caretbn.com',
       password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
       isVerified: true,
+      lineManager: 8,
       role: 5,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -56,6 +59,7 @@ module.exports = {
       email: 'alain@caretbn.com',
       password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
       isVerified: true,
+      lineManager: 8,
       role: 1,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -65,6 +69,7 @@ module.exports = {
       email: 'mateso@caretbn.com',
       password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
       isVerified: true,
+      lineManager: 8,
       role: 6,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -74,7 +79,18 @@ module.exports = {
       email: 'supplier@caretbn.com',
       password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
       isVerified: true,
+      lineManager: 8,
       role: 5,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      username: 'demoManager',
+      email: 'manager@caretbn.com',
+      password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
+      isVerified: true,
+      lineManager: 8,
+      role: 4,
       createdAt: new Date(),
       updatedAt: new Date()
     },

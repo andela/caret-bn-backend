@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       targetKey: 'requestId',
       sourceKey: 'id'
     });
+    requests.belongsTo(models.users, {
+      targetKey: 'id',
+      sourceKey: 'userId'
+    });
   };
 
   return requests;

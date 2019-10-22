@@ -14,12 +14,14 @@ module.exports = (sequelize, Datatypes) => {
     currency: Datatypes.STRING,
     company: Datatypes.STRING,
     department: Datatypes.STRING,
-    lineManager: Datatypes.INTEGER,
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
     },
-    role: Datatypes.INTEGER
+    lineManager:{
+      type: Datatypes.INTEGER,
+      defaultValue: 8
+    }
   }, {
     scopes: {
       responseScope: {
