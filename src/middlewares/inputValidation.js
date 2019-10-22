@@ -26,7 +26,6 @@ export default class InputValidation {
       country: Joi.string(),
       company: Joi.string(),
       department: Joi.string(),
-      lineManager: Joi.string(),
     });
     validation(req, res, schema, next);
   }
