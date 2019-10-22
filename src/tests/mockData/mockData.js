@@ -4,10 +4,11 @@ const mockData = {
   unVerifiedUser: { email: 'johndoe@test.com', password: 'Pa55w0rd' },
   invalidData: { email: 'email@email.com', password: 'password' },
   missingFields: { email: '', password: '' },
-  missingData:{name: '', location: ''},
+  missingData:{name: '', locationId: ''},
   requester:{email: 'mateso@caretbn.com', password: 'Pa55w0rd' },
   admin:{email: 'alain@caretbn.com', password: 'Pa55w0rd' },
   fakeGender: { gender: 'xxxx' },
-  missingFields: { email: '', password: '' }
+  missingFields: { email: '', password: '' },
+  supplier:{email: 'supplier@caretbn.com', password: 'Pa55w0rd'}
 };
 export default mockData;

@@ -23,3 +23,6 @@ src/tests
 
 # Database Models
 src/database/models
+
+#Dist
+dist

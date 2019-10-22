@@ -2,9 +2,10 @@ module.exports = (sequelize, DataTypes) => {
   const accommodations = sequelize.define('accommodations', {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    location: DataTypes.INTEGER,
+    locationId: DataTypes.INTEGER,
     availableSpace: DataTypes.STRING,
     cost: DataTypes.INTEGER,
+    currency: DataTypes.STRING,
     highlights: DataTypes.STRING,
     amenities: DataTypes.STRING,
     owner: DataTypes.INTEGER,
@@ -19,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     accommodations.belongsTo(models.locations, {
       as: 'accommodationLocation',
-      foreignKey: 'location',
+      foreignKey: 'locationId',
       targetKey: 'id',
     });
   };

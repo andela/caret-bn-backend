@@ -69,6 +69,15 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      username: 'demoSupplier',
+      email: 'supplier@caretbn.com',
+      password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
+      isVerified: true,
+      role: 5,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ])
   ]),
 

@@ -7,10 +7,14 @@ import imageUploader from '../helpers/imageUploader';
 
 cloudinary.config({ CLOUDINARY_URL: process.env.CLOUDINARY_URL });
 
+const {
+  CREATED, NO_INFO_YET, RETRIEVED, NO_ACCOMMODATION
+} = strings.accommodation.success;
+
 export default class AccommodationController {
   static async createAccommodation(req, res) {
     const {
-      name, description, location, availableSpace, cost, highlights, amenities
+      name, description, locationId, availableSpace, cost, currency, highlights, amenities
     } = req.body;
 
     const images = await imageUploader(req, res);
@@ -18,40 +22,50 @@ export default class AccommodationController {
     const accommodation = {
       name: name.toLowerCase(),
       description,
-      location: location.toLowerCase(),
+      locationId,
       availableSpace,
       cost,
+      currency: currency.toUpperCase(),
       highlights,
       amenities,
       owner: req.user.payload.id,
       images
     };
-
     try {
       const newAccommodation = await models.accommodations.create(accommodation);
 
-      return responseUtil(res, 201, strings.accommodation.success.CREATED, newAccommodation);
+      return responseUtil(res, 201, CREATED, newAccommodation);
     } catch (error) { return responseError(res, 400, error); }
   }
 
-  static async getMyAccommodations(req, res) {
-    const owner = req.user.payload.id;
-
-    const MyAccommodations = await models.accommodations.findAll({ where: { owner } });
-
-    if (MyAccommodations.length === 0) {
-      return responseUtil(res, 200, strings.accommodation.success.NO_INFO_YET);
-    }
-    return responseUtil(res, 200, strings.accommodation.success.RETRIEVED, MyAccommodations);
-  }
-
   static async getAllAccommodations(req, res) {
-    const allAccommodations = await models.accommodations.findAll();
+    const { role, id: owner } = req.user.payload;
+    if (role === 5) {
+      const MyAccommodations = await models.accommodations.findAll({
+        where: { owner },
+        attributes: { exclude: ['locationId'] },
+        include: [{
+          model: models.locations, as: 'accommodationLocation', attributes: ['id', 'name']
+        }]
+      });
 
-    if (allAccommodations.length === 0) {
-      return responseUtil(res, 200, strings.accommodation.success.NO_ACCOMMODATION);
+      return responseUtil(res, 200, (MyAccommodations.length === 0)
+        ? NO_INFO_YET
+        : RETRIEVED, MyAccommodations);
     }
-    return responseUtil(res, 200, strings.accommodation.success.RETRIEVED, allAccommodations);
+    if (role === 1) {
+      const allAccommodations = await models.accommodations.findAll({
+        attributes: { exclude: ['locationId'] },
+        include: [{
+          model: models.locations, as: 'accommodationLocation', attributes: ['id', 'name']
+        }]
+      });
+
+      return responseUtil(res, 200, (allAccommodations.length === 0)
+        ? NO_ACCOMMODATION
+        : RETRIEVED, allAccommodations);
+    }
+    return responseError(res, 403, strings.users.error.NO_ACCESS);
   }
 
   static async editAccommodation(req, res) {
