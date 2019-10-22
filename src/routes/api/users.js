@@ -7,6 +7,7 @@ import verifyExist from '../../middlewares/verifyExist';
 import validateToken from '../../middlewares/auth/validateToken';
 import InputValidation from '../../middlewares/inputValidation';
 import confirmPassword from '../../middlewares/confirmPassword';
+import user from '../../middlewares/users';
 
 const { signup, signIn } = UserController;
 const { updateProfile, getProfile } = profile;
@@ -254,8 +255,8 @@ router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
 router.post('/forgotpassword', validateResetpassword.checkEmail, UserController.Providelink);
 router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword.checkReset, UserController.Changepassword);
-router.patch('/profile/:email', validateToken, validateProfile, updateProfile);
+router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
 router.post('/login', validateLogin, signIn);
-router.get('/profile/:email', validateToken, getProfile);
+router.get('/profile/:email', validateToken, user.compareData, getProfile);
 
 export default router;

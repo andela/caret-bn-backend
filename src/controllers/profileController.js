@@ -7,9 +7,6 @@ const { users } = models;
 
 export default class profile {
   static async updateProfile(req, res) {
-    if (req.user.payload.email !== req.params.email) {
-      return responseError(res, 400, string.users.error.USER_SAME_EMAIL);
-    }
     try {
       const newUser = await users.update(
         req.body,
@@ -33,9 +30,6 @@ export default class profile {
   }
 
   static async getProfile(req, res) {
-    if (req.user.payload.email !== req.params.email) {
-      return responseError(res, 400, string.users.error.USER_SAME_EMAIL);
-    }
     try {
       const { email } = req.params;
       const user = await users.findOne({
@@ -48,9 +42,7 @@ export default class profile {
         });
       }
       const {
-        password,
-        isVerified,
-        createdAt,
+        password, isVerified, createdAt,
         updatedAt,
         ...data
       } = user;
