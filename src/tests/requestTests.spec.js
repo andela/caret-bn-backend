@@ -50,7 +50,7 @@ describe('Request Tests', () => {
         .end((err, res) => {
             const { status, body } = res;
             expect(status).to.be.eql(400, 'Incorrect Status Code Returned.');
-            expect(body.message).to.be.eql('Unable to validate token, please sign in again', 'Wrong message returned');
+            expect(body.message).to.be.eql('Invalid token please sign again', 'Wrong message returned');
             done();
         });
     })

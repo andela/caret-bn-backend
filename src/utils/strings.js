@@ -5,7 +5,7 @@ const strings = {
       UNSUCCESSFULLY_AUTHENTICATED: 'Unable To Authenticate Account',
     },
     token: {
-      UNABLE_TO_PROCESS: 'Unable to validate token, please sign in again',
+      UNABLE_TO_PROCESS: 'Invalid token please sign again',
       SIGN_IN_FIRST: 'Please sign into the application first'
     },
   },

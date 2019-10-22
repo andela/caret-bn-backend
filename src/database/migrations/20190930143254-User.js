@@ -18,6 +18,38 @@ module.exports = {
         }
       }
     },
+    phone: {
+      type: Sequelize.STRING,
+      unique: false
+    },
+    gender: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    dob: {
+      type: Sequelize.DATE,
+      allowNull: true
+    },
+    country: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    language:{
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    currency:{
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    company:{
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    department:{
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     email: {
       type: Sequelize.STRING,
       allowNull: false,
