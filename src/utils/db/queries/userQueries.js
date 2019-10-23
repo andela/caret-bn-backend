@@ -7,7 +7,7 @@ const userRequests = ({ id }) => {
       {
         model: database.requests,
         attributes: [
-          'createdAt'
+          'createdAt', 'departureDate', 'returnDate'
         ],
         include: [
           {

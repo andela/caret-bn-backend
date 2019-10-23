@@ -1,17 +1,16 @@
 
-const verify = (res, destinations) => {
-  destinations.forEach(destination => {
-    const bookingLength = destinations.filter(dest => dest.bookingId === destination.bookingId);
+const checkMultiple = destinations => {
+  for (let counter = 0; counter < destinations.length; counter += 1) {
+    /*  eslint-disable-next-line max-len */
+    const bookingLength = destinations.filter(dest => dest.bookingId === destinations[counter].bookingId);
     if (bookingLength.length > 1) {
-      return res.status(400).json({
-        status: 400,
-        message: 'You cannot use the same booking in multiple destinations.'
-      });
+      return true;
     }
-  });
+  }
+  return false;
 };
 
 
 module.exports = {
-  verify
+  checkMultiple
 };

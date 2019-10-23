@@ -14,6 +14,8 @@
     "rollback": "NODE_ENV=test sequelize db:migrate:undo:all",
     "seed": "NODE_ENV=test sequelize db:seed:all",
     "test": "npm run rollback && npm run migrate && npm run seed &&  npm run test-suite",
+    "test:requests": "npm run rollback && npm run migrate && npm run seed &&  npm run request-suite",
+    "request-suite": "NODE_ENV=test nyc --reporter=html --reporter=text mocha src/tests/requestTests/index.spec.js --require @babel/register --timeout 20000 --exit",
     "test-suite": "NODE_ENV=test nyc --reporter=html --reporter=text mocha src/tests/index.spec.js --require @babel/register --timeout 20000 --exit",
     "coveralls": "nyc report --reporter=text-lcov| coveralls"
   },
@@ -43,6 +45,7 @@
     "@babel/register": "^7.4.4",
     "@babel/runtime": "^7.6.2",
     "@hapi/joi": "^16.1.7",
+    "@hapi/joi-date": "^2.0.1",
     "@sendgrid/mail": "^6.4.0",
     "babel-watch": "^7.0.0",
     "bcrypt": "^3.0.6",

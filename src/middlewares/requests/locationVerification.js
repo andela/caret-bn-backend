@@ -1,6 +1,6 @@
 import requestServices from '../../services/requestServices/index';
 
-const verify = async (res, id) => {
+const verify = async id => {
   const locationQuery = id => (
     {
       where: {
@@ -8,40 +8,33 @@ const verify = async (res, id) => {
       }
     }
   );
-
   const count = await requestServices.locations.countAll(locationQuery(id));
   if (count === 0) {
-    return res.status(400).json({
-      status: 400,
-      message: 'Location Does not exist on the system.'
-    });
+    return false;
   }
+  return true;
 };
 
 
-const originalLocationCheck = (res, destinations, locationId) => {
-  destinations.forEach(async destination => {
-    if (destination.locationId === locationId) {
-      return res.status(400).json({
-        status: 400,
-        message: 'You cannot travel to original location.'
-      });
+const originalLocationCheck = (destinations, locationId) => {
+  for (let counter = 0; counter < destinations.length; counter += 1) {
+    if (destinations[counter].locationId === locationId) {
+      return true;
     }
-  });
+  }
+  return false;
 };
 
 
-const twoPointVerificationCheck = (res, destinations) => {
-  destinations.forEach(async (destination, index) => {
-    if (index !== 0) {
-      if (destination.locationId === destinations[index - 1].locationId) {
-        return res.status(400).json({
-          status: 400,
-          message: 'You cannot travel to the same location.'
-        });
+const twoPointVerificationCheck = destinations => {
+  for (let counter = 0; counter < destinations.length; counter += 1) {
+    if (counter > 0) {
+      if (destinations[counter].locationId === destinations[counter - 1].locationId) {
+        return true;
       }
     }
-  });
+  }
+  return false;
 };
 
 

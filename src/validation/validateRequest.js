@@ -1,5 +1,6 @@
 import Joi from '@hapi/joi';
 
+
 const validateRequest = data => {
   let minimumItems = 1;
   let maximumItems = 30;
@@ -15,9 +16,15 @@ const validateRequest = data => {
     locationId: Joi.number().required(),
     typeId: Joi.number()
       .required(),
+    departureDate: Joi.date().greater('now').required(),
+    returnDate: Joi.date()
+      .when('typeId', {
+        is: 2,
+        then: Joi.required()
+      }).greater(Joi.ref('departureDate')),
     destinations: Joi.array()
       .items(Joi.object({
-        arrivalDate: Joi.date().greater('now').required(),
+        arrivalDate: Joi.date().greater(Joi.ref('....departureDate')).required(),
         departureDate: Joi.date().greater(Joi.ref('arrivalDate'))
           .when('....typeId', {
             not: 1,

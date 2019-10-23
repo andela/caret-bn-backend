@@ -3,7 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     typeId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     locationId: DataTypes.INTEGER,
-    statusId: DataTypes.INTEGER
+    statusId: DataTypes.INTEGER,
+    departureDate: DataTypes.DATE,
+    returnDate: DataTypes.DATE,
   }, {});
   // eslint-disable-next-line func-names
   requests.associate = function (models) {

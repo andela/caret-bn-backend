@@ -1,8 +1,5 @@
 import models from '../../database/models';
 
-const findOne = (query, scope = null) => models.destinations.scope(scope)
-  .findOne(query).then(destination => destination);
-
 const createDestination = async ({
   arrivalDate, departureDate,
   reasons, isFinal,
@@ -23,5 +20,5 @@ const createDestination = async ({
 };
 
 module.exports = {
-  createDestination, findOne
+  createDestination
 };
