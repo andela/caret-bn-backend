@@ -8,6 +8,13 @@ const checkSupplierRole = (req, res, next) => {
   }
   return next();
 };
+const checkBookingRole = (req, res, next) => {
+  const { role } = req.user.payload;
+  if (role === 5) {
+    return responseError(res, 403, strings.users.error.NOT_ALLOWED);
+  }
+  return next();
+};
 
 const supplierNotAllowed = (req, res, next) => {
   const { role } = req.user.payload;
@@ -25,4 +32,6 @@ const checkManagerRole = (req, res, next) => {
   return next();
 };
 
-export default { checkSupplierRole, checkManagerRole, supplierNotAllowed };
+export default {
+  checkSupplierRole, checkManagerRole, checkBookingRole, supplierNotAllowed
+};

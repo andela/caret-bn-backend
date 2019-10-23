@@ -14,7 +14,7 @@ const strings = {
     },
     error: {
       BAD_SIGNUP_REQUEST: 'Input Error please check error!',
-      ANAUTHORIZED: 'you are not authorized to access this endpoint',
+      ANAUTHORIZED: 'you are not authorized to access this page',
       EXPERED: 'Token expired request a new one',
       ROLE_NOTFOUND: 'role not found',
       ROLE_ALREADY_IN: 'role already exist',
@@ -37,6 +37,7 @@ const strings = {
       USER_SAME_EMAIL: 'this email is not for this token',
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
+      NOT_ALLOWED: 'Access denied! a supplier can not access this part of the system!',
     },
   },
   token: {
@@ -49,9 +50,17 @@ const strings = {
       NO_INFO_YET: 'You have not added any accommodation facilities yet!',
       NO_ACCOMMODATION: 'No accommodatin facilities were found',
       RETRIEVED: 'Accommodation facilities are retrieved successfully!',
+      FOUND: 'all available accommodation',
+      BOOKED_FOUND: 'Your bookings',
+      SUCCESSFUL_BOOKED: 'Booking done successfully'
     },
     error: {
       EXISTING: 'This accommodation already exists!',
+      NOT_AVAILABLE: 'There is no space available in accommodation',
+      ALREADY_BOOKED: 'you have already booked this accommodation',
+      DATE_ERROR: 'checkout date must not be less than checkin date',
+      INVALID_DATE: 'CheckOut and CheckIn must not be outdate dates',
+      EXCEED_NUMBER: 'roomsNumber exceed number of available rooms',
     }
   },
   images: {

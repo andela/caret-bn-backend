@@ -16,7 +16,7 @@ module.exports = {
           model: { tableName: 'locations', }, key: 'id',
         }
       },
-      availableSpace: {type: Sequelize.STRING},
+      availableSpace: {type: Sequelize.INTEGER},
       cost: {type: Sequelize.INTEGER},
       currency: {type: Sequelize.STRING},
       highlights: {type: Sequelize.STRING},
