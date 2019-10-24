@@ -1,30 +1,27 @@
-const verify = destinations => {
-  let FinalFlag = false;
-  for (let counter = 0; counter < destinations.length; counter += 1) {
-    if (counter > 0) {
-      if (destinations[counter - 1].isFinal === true) {
-        return {
-          flagError: true,
-          flagMessage: 'You are already set the previous destination as your final.'
-        };
+const verify = destinations => new Promise(
+  (resolve, reject) => Promise.all(
+    destinations.map(destination => {
+      if (destination.isFinal === true) {
+        return true;
       }
+    })
+  ).then(res => {
+    const len = destinations.length;
+    const resultCount = res.filter(result => result === true);
+    if (resultCount.length === 0) {
+      reject(new Error('You need to set a destination as final.'));
+    } else if (destinations[len - 1].isFinal !== true) {
+      reject(new Error('You need to set your final destination as final.'));
+    } else if (resultCount.length > 1) {
+      reject(new Error('Cannot set multiple destinations as final.'));
+    } else {
+      resolve({
+        flagError: false,
+        flagMessage: ''
+      });
     }
-    FinalFlag = destinations[counter].isFinal;
-  }
-
-  if (!FinalFlag) {
-    return {
-      flagError: true,
-      flagMessage: 'You need to set a destination as final.'
-    };
-  }
-
-  return {
-    flagError: false,
-    flagMessage: ''
-  };
-};
-
+  })
+);
 
 module.exports = {
   verify

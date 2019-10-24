@@ -8,9 +8,7 @@ import validationErrorFormatter from '../../utils/validationErrorFormatter';
 import Utilities from '../../utils/index';
 
 export default async (req, res, next) => {
-
   const { body, user } = req;
-
   const {
     locationId, typeId, departureDate, returnDate, destinations
   } = body;
@@ -21,46 +19,47 @@ export default async (req, res, next) => {
     return validationErrorFormatter(res, error);
   }
 
-  const locationExists = await locationChecker.verify(locationId);
-  if (!locationExists) {
+  const result = await locationChecker.getLocationById(locationId);
+
+  if (!result) {
     return Utilities.responseHelper(
       res,
       Utilities.stringsHelper.validation.requests.locations.DOES_NOT_EXIST,
-      '',
+      null,
       400
     );
   }
 
-  /*  eslint-disable no-await-in-loop */
-  for (let counter = 0; counter < destinations.length; counter += 1) {
-    const locationExists = await locationChecker.verify(destinations[counter].locationId);
-    if (!locationExists) {
-      return Utilities.responseHelper(
-        res,
-        Utilities.stringsHelper.validation.requests.locations.DOES_NOT_EXIST,
-        '',
-        400
-      );
-    }
-  }
-
-  const originalLocation = locationChecker.originalLocationCheck(destinations, locationId);
-  if (originalLocation) {
+  try {
+    await Promise.resolve(locationChecker.verifyDestinations(destinations));
+  } catch (err) {
     return Utilities.responseHelper(
       res,
-      Utilities.stringsHelper.validation.requests.locations.TRAVEL_TO_ORIGIN,
-      '',
+      err.message,
+      null,
+      400
+    );
+  }
+
+  try {
+    await Promise.resolve(locationChecker.originalLocationCheck(destinations, locationId));
+  } catch (err) {
+    return Utilities.responseHelper(
+      res,
+      err.message,
+      null,
       400
     );
   }
 
 
-  const travellingToSameLocation = locationChecker.twoPointVerificationCheck(destinations);
-  if (travellingToSameLocation) {
+  try {
+    await Promise.resolve(locationChecker.twoPointVerificationCheck(destinations));
+  } catch (err) {
     return Utilities.responseHelper(
       res,
-      Utilities.stringsHelper.validation.requests.locations.TRAVEL_TO_SAME_LOCATION,
-      '',
+      err.message,
+      null,
       400
     );
   }
@@ -70,41 +69,54 @@ export default async (req, res, next) => {
     return Utilities.responseHelper(
       res,
       Utilities.stringsHelper.validation.requests.types.DOES_NOT_EXIST,
-      '',
+      null,
       400
     );
   }
 
-  const { invalidDates, datesErrorMessage } = datesVerification.verify(destinations);
-  if (invalidDates) {
+  const { validDates, datesErrorMessage } = await datesVerification.verify(destinations);
+  if (!validDates) {
     return Utilities.responseHelper(
       res,
       datesErrorMessage,
-      '',
+      null,
       400
     );
   }
 
-  const multipleBookingsMade = bookingsChecker.checkMultiple(destinations);
-  if (multipleBookingsMade) {
+  const { returnDatesError, returnDatesErrorMessage } = datesVerification.verifyDateSanity(body);
+  if (returnDatesError) {
     return Utilities.responseHelper(
       res,
-      Utilities.stringsHelper.validation.requests.bookings.MULTIPLE_BOOKINGS,
-      '',
+      returnDatesErrorMessage,
+      null,
       400
     );
   }
 
-  const { flagError, flagMessage } = destinationChecker.verify(destinations);
-
-  if (flagError) {
+  try {
+    await bookingsChecker.checkMultiple(destinations);
+  } catch (err) {
     return Utilities.responseHelper(
       res,
-      flagMessage,
-      '',
+      err.message,
+      null,
       400
     );
   }
+
+
+  try {
+    await destinationChecker.verify(destinations);
+  } catch (err) {
+    return Utilities.responseHelper(
+      res,
+      err.message,
+      null,
+      400
+    );
+  }
+
 
   const {
     dateVerificationError, dateVerificationMessage
@@ -114,10 +126,10 @@ export default async (req, res, next) => {
     return Utilities.responseHelper(
       res,
       dateVerificationMessage,
-      '',
+      null,
       400
     );
-  }
 
+  }
   next();
 };

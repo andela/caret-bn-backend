@@ -6,6 +6,7 @@ import loginTest from './loginTest.spec';
 import requestTest from './requestTests/index.spec'
 import accommodationTest from './accommodationTest.spec';
 import editDeleteAccommodationsTests from './editDeleteAccommodationsTests.spec';
+import adminTest from './adminTest.spec';
 
 describe('Default Tests', defaultTests);
 describe('Social Authentication Tests', authTests);
@@ -16,3 +17,5 @@ describe('Accommodation Tests', accommodationTest);
 describe('Setting Profile Test', profileTests);
 describe('Social Authentication Tests', loginTest);
 describe('Edit-Delete Accommodations Tests', editDeleteAccommodationsTests);
+describe('Social Authentication Tests', loginTest);
+describe('Admin routes test', adminTest);

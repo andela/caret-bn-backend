@@ -6,6 +6,7 @@ import responseHelper from './responseHelper';
 import tokenHelper from './generateToken';
 import strategyQueries from './passport/strategyQueries';
 import userQueries from './db/queries/userQueries';
+import requestQueries from './db/queries/requestQueries';
 
 module.exports = {
   keys,
@@ -15,5 +16,6 @@ module.exports = {
   responseHelper,
   tokenHelper,
   strategyQueries,
-  userQueries
+  userQueries,
+  requestQueries,
 };

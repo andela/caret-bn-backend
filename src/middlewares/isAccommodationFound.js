@@ -20,13 +20,13 @@ const isAccommodationFound = (req, res, next) => {
     }
     const {
       // eslint-disable-next-line max-len
-      id, name, description, location, availableSpace, cost, highlights, amenities, owner, images, createdAt, updatedAt
+      id, name, description, locationId, availableSpace, cost, currency, highlights, amenities, owner, images, createdAt, updatedAt
     } = accommodation;
     let { ownerUser } = accommodation;
     ownerUser = { id: ownerUser.id, username: ownerUser.username, email: ownerUser.email };
     const accommodationData = {
       // eslint-disable-next-line max-len
-      id, name, description, location, availableSpace, cost, highlights, amenities, owner, images, createdAt, updatedAt, ownerUser
+      id, name, description, locationId, availableSpace, cost, currency, highlights, amenities, owner, images, createdAt, updatedAt, ownerUser
     };
     req.accommodation = accommodationData;
     return next();

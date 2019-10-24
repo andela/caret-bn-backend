@@ -87,7 +87,7 @@ describe('Request Tests', () => {
             .set('Authorization', `Bearer ${authToken}`)
             .end((err, res) => {
                 expect(res.status).to.be.eql(400, 'Incorrect Status Code Being Returned');
-                expect(res.body.message).to.be.eql('You are already set the previous destination as your final.', 'Incorrect Message Being Returned');
+                expect(res.body.message).to.be.eql('Cannot set multiple destinations as final.', 'Incorrect Message Being Returned');
                 done();
             })
             .timeout(4000);

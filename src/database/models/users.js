@@ -5,6 +5,7 @@ module.exports = (sequelize, Datatypes) => {
     googleId: Datatypes.STRING,
     facebookId: Datatypes.STRING,
     password: Datatypes.STRING,
+    role: Datatypes.INTEGER,
     phone: Datatypes.STRING,
     gender: Datatypes.STRING,
     dob: Datatypes.DATE,
@@ -13,11 +14,12 @@ module.exports = (sequelize, Datatypes) => {
     currency: Datatypes.STRING,
     company: Datatypes.STRING,
     department: Datatypes.STRING,
+    lineManager: Datatypes.INTEGER,
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
     },
-    role: Datatypes.STRING
+    role: Datatypes.INTEGER
   }, {
     scopes: {
       responseScope: {
@@ -33,6 +35,11 @@ module.exports = (sequelize, Datatypes) => {
     Users.hasMany(models.requests, {
       targetKey: 'userId',
       sourceKey: 'id'
+    });
+    Users.belongsTo(models.Role, {
+      as: 'Role',
+      foreignKey: 'role',
+      targetKey: 'id',
     });
   };
   return Users;

@@ -17,7 +17,8 @@
     "test:requests": "npm run rollback && npm run migrate && npm run seed &&  npm run request-suite",
     "request-suite": "NODE_ENV=test nyc --reporter=html --reporter=text mocha src/tests/requestTests/index.spec.js --require @babel/register --timeout 20000 --exit",
     "test-suite": "NODE_ENV=test nyc --reporter=html --reporter=text mocha src/tests/index.spec.js --require @babel/register --timeout 20000 --exit",
-    "coveralls": "nyc report --reporter=text-lcov| coveralls"
+    "coveralls": "nyc report --reporter=text-lcov| coveralls",
+    "build": "babel ./src --out-dir dist --source-maps --watch"
   },
   "nyc": {
     "exclude": [
@@ -29,8 +30,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test && npm run lint",
-      "pre-push": "npm test && npm run lint"
+      "pre-commit": "npm run lint && npm test",
+      "pre-push": "npm run lint && npm test"
     }
   },
   "author": "Andela Simulations Programme",
@@ -71,6 +72,7 @@
     "morgan": "^1.9.1",
     "nconf": "^0.10.0",
     "nyc": "^14.1.1",
+    "p-iteration": "^1.1.8",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-facebook-token": "^3.3.0",

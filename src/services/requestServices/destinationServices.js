@@ -15,6 +15,11 @@ const createDestination = async ({
     locationId,
     bookingId,
     requestId
+  }, {
+    include: [{
+      model: models.locations,
+      as: 'location'
+    }]
   });
   return destination;
 };

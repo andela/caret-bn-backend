@@ -102,6 +102,7 @@ pgdata
 
 # Build files
 build
+dist
 # VSCode
 .DS_Store
 .vscode/

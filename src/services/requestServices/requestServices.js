@@ -1,5 +1,8 @@
 import models from '../../database/models';
 
+const findOne = (query, scope = null) => models.requests.scope(scope)
+  .findOne(query).then(user => user);
+
 const createRequest = async ({
   typeId, locationId, departureDate, returnDate
 }, userId) => {
@@ -17,5 +20,5 @@ const createRequest = async ({
 };
 
 module.exports = {
-  createRequest
+  createRequest, findOne
 };

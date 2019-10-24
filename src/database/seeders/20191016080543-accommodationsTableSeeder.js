@@ -6,12 +6,13 @@ module.exports = {
       {
         name: 'Isimbi Hotel',
         description: 'Lorem Ipsum',
-        location: 1,
+        locationId: 1,
         availableSpace: '25',
         cost: 100,
+        currency: 'USD',
         highlights: 'Lorem Ipsum',
         amenities: 'Lorem Ipasum',
-        owner: 2,
+        owner: 4,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8luasp8j.png"',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -19,12 +20,13 @@ module.exports = {
       {
         name: 'El Gorillaz',
         description: 'Kampolama',
-        location: 4,
+        locationId: 4,
         availableSpace: '35',
         cost: 50,
+        currency: 'USD',
         highlights: 'Kampolama',
         amenities: 'Kampolama',
-        owner: 2,
+        owner: 4,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8laspg8j.png"',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -32,9 +34,10 @@ module.exports = {
       {
         name: 'Moto Ni Moto Inn',
         description: 'BoneFire Camp',
-        location: 3,
+        locationId: 3,
         availableSpace: '20',
         cost: 50,
+        currency: 'USD',
         highlights: 'BoneFire Camp',
         amenities: 'BoneFire Camp',
         owner: 3,

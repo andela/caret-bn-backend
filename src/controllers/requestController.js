@@ -26,9 +26,21 @@ export default class requestController {
     );
   }
 
+  static async findOne(req, res) {
+    const { id } = req.params;
+    const { user } = req;
+    const query = Utilities.requestQueries.singleRequest(id, user.payload.id);
+    const request = await requestServices.findOne(query);
+    return Utilities.responseHelper(
+      res,
+      Utilities.stringsHelper.user.requests.SUCCESSFULLY_RETRIEVED_REQUESTS,
+      request,
+      200
+    );
+  }
 
   static async storeRequest({ body, user }, res) {
     const request = await requestServices.createRequest(body, user.payload.id);
-    return destinationController.storeDestination(res, body, request);
+    return destinationController.storeDestination(res, body, user, request);
   }
 }

@@ -1,43 +1,69 @@
+/* eslint-disable no-else-return */
+/* eslint-disable  implicit-arrow-linebreak */
 import requestServices from '../../services/requestServices/index';
 
-const verify = async id => {
-  const locationQuery = id => (
-    {
-      where: {
-        id
-      }
+const getLocationById = id => {
+  const query = {
+    where: {
+      id
     }
-  );
-  const count = await requestServices.locations.countAll(locationQuery(id));
-  if (count === 0) {
-    return false;
-  }
-  return true;
+  };
+  return requestServices.locations.findOne(query).then(result => result);
 };
 
-
-const originalLocationCheck = (destinations, locationId) => {
-  for (let counter = 0; counter < destinations.length; counter += 1) {
-    if (destinations[counter].locationId === locationId) {
+const verifyDestinations = destinations => new Promise(
+  (resolve, reject) => Promise.all(destinations.map(async destination => {
+    const location = await Promise.resolve(getLocationById(destination.locationId));
+    if (!location) {
+      return false;
+    } else {
       return true;
     }
-  }
-  return false;
-};
-
-
-const twoPointVerificationCheck = destinations => {
-  for (let counter = 0; counter < destinations.length; counter += 1) {
-    if (counter > 0) {
-      if (destinations[counter].locationId === destinations[counter - 1].locationId) {
-        return true;
-      }
+  })).then(res => {
+    const resultCount = res.filter(result => result === false);
+    if (resultCount.length === 0) {
+      resolve();
+    } else {
+      reject(new Error('Location does not exist on the system.'));
     }
-  }
-  return false;
-};
+  })
+);
 
+const originalLocationCheck = (destinations, locationId) =>
+  new Promise((resolve, reject) => Promise.all(destinations.map(async destination => {
+    if (destination.locationId === locationId) {
+      return true;
+    } else {
+      return false;
+    }
+  })).then(res => {
+    const resultCount = res.filter(result => result === true);
+    if (resultCount.length === 0) {
+      resolve(true);
+    } else {
+      reject(new Error('Cannot travel to the same location.'));
+    }
+  }));
+
+const twoPointVerificationCheck = destinations =>
+  new Promise((resolve, reject) =>
+    Promise.all(destinations.map(async (destination, index) => {
+      if (index > 0) {
+        if (destination.locationId === destinations[index - 1].locationId) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    })).then(res => {
+      const resultCount = res.filter(result => result === true);
+      if (resultCount.length === 0) {
+        resolve(true);
+      } else {
+        reject(new Error('Cannot travel to the same location.'));
+      }
+    }));
 
 module.exports = {
-  verify, twoPointVerificationCheck, originalLocationCheck
+  verifyDestinations, twoPointVerificationCheck, originalLocationCheck, getLocationById
 };

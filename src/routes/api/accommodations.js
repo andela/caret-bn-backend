@@ -14,7 +14,6 @@ const multipartMiddleware = multipart();
 
 const {
   createAccommodation,
-  getMyAccommodations,
   getAllAccommodations,
   editAccommodation,
   deleteAccommodation
@@ -23,13 +22,81 @@ const {
 const {
   validateAddNew, validateImage, validateExistence, validateAccommodationEdit
 } = InputValidation;
-const { checkAdminRole, checkSupplierRole } = checkRole;
+const { checkSupplierRole } = checkRole;
 
-router.post('/', validateToken, checkSupplierRole, multipartMiddleware, validateAddNew, validateExistence, validateImage, createAccommodation);
-router.get('/myAccommodations', validateToken, getMyAccommodations);
-router.get('/allAccommodations', validateToken, checkAdminRole, getAllAccommodations);
-
-
+/**
+ * @swagger
+ * definitions:
+ *   createAccommodation:
+ *     type: object
+ *     properties:
+ *       name:
+ *         type: string
+ *         example: Muhabura Resort
+ *       description:
+ *         type: string
+ *         example: Lorem Ipsum
+ *       locationId:
+ *         type: integer
+ *         example: 2
+ *       availableSpace:
+ *         type: string
+ *         example: 20
+ *       cost:
+ *         type: integer
+ *         example: 1000
+ *       currency:
+ *         type: string
+ *         example: USD
+ *       highlights:
+ *         type: string
+ *         example: Lorem Ipsum
+ *       amenities:
+ *         type: string
+ *         example: Lorem Ipsum
+ *       image:
+ *         type: string
+ *         example: src/tests/mockData/AI.png
+ */
+/**
+ * @swagger
+ * /accommodations:
+ *   post:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Accommodations
+ *     name: Create an Accommodation
+ *     summary: Create an Accommodation
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         schema:
+ *          $ref: '#/definitions/createAccommodation'
+ *     responses:
+ *       '201':
+ *         description: New accommodation facility added successfully!
+*/
+/**
+ * @swagger
+ * /accommodations:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Accommodations
+ *     name: Get all Accommodations
+ *     summary: Get all Accommodations
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       '200':
+ *         description: Accommodation facilities are retrieved successfully!!
+*/
 /**
  * @swagger
  * definitions:
@@ -118,6 +185,9 @@ router.get('/allAccommodations', validateToken, checkAdminRole, getAllAccommodat
  *       '404':
  *         description: Accommodation Not Found!
  */
+
+router.post('/', validateToken, checkSupplierRole, catchEmptyForm, multipartMiddleware, validateAddNew, validateExistence, validateImage, createAccommodation);
+router.get('/', validateToken, getAllAccommodations);
 router.patch('/:id/edit', validateToken, checkId, catchEmptyForm, multipartMiddleware, isAccommodationFound, isOwner, validateAccommodationEdit, editAccommodation);
 router.delete('/:id/delete', validateToken, checkId, isAccommodationFound, isOwner, deleteAccommodation);
 

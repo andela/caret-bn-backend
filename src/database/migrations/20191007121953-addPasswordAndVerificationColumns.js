@@ -11,9 +11,9 @@ module.exports = {
       defaultValue: false
     }, { transaction: t }),
     queryInterface.addColumn('users', 'role', {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
       allowNull: false,
-      defaultValue: 'requester'
+      defaultValue: 6
     }, { transaction: t })
   ])),
 
