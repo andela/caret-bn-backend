@@ -35,7 +35,7 @@ const strings = {
       ACCESS_TOKEN_NEEDED: 'Access token is needed',
       INVALID_INPUT: 'Please provide valid inputs!',
       USER_SAME_EMAIL: 'this email is not for this token',
-      NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!'
+      NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
     },
   },
   token: {
@@ -68,6 +68,14 @@ const strings = {
       NOT_OWNER: 'Oops! You are not the owner of this accommodation!',
       EMPTY_FORM: 'Oops! You have submitted an empty form! Make sure to add information to the form-data!',
     },
+  },
+  requests: {
+    APPROVED: 'Request approved successfully!',
+    REJECTED: 'Request rejected!',
+    NOT_FOUND: 'No request was found',
+    MANAGERS_ONLY: 'Unable to proceed! This is reserved for managers only',
+    SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
+
   },
   id: {
     error: {

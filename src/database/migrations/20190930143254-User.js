@@ -53,7 +53,8 @@ module.exports = {
     },
     lineManager:{
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: false,
+      defaultValue: 8
     },
     email: {
       type: Sequelize.STRING,

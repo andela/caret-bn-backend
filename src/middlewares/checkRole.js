@@ -9,4 +9,12 @@ const checkSupplierRole = (req, res, next) => {
   return next();
 };
 
-export default { checkSupplierRole };
+const checkManagerRole = (req, res, next) => {
+  const { role } = req.user.payload;
+  if (role !== 4) {
+    return responseError(res, 403, strings.requests.MANAGERS_ONLY);
+  }
+  return next();
+};
+
+export default { checkSupplierRole, checkManagerRole };

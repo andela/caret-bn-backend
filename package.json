@@ -16,7 +16,7 @@
     "test": "npm run rollback && npm run migrate && npm run seed &&  npm run test-suite",
     "test-suite": "NODE_ENV=test nyc --reporter=html --reporter=text mocha src/tests/index.spec.js --require @babel/register --timeout 20000 --exit",
     "coveralls": "nyc report --reporter=text-lcov| coveralls",
-    "build": "babel ./src --out-dir dist --source-maps --watch"
+    "localbuild": "babel ./src --out-dir dist --source-maps --watch"
   },
   "nyc": {
     "exclude": [

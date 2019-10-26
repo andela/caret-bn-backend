@@ -4,7 +4,7 @@ import responseError from '../utils/responseError';
 import strings from '../utils/stringsUtil';
 
 const validation = (req, res, schema, next) => {
-  const { error } = schema.validate(req.body, { abortEarly: false });
+  const { error } = schema.validate(req.body, req.params, { abortEarly: false });
   if (error) {
     const errorMessages = [];
     error.details.forEach(detail => {

@@ -14,7 +14,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 6
-    }, { transaction: t })
+    }, { transaction: t }),
   ])),
 
   down: queryInterface => queryInterface.sequelize.transaction(t => Promise.all([
