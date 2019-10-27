@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     highlights: DataTypes.STRING,
     amenities: DataTypes.STRING,
     owner: DataTypes.INTEGER,
-    images: DataTypes.JSONB
+    images: DataTypes.JSONB,
+    slug: DataTypes.STRING,
   }, { tableName: 'accommodations' });
   accommodations.associate = models => {
     // associations can be defined here

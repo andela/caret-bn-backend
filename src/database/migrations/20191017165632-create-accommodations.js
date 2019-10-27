@@ -23,6 +23,7 @@ module.exports = {
       amenities: { type: Sequelize.STRING},
       owner: {type: Sequelize.INTEGER},
       images: {type: Sequelize.JSONB},
+      slug: {type: Sequelize.STRING},
       createdAt: {allowNull: false,type: Sequelize.DATEONLY},
       updatedAt: {allowNull: false,type: Sequelize.DATEONLY}
     });

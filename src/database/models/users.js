@@ -8,7 +8,7 @@ module.exports = (sequelize, Datatypes) => {
     role: Datatypes.INTEGER,
     phone: Datatypes.STRING,
     gender: Datatypes.STRING,
-    dob: Datatypes.DATE,
+    dob: Datatypes.DATEONLY,
     country: Datatypes.STRING,
     language: Datatypes.STRING,
     currency: Datatypes.STRING,
