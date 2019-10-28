@@ -9,6 +9,7 @@ import checkUserIdField from '../../middlewares/checkUserIdField';
 import managerUserIdField from '../../middlewares/managerUserIdField';
 import catchSearchQueries from '../../middlewares/catchSearchQueries';
 import pendingRequest from '../../middlewares/request';
+import isProcessed from '../../middlewares/isProcessed';
 
 const router = new Router();
 const {

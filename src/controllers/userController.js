@@ -154,4 +154,22 @@ export default class UserController {
     };
     return responseUtil(res, 200, strings.users.success.SUCCESSFUL_LOGIN, userInfo);
   }
+
+  static async switchEmailNotif(req, res) {
+    const { id } = req.user.payload;
+    const { emailNotif } = await models.users.findOne({ where: { id } });
+
+    const user = await models.users.update(
+      { emailNotif: !emailNotif },
+      {
+        where: {
+          id,
+        },
+        returning: true,
+      }
+    );
+
+    const status = (user[1][0].dataValues.emailNotif) ? 'Activated' : 'Deactivated';
+    return responseUtil(res, 200, `Email Notifcation ${status}`);
+  }
 }

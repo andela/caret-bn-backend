@@ -92,11 +92,17 @@ const strings = {
       EMPTY_FORM: 'Oops! You have submitted an empty form! Make sure to add information to the form-data!',
     },
   },
+  notifications: {
+    NOTIF_FOUND: 'Your Notifications',
+    NOTIF_NOT_FOUND: 'No Notifications Found',
+  },
   requests: {
     APPROVED: 'Request approved successfully!',
     REJECTED: 'Request rejected!',
     NOT_FOUND: 'No request was found',
     MANAGERS_ONLY: 'Unable to proceed! This is reserved for managers only',
+    RESQUEST_ALREADY_APPROVED: 'This request has already been approved!',
+    RESQUEST_ALREADY_REJECTED: 'This request has already been rejected!',
     SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
   },
   id: {

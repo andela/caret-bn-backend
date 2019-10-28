@@ -104,6 +104,17 @@ describe('Request Tests', () => {
         });
     });
 
+    it('Should not approve a request twice', (done) => {
+        chai.request(app)
+        .patch('/api/v1/requests/manager/approve/1')
+        .set('Authorization', `Bearer ${managerToken}`)
+        .end((err, res) => {
+            const { status } = res;
+            expect(status).to.be.eql(400);
+            done();
+        });
+    });
+
     it('Should reject a request', (done) => {
         chai.request(app)
         .patch('/api/v1/requests/manager/reject/1')
@@ -114,6 +125,18 @@ describe('Request Tests', () => {
             done();
         });
     });
+
+    it('Should not reject a request twice', (done) => {
+        chai.request(app)
+        .patch('/api/v1/requests/manager/reject/1')
+        .set('Authorization', `Bearer ${managerToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(400);
+            done();
+        });
+    });
+
     it('Should return an error on an incorrect id format', (done) => {
         chai.request(app)
         .patch('/api/v1/requests/manager/reject/wrongFormat')

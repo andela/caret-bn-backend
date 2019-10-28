@@ -11,6 +11,7 @@ const generateToken = user => {
         isVerified: user.isVerified,
         email: user.email,
         role: user.role,
+        lineManager: user.lineManager,
       },
     },
     process.env.JWT_SECRET,
