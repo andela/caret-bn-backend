@@ -168,19 +168,15 @@ export default class InputValidation {
     if (data.typeId === 1 || data.typeId === 2) {
       maximumItems = 1;
     }
+
     if (data.typeId === 3) {
       minimumItems = 2;
     }
+
     const schema = Joi.object({
-      locationId: Joi.number().required(),
-      typeId: Joi.number()
-        .required(),
+      locationId: Joi.number(),
       departureDate: Joi.date().greater('now'),
-      returnDate: Joi.date()
-        .when('typeId', {
-          is: 2,
-          then: Joi.required()
-        }).greater(Joi.ref('departureDate')),
+      returnDate: Joi.date().greater(Joi.ref('departureDate')),
       destinations: Joi.array()
         .items(Joi.object({
           arrivalDate: Joi.date().greater(Joi.ref('....departureDate')),

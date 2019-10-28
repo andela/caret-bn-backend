@@ -77,7 +77,6 @@ describe('Profile Test Suite', () => {
            .get(`/api/v1/users/profile/${newEmail}`)
            .set('Authorization', `Bearer ${token}`)
            .end((err, res) => {
-               console.log(res.body)
                res.should.have.status(400);
                done();
            });

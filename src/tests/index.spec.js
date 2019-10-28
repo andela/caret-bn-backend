@@ -3,6 +3,8 @@ import defaultTests from './defaultTests.spec'
 import signupTests from './signupTest.spec'
 import profileTests from './profile.spec'
 import loginTest from './loginTest.spec';
+import requestTest from './requestTests/index.spec'
+import requestTests from './requestTests.spec'
 import accommodationTest from './accommodationTest.spec';
 import editRequest from './editRequest.spec';
 import editDeleteAccommodationsTests from './editDeleteAccommodationsTests.spec';
@@ -18,6 +20,8 @@ describe('Login Tests', loginTest);
 describe('Accommodation Tests', accommodationTest);
 describe('Setting Profile Test', profileTests);
 describe('Social Authentication Tests', loginTest);
+describe('Request Test', requestTest);
+describe('Requests-Tests', requestTests);
 describe('Edit-Delete Accommodations Tests', editDeleteAccommodationsTests);
 describe('Social Authentication Tests', loginTest);
 describe('Admin routes test', adminTest);

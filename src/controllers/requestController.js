@@ -13,7 +13,6 @@ import Utilities from '../utils/index';
 import findRequests from '../helpers/findRequests';
 
 const { Op } = Sequelize;
-const { requests } = models;
 
 const {
   APPROVED, REJECTED, SUCCESSFULLY_RETRIEVED_REQUESTS
@@ -99,24 +98,7 @@ export default class requestController {
           },
         });
       });
-      const request = await requests.findOne({
-        where: { id },
-        include: [{
-          model: models.tripTypes, attribute: ['name'], as: 'type', attributes: ['id', 'name']
-        },
-        {
-          model: models.destinations,
-          attributes: ['arrivalDate', 'departureDate', 'reasons', 'isFinal', 'bookingId'],
-          include: [{
-            model: models.locations,
-            as: 'location',
-            attributes: ['id', 'name', 'country']
-          },
-          ],
-          required: true
-        }
-        ],
-      });
+      const request = await allSearch({ id });
       return responseUtil(res, 200, strings.request.success.SUCCESS_UPDATE_REQUEST, request);
     } catch (error) {
       return res.status(500).json({ error: 'Something wrong' });

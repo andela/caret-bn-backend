@@ -36,7 +36,7 @@ const strings = {
       INVALID_INPUT: 'Please provide valid inputs!',
       USER_SAME_EMAIL: 'this email is not for this token',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
-      NO_PENDED_REQUEST: 'you have no pending request',
+      NO_PENDED_REQUEST: 'Access denied! you have no pending request',
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!'
     },
   },
@@ -46,7 +46,8 @@ const strings = {
     },
     error: {
       INTERNAL_ERROR: 'Internal server error',
-      EDIT_YOUR_REQUEST: 'you need to edit your request',
+      EDIT_YOUR_REQUEST: 'Access denied! you are not the owner of this request',
+      NO_REQUEST: 'Access denied! You have no request to edit',
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
       NOT_ALLOWED: 'Access denied! a supplier can not access this part of the system!',
