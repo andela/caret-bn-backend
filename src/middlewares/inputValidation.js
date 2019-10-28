@@ -159,4 +159,42 @@ export default class InputValidation {
     });
     validation(req, res, schema, next);
   }
+
+  static validateRequest(req, res, next) {
+    const data = req.body;
+    let minimumItems = 1;
+    let maximumItems = 30;
+
+    if (data.typeId === 1 || data.typeId === 2) {
+      maximumItems = 1;
+    }
+    if (data.typeId === 3) {
+      minimumItems = 2;
+    }
+    const schema = Joi.object({
+      locationId: Joi.number().required(),
+      typeId: Joi.number()
+        .required(),
+      departureDate: Joi.date().greater('now'),
+      returnDate: Joi.date()
+        .when('typeId', {
+          is: 2,
+          then: Joi.required()
+        }).greater(Joi.ref('departureDate')),
+      destinations: Joi.array()
+        .items(Joi.object({
+          arrivalDate: Joi.date().greater(Joi.ref('....departureDate')),
+          departureDate: Joi.date().greater(Joi.ref('arrivalDate')),
+          reasons: Joi.string().trim(true),
+          isFinal: Joi.boolean(),
+          id: Joi.number(),
+          bookingId: Joi.number(),
+          locationId: Joi.number(),
+        }))
+        .min(minimumItems)
+        .max(maximumItems)
+        .required(),
+    });
+    validation(req, res, schema, next);
+  }
 }
