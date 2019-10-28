@@ -94,6 +94,16 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      username: 'anotherManager',
+      email: 'anothermanager@caretbn.com',
+      password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
+      isVerified: true,
+      lineManager: 8,
+      role: 4,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
   ])
   ]),
 

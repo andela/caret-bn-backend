@@ -4,6 +4,7 @@ import text from '../utils/strings';
 import responseHelper from '../utils/responseHelper';
 import responseUtil from '../utils/responseUtil';
 import userServices from '../services/userServices';
+import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
 import findRequests from '../helpers/findRequests';
 
@@ -11,6 +12,8 @@ const {
   APPROVED, REJECTED, SUCCESSFULLY_RETRIEVED_REQUESTS
 } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
+
+const { allSearch } = searchRequestsServices;
 
 export default class requestController {
 
@@ -73,5 +76,25 @@ export default class requestController {
     }
     return responseHelper(res, strings.user.requests.NOT_FOUND, null, 404);
 
+  }
+
+  static async searchRequests(req, res) {
+    const requests = await allSearch(req.body);
+
+    if (!requests.length) {
+      return Utilities.responseHelper(
+        res,
+        Utilities.stringsHelper.user.requests.NO_REQUESTS,
+        requests,
+        404
+      );
+    }
+
+    return Utilities.responseHelper(
+      res,
+      Utilities.stringsHelper.user.requests.SUCCESSFULLY_FOUND_REQUESTS,
+      requests,
+      200
+    );
   }
 }

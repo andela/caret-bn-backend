@@ -11,5 +11,6 @@ const mockData = {
   missingFields: { email: '', password: '' },
   supplier:{email: 'supplier@caretbn.com', password: 'Pa55w0rd'},
   manager:{email: 'manager@caretbn.com', password: 'Pa55w0rd'},
+  anotherManager:{email: 'anothermanager@caretbn.com', password: 'Pa55w0rd'},
 };
 export default mockData;

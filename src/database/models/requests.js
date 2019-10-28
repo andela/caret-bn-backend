@@ -3,11 +3,17 @@ module.exports = (sequelize, DataTypes) => {
     typeId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     locationId: DataTypes.INTEGER,
-    statusId: DataTypes.INTEGER
+    statusId: DataTypes.INTEGER,
+    departureDate: DataTypes.DATEONLY,
+    returnDate: DataTypes.DATEONLY,
   }, {});
   // eslint-disable-next-line func-names
   requests.associate = function (models) {
     // associations can be defined here
+    requests.belongsTo(models.users, {
+      as: 'requester',
+      foreignKey: 'userId',
+    });
     requests.belongsTo(models.tripTypes, {
       as: 'type',
       foreignKey: 'typeId',

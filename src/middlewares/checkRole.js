@@ -9,6 +9,14 @@ const checkSupplierRole = (req, res, next) => {
   return next();
 };
 
+const supplierNotAllowed = (req, res, next) => {
+  const { role } = req.user.payload;
+  if (role === 5) {
+    return responseError(res, 403, strings.users.error.SUPPLIER_NOT_ALLOWED);
+  }
+  return next();
+};
+
 const checkManagerRole = (req, res, next) => {
   const { role } = req.user.payload;
   if (role !== 4) {
@@ -17,4 +25,4 @@ const checkManagerRole = (req, res, next) => {
   return next();
 };
 
-export default { checkSupplierRole, checkManagerRole };
+export default { checkSupplierRole, checkManagerRole, supplierNotAllowed };

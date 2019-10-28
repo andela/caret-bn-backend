@@ -63,6 +63,7 @@ describe('Accommodations Tests', () => {
       });
   });
 
+
   it('Should update an existing accommodation with multiple images by returning 200 status code', done => {
     chai.request(app)
       .patch('/api/v1/accommodations/1/edit')

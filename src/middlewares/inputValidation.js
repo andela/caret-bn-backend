@@ -112,4 +112,41 @@ export default class InputValidation {
     });
     validation(req, res, schema, next);
   }
+
+  static validateSearchRequestUser(req, res, next) {
+    const schema = Joi.object({
+      id: Joi.number().integer().min(1),
+      destination: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      origin: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      duration: Joi.number().integer().min(1),
+      departureDate: Joi.string()
+        .regex(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/)
+        .message('The date format should be "YYYY-MM-DD"'),
+      statusId: Joi.number().integer().min(1).max(3)
+        .message('1-Pending, 2-Rejected, 3-Approved'),
+      reasons: Joi.string().trim().min(3),
+    });
+    validation(req, res, schema, next);
+  }
+
+  static validateSearchRequestManager(req, res, next) {
+    const schema = Joi.object({
+      id: Joi.number().integer().min(1),
+      userId: Joi.number().integer().min(1),
+      destination: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      origin: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      duration: Joi.number().integer().min(1),
+      departureDate: Joi.string()
+        .regex(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/)
+        .message('The date format should be "YYYY-MM-DD"'),
+      statusId: Joi.number().integer().min(1).max(3)
+        .message('1-Pending, 2-Rejected, 3-Approved'),
+      reasons: Joi.string().trim().min(3),
+    });
+    validation(req, res, schema, next);
+  }
 }
