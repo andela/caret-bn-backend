@@ -18,6 +18,10 @@ module.exports = (sequelize, Datatypes) => {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
     },
+    emailNotif: {
+      type: Datatypes.BOOLEAN,
+      defaultValue: true,
+    },
     lineManager:{
       type: Datatypes.INTEGER,
       defaultValue: 8

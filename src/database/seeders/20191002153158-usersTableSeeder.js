@@ -10,12 +10,14 @@ module.exports = {
         isVerified: false,
         lineManager: 8,
         role: 6,
+        emailNotif: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
       username: 'admin',
       role: 1,
+      emailNotif: true,
       phone: '078567554',
       gender: 'male',
       dob: '2014-01-01 00:00:00+02',
@@ -40,6 +42,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 6,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -50,6 +53,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 5,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -61,6 +65,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 1,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -71,6 +76,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 6,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -81,6 +87,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 5,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -91,6 +98,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 4,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -101,6 +109,7 @@ module.exports = {
       isVerified: true,
       lineManager: 8,
       role: 4,
+      emailNotif: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },

@@ -9,11 +9,14 @@ import destinationController from './destinationController';
 import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
 import findRequests from '../helpers/findRequests';
+import notifServices from '../services/notifServices';
+import notifSender from '../helpers/notifSender';
 
 const {
   APPROVED, REJECTED, SUCCESSFULLY_RETRIEVED_REQUESTS
 } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
+const { notifSaver, notifBuilder } = notifServices;
 
 const { allSearch } = searchRequestsServices;
 
@@ -58,9 +61,19 @@ export default class requestController {
 
     const requestToApprove = findRequests(req);
 
-    if (requestToApprove) {
-      await models.requests.update({ statusId: 3 }, { where: { id } });
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
 
+    if (requestToApprove) {
+      let request = await models.requests.update(
+        { statusId: 3 },
+        { where: { id }, returning: true, }
+      );
+
+      request = request[1][0].dataValues;
+
+      const notification = await notifBuilder(request, request.userId, 'approved');
+      await notifSaver(notification);
+      await notifSender('Request Approved', request, request.userId, notification, APP_URL_BACKEND);
       return responseHelper(res, APPROVED, null, 200);
     }
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
@@ -71,8 +84,19 @@ export default class requestController {
 
     const requestToReject = findRequests(req);
 
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
+
     if (requestToReject) {
-      await models.requests.update({ statusId: 2 }, { where: { id } });
+      let request = await models.requests.update(
+        { statusId: 2 },
+        { where: { id }, returning: true, }
+      );
+
+      request = request[1][0].dataValues;
+
+      const notification = await notifBuilder(request, request.userId, 'rejected');
+      await notifSaver(notification);
+      await notifSender('Request Rejected', request, request.userId, notification, APP_URL_BACKEND);
 
       return responseHelper(res, REJECTED, null, 200);
     }
@@ -113,8 +137,9 @@ export default class requestController {
     );
   }
 
-  static async storeRequest({ body, user }, res) {
+  static async storeRequest(req, res) {
+    const { body, user } = req;
     const request = await requestServices.createRequest(body, user.payload.id);
-    return destinationController.storeDestination(res, body, user, request);
+    return destinationController.storeDestination(req, res, body, user, request);
   }
 }
