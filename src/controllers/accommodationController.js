@@ -1,4 +1,5 @@
 import cloudinary from 'cloudinary';
+import slugify from 'slugify';
 import models from '../database/models';
 import strings from '../utils/stringsUtil';
 import responseUtil from '../utils/responseUtil';
@@ -29,7 +30,8 @@ export default class AccommodationController {
       highlights,
       amenities,
       owner: req.user.payload.id,
-      images
+      images,
+      slug: slugify(name.toLowerCase())
     };
     try {
       const newAccommodation = await models.accommodations.create(accommodation);

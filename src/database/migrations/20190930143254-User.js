@@ -27,7 +27,7 @@ module.exports = {
       allowNull: true
     },
     dob: {
-      type: Sequelize.DATE,
+      type: Sequelize.DATEONLY,
       allowNull: true
     },
     country: {
@@ -69,8 +69,8 @@ module.exports = {
         }
       }
     },
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    createdAt: Sequelize.DATEONLY,
+    updatedAt: Sequelize.DATEONLY,
   }),
   down: queryInterface => queryInterface.dropTable('users')
 };
