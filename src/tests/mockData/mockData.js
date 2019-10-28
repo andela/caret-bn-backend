@@ -20,6 +20,8 @@ const mockData = {
   bookingdata5:{checkInDate:'2019-12-22',checkOutDate:'2019-12-30',roomsNumber:50,accomodationId:2},
   invalidBookingData:{checkInDate:'2019-12-22',checkOutDate:'',roomsNumber:3,accomodationId:3},
   invalidBookingDate:{checkInDate:'2019-12-22',checkOutDate:'2019-12-20',roomsNumber:3,accomodationId:3},
-  OutdateBookingDate:{checkInDate:'2019-02-22',checkOutDate:'2019-02-25',roomsNumber:3,accomodationId:3}
+  OutdateBookingDate:{checkInDate:'2019-02-22',checkOutDate:'2019-02-25',roomsNumber:3,accomodationId:3},
+  travelAdmin:{email: 'travelAdmin@caretbn.com', password: 'Pa55w0rd'},
+  activationInfo: {reasons: 'This is a valid reason to take action on your accommodation'},
 };
 export default mockData;

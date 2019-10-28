@@ -12,29 +12,12 @@ let userToken;
 let requesterToken;
 let adminToken;
 let supplierToken;
+let travelAdminToken;
+let slug;
 
 let invalidToken = 'wdsfwsadwsadsadsqa';
 // it should not book an accommodation with supplier Token:
 describe('Accommodation Test', () => {
-    before((done) => {
-        chai.request(app)
-          .post('/api/v1/users/login')
-          .send(mockData.supplier)
-          .end((err, res) => {
-            supplierToken = res.body.data.token;
-            done();
-          });
-      });
-      it('it should tell the user that they have not created accommodations yet', done => {
-        chai.request(app)
-          .get('/api/v1/accommodations')
-          .set('Authorization', `Bearer ${supplierToken}`)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.have.property('message').eql(strings.accommodation.success.NO_INFO_YET)
-            done();
-          });
-      });
       it('it should log in a supplier User', done => {
         chai.request(app)
         .post('/api/v1/users/login')
@@ -165,11 +148,19 @@ describe('Accommodation Test', () => {
   });
   it('it should return permission error', done => {
     chai.request(app)
-      .get('/api/v1/accommodations')
+      .get(`/api/v1/accommodations/admin/deactivated`)
       .set('Authorization', `Bearer ${requesterToken}`)
       .end((err, res) => {
         res.should.have.status(403);
-        res.body.should.have.property('message').eql(strings.users.error.NO_ACCESS)
+        done();
+      });
+  });
+  it('it should return a specific available accommodation', done => {
+    chai.request(app)
+      .get(`/api/v1/accommodations/${slug}`)
+      .set('Authorization', `Bearer ${requesterToken}`)
+      .end((err, res) => {
+        res.should.have.status(200);
         done();
       });
   });
@@ -198,16 +189,6 @@ describe('Accommodation Test', () => {
       .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
         res.should.have.status(200);
-        done();
-      });
-  });
-  it('it should get all available accommodation', done => {
-    chai.request(app)
-      .get('/api/v1/accommodations/available')
-      .set('Authorization', `Bearer ${supplierToken}`)
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property('message').eql('all available accommodation')
         done();
       });
   });
@@ -308,6 +289,17 @@ describe('Accommodation Test', () => {
                   });
                 });
                 
+                it('it should not book an accommodation with supplier Token', done => {
+                  chai.request(app)
+                    .patch('/api/v1/accommodations/book')
+                    .set('Authorization', `Bearer ${userToken}`)
+                    .send(mockData.bookingdata)
+                    .end((err, res) => {
+                      console.log(res.body);
+                      res.should.have.status(403);
+                      done();
+                    });
+                  });
                   it('it should get all bookings', done => {
                     chai.request(app)
                       .get('/api/v1/accommodations/bookings')
@@ -340,4 +332,81 @@ describe('Accommodation Test', () => {
                             done();
                           });
                         });         
+  it('it should log in a travel admin ', done => {
+    chai.request(app)
+    .post('/api/v1/users/login')
+    .send(mockData.travelAdmin)
+    .end((err, res) => {
+      travelAdminToken = res.body.data.token;
+      done();
+    });
+  });
+  it('it should create a new accommodation for travel admin successfully with a single image', done => {
+    chai.request(app)
+      .post('/api/v1/accommodations')
+      .set('Authorization', `Bearer ${travelAdminToken}`)
+      .field('name', 'test accommodation')
+      .field('description', 'description')
+      .field('locationId', '1')
+      .field('currency', 'USD')
+      .field('availableSpace', '5')
+      .field('cost', '500')
+      .field('highlights', 'Accommodation highlights')
+      .field('amenities', 'Accommodation amenities')
+      .attach('image', 'src/tests/mockData/AI.png')
+      .end((err, res) => {
+        slug = res.body.data.slug;
+        res.should.have.status(201);
+        done();
+      });
+  });
+  it('it should return a specific accommodation regardless of the available space', done => {
+    chai.request(app)
+      .get(`/api/v1/accommodations/${slug}`)
+      .set('Authorization', `Bearer ${travelAdminToken}`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+  it('it should deactivate an accommodation and send an email', done => {
+    chai.request(app)
+      .patch(`/api/v1/accommodations/activate/${slug}`)
+      .set('Authorization', `Bearer ${travelAdminToken}`)
+      .send(mockData.activationInfo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+  it('it should retrieve all deactivated accommodations', done => {
+    chai.request(app)
+      .get(`/api/v1/accommodations/admin/deactivated`)
+      .set('Authorization', `Bearer ${travelAdminToken}`)
+      .send(mockData.activationInfo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+  it('it should activate an accommodation and send an email', done => {
+    chai.request(app)
+      .patch(`/api/v1/accommodations/activate/${slug}`)
+      .set('Authorization', `Bearer ${travelAdminToken}`)
+      .send(mockData.activationInfo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
+  it('it should tell the user that no deactivated accommodations are found', done => {
+    chai.request(app)
+      .get(`/api/v1/accommodations/admin/deactivated`)
+      .set('Authorization', `Bearer ${travelAdminToken}`)
+      .send(mockData.activationInfo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        done();
+      });
+  });
 });

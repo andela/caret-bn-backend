@@ -14,6 +14,7 @@ module.exports = {
         amenities: 'Lorem Ipasum',
         owner: 4,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8luasp8j.png"',
+        slug: 'isimbi-hotel',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -28,6 +29,7 @@ module.exports = {
         amenities: 'Kampolama',
         owner: 4,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8laspg8j.png"',
+        slug: 'el-gorillaz',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -42,6 +44,7 @@ module.exports = {
         amenities: 'BoneFire Camp',
         owner: 3,
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/i2ro51fa8luaspg8j.png"',
+        slug: 'moto-ni-moto-inn',
         createdAt: new Date(),
         updatedAt: new Date()
       },

@@ -1,3 +1,4 @@
 exclude_patterns:
 - "src/tests/"
 - "src/database/"
+- "src/utils/stringsUtil.js"

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     owner: DataTypes.INTEGER,
     images: DataTypes.JSONB,
     slug: DataTypes.STRING,
+    isActivated: DataTypes.BOOLEAN,
   }, { tableName: 'accommodations' });
   accommodations.associate = models => {
     // associations can be defined here
