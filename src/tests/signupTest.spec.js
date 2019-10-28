@@ -165,7 +165,7 @@ describe('Signup Test Suite', () => {
       .send(testdata.wrongEmail)
       .end((err, res) => {
         res.should.have.property('status').eql(403);
-        res.body.should.have.property('message').eql('you are not authorized to access this endpoint');
+        res.body.should.have.property('message').eql('you are not authorized to access this page');
         done();
       });
   });
@@ -175,7 +175,7 @@ describe('Signup Test Suite', () => {
       .send(testdata.passwordData2)
       .end((err, res) => {
         res.should.have.property('status').eql(403);
-        res.body.should.have.property('message').eql('you are not authorized to access this endpoint');
+        res.body.should.have.property('message').eql('you are not authorized to access this page');
         done();
       });
   });

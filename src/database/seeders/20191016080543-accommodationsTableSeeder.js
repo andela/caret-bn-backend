@@ -45,6 +45,20 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        name: 'Marriot',
+        description: 'BoneFire Camp',
+        locationId: 3,
+        availableSpace: '0',
+        cost: 50,
+        currency: 'USD',
+        highlights: 'BoneFire Camp',
+        amenities: 'BoneFire Camp',
+        owner: 3,
+        images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/i2ro51fa8luaspg8j.png"',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
   ])
   ]),
 

@@ -104,7 +104,7 @@ it('Should  not asign role to user  with wrong Token', done => {
     .send(testdata.role)
     .end((err, res) => {
       res.should.have.property('status').eql(403);
-      res.body.should.have.property('message').eql('you are not authorized to access this endpoint');
+      res.body.should.have.property('message').eql('you are not authorized to access this page');
       done();
     });
 });

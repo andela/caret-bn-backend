@@ -149,4 +149,14 @@ export default class InputValidation {
     });
     validation(req, res, schema, next);
   }
+
+  static validateBooking(req, res, next) {
+    const schema = Joi.object({
+      checkInDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('checkInDate format must be YYYY-MM-DD').required(),
+      checkOutDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('checkOutDate format must be YYYY-MM-DD').required(),
+      accomodationId: Joi.number().integer().min(1).required(),
+      roomsNumber: Joi.number().integer().min(1).required(),
+    });
+    validation(req, res, schema, next);
+  }
 }
