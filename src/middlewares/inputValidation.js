@@ -4,7 +4,7 @@ import responseError from '../utils/responseError';
 import strings from '../utils/stringsUtil';
 
 const validation = (req, res, schema, next) => {
-  const { error } = schema.validate(req.body, { abortEarly: false });
+  const { error } = schema.validate(req.body, req.params, { abortEarly: false });
   if (error) {
     const errorMessages = [];
     error.details.forEach(detail => {
@@ -109,6 +109,53 @@ export default class InputValidation {
         .message('highlights should be at least 10 character and not more than 250 characters!'),
       amenities: Joi.string().min(10).max(250)
         .message('amenities should be at least 10 character and not more than 250 characters!'),
+    });
+    validation(req, res, schema, next);
+  }
+
+  static validateSearchRequestUser(req, res, next) {
+    const schema = Joi.object({
+      id: Joi.number().integer().min(1),
+      destination: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      origin: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      duration: Joi.number().integer().min(1),
+      departureDate: Joi.string()
+        .regex(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/)
+        .message('The date format should be "YYYY-MM-DD"'),
+      statusId: Joi.number().integer().min(1).max(3)
+        .message('1-Pending, 2-Rejected, 3-Approved'),
+      reasons: Joi.string().trim().min(3),
+    });
+    validation(req, res, schema, next);
+  }
+
+  static validateSearchRequestManager(req, res, next) {
+    const schema = Joi.object({
+      id: Joi.number().integer().min(1),
+      userId: Joi.number().integer().min(1),
+      destination: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      origin: Joi.number().integer().min(1)
+        .message('Enter the id of the location'),
+      duration: Joi.number().integer().min(1),
+      departureDate: Joi.string()
+        .regex(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/)
+        .message('The date format should be "YYYY-MM-DD"'),
+      statusId: Joi.number().integer().min(1).max(3)
+        .message('1-Pending, 2-Rejected, 3-Approved'),
+      reasons: Joi.string().trim().min(3),
+    });
+    validation(req, res, schema, next);
+  }
+
+  static validateBooking(req, res, next) {
+    const schema = Joi.object({
+      checkInDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('checkInDate format must be YYYY-MM-DD').required(),
+      checkOutDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('checkOutDate format must be YYYY-MM-DD').required(),
+      accomodationId: Joi.number().integer().min(1).required(),
+      roomsNumber: Joi.number().integer().min(1).required(),
     });
     validation(req, res, schema, next);
   }

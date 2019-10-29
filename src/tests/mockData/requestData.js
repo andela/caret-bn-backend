@@ -84,7 +84,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": true,
                 "locationId": 4,
-                "bookingId": 7
+                "bookingId": 2
             }
         ]
     },
@@ -102,7 +102,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": true,
                 "locationId": 3,
-                "bookingId": 7
+                "bookingId": 2
             }
         ]
     },
@@ -161,7 +161,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": false,
                 "locationId": 3,
-                "bookingId": 7
+                "bookingId": 2
             },
             {
                 "arrivalDate": "2020-02-01",
@@ -169,7 +169,7 @@ const requestData = {
                 "reasons": "Meeting with the democrats",
                 "isFinal": true,
                 "locationId": 6,
-                "bookingId": 6
+                "bookingId": 1
             }
         ]
     },
@@ -226,7 +226,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": false,
                 "locationId": 5,
-                "bookingId": 7
+                "bookingId": 2
             },
             {
                 "arrivalDate": "2020-02-01",
@@ -234,7 +234,7 @@ const requestData = {
                 "reasons": "Meeting with the democrats",
                 "isFinal": true,
                 "locationId": 6,
-                "bookingId": 6
+                "bookingId": 1
             }
         ]
     },
@@ -259,7 +259,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": true,
                 "locationId": 3,
-                "bookingId": 7
+                "bookingId": 2
             },
             {
                 "arrivalDate": "2020-02-01",
@@ -267,7 +267,7 @@ const requestData = {
                 "reasons": "Meeting with the democrats",
                 "isFinal": true,
                 "locationId": 6,
-                "bookingId": 6
+                "bookingId": 1
             }
         ]
     },
@@ -292,7 +292,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": false,
                 "locationId": 3,
-                "bookingId": 7
+                "bookingId": 2
             },
             {
                 "arrivalDate": "2020-02-01",
@@ -300,7 +300,7 @@ const requestData = {
                 "reasons": "Meeting with the democrats",
                 "isFinal": false,
                 "locationId": 6,
-                "bookingId": 6
+                "bookingId": 1
             }
         ]
     },
@@ -325,7 +325,7 @@ const requestData = {
                 "reasons": "Meeting with people",
                 "isFinal": false,
                 "locationId": 3,
-                "bookingId": 7
+                "bookingId": 2
             },
             {
                 "arrivalDate": "2020-01-29",
@@ -333,7 +333,7 @@ const requestData = {
                 "reasons": "Meeting with the democrats",
                 "isFinal": false,
                 "locationId": 6,
-                "bookingId": 6
+                "bookingId": 1
             }
         ]
     },

@@ -1,4 +1,3 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.sequelize.transaction(t => Promise.all([
     queryInterface.addColumn('users', 'password', {
@@ -14,7 +13,7 @@ module.exports = {
       type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 6
-    }, { transaction: t })
+    }, { transaction: t }),
   ])),
 
   down: queryInterface => queryInterface.sequelize.transaction(t => Promise.all([

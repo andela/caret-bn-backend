@@ -16,13 +16,14 @@ module.exports = {
           model: { tableName: 'locations', }, key: 'id',
         }
       },
-      availableSpace: {type: Sequelize.STRING},
+      availableSpace: {type: Sequelize.INTEGER},
       cost: {type: Sequelize.INTEGER},
       currency: {type: Sequelize.STRING},
       highlights: {type: Sequelize.STRING},
       amenities: { type: Sequelize.STRING},
       owner: {type: Sequelize.INTEGER},
       images: {type: Sequelize.JSONB},
+      slug: {type: Sequelize.STRING},
       createdAt: {allowNull: false,type: Sequelize.DATEONLY},
       updatedAt: {allowNull: false,type: Sequelize.DATEONLY}
     });

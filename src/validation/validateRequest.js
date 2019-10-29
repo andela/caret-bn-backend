@@ -13,8 +13,8 @@ const validateRequest = data => {
     minimumItems = 2;
   }
   const schema = Joi.object({
-    locationId: Joi.number().required(),
-    typeId: Joi.number()
+    locationId: Joi.number().positive().required(),
+    typeId: Joi.number().positive()
       .required(),
     departureDate: Joi.date().greater('now').required(),
     returnDate: Joi.date()
@@ -32,8 +32,8 @@ const validateRequest = data => {
           }),
         reasons: Joi.string().trim(true),
         isFinal: Joi.boolean().required(),
-        bookingId: Joi.number().required(),
-        locationId: Joi.number().required(),
+        bookingId: Joi.number().positive().required(),
+        locationId: Joi.number().positive().required(),
       }))
       .min(minimumItems)
       .max(maximumItems)

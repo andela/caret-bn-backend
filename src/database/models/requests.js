@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line func-names
   requests.associate = function (models) {
     // associations can be defined here
+    requests.belongsTo(models.users, {
+      as: 'requester',
+      foreignKey: 'userId',
+    });
     requests.belongsTo(models.tripTypes, {
       as: 'type',
       foreignKey: 'typeId',
@@ -25,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     requests.hasMany(models.destinations, {
       targetKey: 'requestId',
       sourceKey: 'id'
+    });
+    requests.belongsTo(models.users, {
+      targetKey: 'id',
+      sourceKey: 'userId'
     });
   };
 

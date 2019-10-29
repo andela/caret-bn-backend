@@ -201,4 +201,153 @@ describe('Accommodation Test', () => {
         done();
       });
   });
+  it('it should get all available accommodation', done => {
+    chai.request(app)
+      .get('/api/v1/accommodations/available')
+      .set('Authorization', `Bearer ${supplierToken}`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('message').eql('all available accommodation')
+        done();
+      });
+  });
+  it('it should book an accommodation', done => {
+    chai.request(app)
+      .patch('/api/v1/accommodations/book')
+      .set('Authorization', `Bearer ${requesterToken}`)
+      .send(mockData.bookingdata)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property('message').eql('Booking done successfully')
+        done();
+      });
+    });
+    it('it should not book an accommodation with wrong id', done => {
+      chai.request(app)
+        .patch('/api/v1/accommodations/book')
+        .set('Authorization', `Bearer ${requesterToken}`)
+        .send(mockData.bookingdata2)
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.should.have.property('message').eql('Ooops! This accommodation id does not exist!')
+          done();
+        });
+      });
+      it('it should not book an accommodation with ivalid Id', done => {
+        chai.request(app)
+          .patch('/api/v1/accommodations/book')
+          .set('Authorization', `Bearer ${requesterToken}`)
+          .send(mockData.bookingdata3)
+          .end((err, res) => {
+            res.should.have.status(400);
+            done();
+          });
+        });
+        it('it should not book an accommodation with ivalid Date', done => {
+          chai.request(app)
+            .patch('/api/v1/accommodations/book')
+            .set('Authorization', `Bearer ${requesterToken}`)
+            .send(mockData.invalidbookingdata)
+            .end((err, res) => {
+              res.should.have.status(400);
+              done();
+            });
+          });
+      it('it should not book an accommodation with no space', done => {
+        chai.request(app)
+          .patch('/api/v1/accommodations/book')
+          .set('Authorization', `Bearer ${requesterToken}`)
+          .send(mockData.bookingdata4)
+          .end((err, res) => {
+            res.should.have.status(400);
+            res.body.should.have.property('message').eql('There is no space available in accommodation')
+            done();
+          });
+        });
+        it('it should not book an accommodation twice', done => {
+          chai.request(app)
+            .patch('/api/v1/accommodations/book')
+            .set('Authorization', `Bearer ${requesterToken}`)
+            .send(mockData.bookingdata)
+            .end((err, res) => {
+              res.should.have.status(409);
+              res.body.should.have.property('message').eql('you have already booked this accommodation')
+              done();
+            });
+          });
+          it('it should not book an accommodation with invalid token', done => {
+            chai.request(app)
+              .patch('/api/v1/accommodations/book')
+              .set('Authorization', `Bearer ${invalidToken}`)
+              .send(mockData.bookingdata)
+              .end((err, res) => {
+                res.should.have.status(400);
+                done();
+              });
+            });
+            it('it should not book an accommodation checkOut greater than checkIn', done => {
+              chai.request(app)
+                .patch('/api/v1/accommodations/book')
+                .set('Authorization', `Bearer ${requesterToken}`)
+                .send(mockData.invalidBookingDate)
+                .end((err, res) => {
+                  res.should.have.status(400);
+                  res.body.should.have.property('message').eql('checkout date must not be less than checkin date')
+                  done();
+                });
+              });
+              it('it should not book an accommodation with outdate dates', done => {
+                chai.request(app)
+                  .patch('/api/v1/accommodations/book')
+                  .set('Authorization', `Bearer ${requesterToken}`)
+                  .send(mockData.OutdateBookingDate)
+                  .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.should.have.property('message').eql('CheckOut and CheckIn must not be outdate dates')
+                    done();
+                  });
+                });
+                it('it should not book an accommodation with supplier Token', done => {
+                  chai.request(app)
+                    .patch('/api/v1/accommodations/book')
+                    .set('Authorization', `Bearer ${supplierToken}`)
+                    .send(mockData.bookingdata)
+                    .end((err, res) => {
+                      res.should.have.status(403);
+                      res.body.should.have.property('message').eql('Access denied! a supplier can not access this part of the system!')
+                      done();
+                    });
+                  });
+                  it('it should get all bookings', done => {
+                    chai.request(app)
+                      .get('/api/v1/accommodations/bookings')
+                      .set('Authorization', `Bearer ${requesterToken}`)
+                      .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('message').eql('Your bookings')
+                        done();
+                      });
+                    });
+                    it('it should get all bookings', done => {
+                      chai.request(app)
+                        .get('/api/v1/accommodations/bookings')
+                        .set('Authorization', `Bearer ${requesterToken}`)
+                        .end((err, res) => {
+                          res.should.have.status(200);
+                          res.body.should.have.property('message').eql('Your bookings')
+                          done();
+                        });
+                      });
+
+                      it('it should not book an accommodation with unvailable rooms', done => {
+                        chai.request(app)
+                          .patch('/api/v1/accommodations/book')
+                          .set('Authorization', `Bearer ${requesterToken}`)
+                          .send(mockData.bookingdata5)
+                          .end((err, res) => {
+                            res.should.have.status(400);
+                            res.body.should.have.property('message').eql('roomsNumber exceed number of available rooms')
+                            done();
+                          });
+                        });         
 });

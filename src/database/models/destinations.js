@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes) => {
   const destinations = sequelize.define('destinations', {
     locationId: DataTypes.INTEGER,

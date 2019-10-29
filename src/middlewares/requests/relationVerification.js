@@ -19,6 +19,15 @@ export default async (req, res, next) => {
     return validationErrorFormatter(res, error);
   }
 
+  if (user.payload.role === 5) {
+    return Utilities.responseHelper(
+      res,
+      'Suppliers are restricted from making travel requests',
+      null,
+      403
+    );
+  }
+
   const result = await locationChecker.getLocationById(locationId);
 
   if (!result) {
@@ -105,6 +114,16 @@ export default async (req, res, next) => {
     );
   }
 
+  try {
+    await bookingsChecker.checkOwnership(destinations, user.payload.id);
+  } catch (err) {
+    return Utilities.responseHelper(
+      res,
+      err.message,
+      null,
+      400
+    );
+  }
 
   try {
     await destinationChecker.verify(destinations);

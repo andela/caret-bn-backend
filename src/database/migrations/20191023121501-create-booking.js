@@ -1,37 +1,39 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('requests', {
+    return queryInterface.createTable('bookings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      typeId: {
-        type: Sequelize.INTEGER
-      },
       userId: {
         type: Sequelize.INTEGER
       },
-      locationId: {
+      accommodationId: {
         type: Sequelize.INTEGER
       },
-      statusId: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1
+      bookedSpace: {
+        type: Sequelize.INTEGER
+      },
+      checkIn: {
+        type: Sequelize.DATE
+      },
+      checkOut: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('requests');
+    return queryInterface.dropTable('bookings');
   }
 };

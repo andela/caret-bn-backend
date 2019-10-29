@@ -8,18 +8,20 @@ module.exports = (sequelize, Datatypes) => {
     role: Datatypes.INTEGER,
     phone: Datatypes.STRING,
     gender: Datatypes.STRING,
-    dob: Datatypes.DATE,
+    dob: Datatypes.DATEONLY,
     country: Datatypes.STRING,
     language: Datatypes.STRING,
     currency: Datatypes.STRING,
     company: Datatypes.STRING,
     department: Datatypes.STRING,
-    lineManager: Datatypes.INTEGER,
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,
     },
-    role: Datatypes.INTEGER
+    lineManager:{
+      type: Datatypes.INTEGER,
+      defaultValue: 8
+    }
   }, {
     scopes: {
       responseScope: {
@@ -37,9 +39,9 @@ module.exports = (sequelize, Datatypes) => {
       sourceKey: 'id'
     });
     Users.belongsTo(models.Role, {
-      as: 'Role',
-      foreignKey: 'role',
-      targetKey: 'id',
+      as: 'Role',
+      foreignKey: 'role',
+      targetKey: 'id',
     });
   };
   return Users;

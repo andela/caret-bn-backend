@@ -1,4 +1,3 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('users', {
     id: {
@@ -28,7 +27,7 @@ module.exports = {
       allowNull: true
     },
     dob: {
-      type: Sequelize.DATE,
+      type: Sequelize.DATEONLY,
       allowNull: true
     },
     country: {
@@ -53,7 +52,8 @@ module.exports = {
     },
     lineManager:{
       type: Sequelize.INTEGER,
-      allowNull: true
+      allowNull: false,
+      defaultValue: 8
     },
     email: {
       type: Sequelize.STRING,
@@ -69,8 +69,8 @@ module.exports = {
         }
       }
     },
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
+    createdAt: Sequelize.DATEONLY,
+    updatedAt: Sequelize.DATEONLY,
   }),
   down: queryInterface => queryInterface.dropTable('users')
 };
