@@ -3,7 +3,7 @@ import defaultTests from './defaultTests.spec';
 import signupTests from './signupTest.spec';
 import profileTests from './profile.spec';
 import loginTest from './loginTest.spec';
-import requestTest from './requestTests/index.spec';
+import requestTest from './requestTests/index.spec'
 import requestTests from './requestTests.spec';
 import accommodationTest from './accommodationTest.spec';
 import editRequest from './editRequest.spec';
@@ -20,7 +20,7 @@ describe('Social Authentication Tests', authTests);
 describe('Signup Tests', signupTests);
 describe('Login Tests', loginTest);
 describe('Request Test', requestTest);
-describe('Request Tests', requestTests);
+describe('Requests-Tests', requestTests);
 describe('Accommodation Tests', accommodationTest);
 describe('Setting Profile Test', profileTests);
 describe('Social Authentication Tests', loginTest);

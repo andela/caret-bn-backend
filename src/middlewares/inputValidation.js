@@ -203,7 +203,9 @@ export default class InputValidation {
 
   static validateComment(req, res, next) {
     const schema = Joi.object({
-      comment: Joi.string().required(),
+      comment: Joi.string().min(1).max(250)
+        .message('comment should be at least 1 character and not more than 250 characters!')
+        .required(),
     });
     validation(req, res, schema, next);
   }

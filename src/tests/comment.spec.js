@@ -43,8 +43,6 @@ it('should return a 400 when you are not owner of the request or manager', (done
     .get('/api/v1/comments/2')
     .set('Authorization', `Bearer ${token3}`)
     .end((err, res) => {
-        console.log(res.body);
-        
         res.should.have.property('status').eql(400);
     done();
     });

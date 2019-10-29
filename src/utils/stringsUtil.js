@@ -121,6 +121,16 @@ const strings = {
       ID_INVALID: 'Invalid id, id should be an integer',
     },
   },
+  comments: {
+    success: {
+      COMMENT_UPDATED: 'Comment Successfully Updated!',
+      COMMENT_DELETED: 'Comment Successfully Deleted!'
+    },
+    error: {
+      COMMENT_NOT_FOUND: 'Ooops! This comment does not exist!',
+      NOT_OWNER: 'Oops! You are not the owner of this comment!',
+    },
+  },
 };
 
 export default strings;
