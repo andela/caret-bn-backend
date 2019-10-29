@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import requestController from '../../controllers/requestController';
 import validateToken from '../../middlewares/auth/validateToken';
+import verifyRelationships from '../../middlewares/requests/relationVerification';
 import checkId from '../../middlewares/checkId';
 import checkRole from '../../middlewares/checkRole';
 import InputValidation from '../../middlewares/inputValidation';
@@ -139,9 +140,13 @@ router.patch('/manager/reject/:id', validateToken, checkManagerRole, checkId, re
  *         description: No Requests Registered!
 */
 
+router.use(validateToken);
+
+router.post('/', verifyRelationships, (req, res) => requestController.storeRequest(req, res));
 router.get('/', validateToken, (req, res) => requestController.viewRequests(req, res));
 router.get('/search', validateToken, catchSearchQueries, supplierNotAllowed, validateSearchRequestUser, checkUserIdField, searchRequests);
 // eslint-disable-next-line max-len
 router.get('/manager/search', validateToken, catchSearchQueries, supplierNotAllowed, checkManagerRole, validateSearchRequestManager, managerUserIdField, searchRequests);
+router.get('/:id', (req, res) => requestController.findOne(req, res));
 
 export default router;

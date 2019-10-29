@@ -4,6 +4,8 @@ import text from '../utils/strings';
 import responseHelper from '../utils/responseHelper';
 import responseUtil from '../utils/responseUtil';
 import userServices from '../services/userServices';
+import requestServices from '../services/requestServices/requestServices';
+import destinationController from './destinationController';
 import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
 import findRequests from '../helpers/findRequests';
@@ -43,7 +45,7 @@ export default class requestController {
   }
 
   static async viewMyRequests({ user }, res) {
-    const query = Utilities.requestQueries.userRequests(user.payload);
+    const query = Utilities.userQueries.userRequests(user.payload);
     const { requests } = await userServices.findOne(query, Utilities.queryScopes.responseScope);
 
     return responseUtil(res, 200, (!requests.length)
@@ -96,5 +98,23 @@ export default class requestController {
       requests,
       200
     );
+  }
+
+  static async findOne(req, res) {
+    const { id } = req.params;
+    const { user } = req;
+    const query = Utilities.requestQueries.singleRequest(id, user.payload.id);
+    const request = await requestServices.findOne(query);
+    return Utilities.responseHelper(
+      res,
+      Utilities.stringsHelper.user.requests.SUCCESSFULLY_RETRIEVED_REQUESTS,
+      request,
+      200
+    );
+  }
+
+  static async storeRequest({ body, user }, res) {
+    const request = await requestServices.createRequest(body, user.payload.id);
+    return destinationController.storeDestination(res, body, user, request);
   }
 }

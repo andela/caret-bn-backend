@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const destinations = sequelize.define('destinations', {
     locationId: DataTypes.INTEGER,
     bookingId: DataTypes.INTEGER,
-    arrivalDate: DataTypes.DATEONLY,
-    departureDate: DataTypes.DATEONLY,
+    arrivalDate: DataTypes.DATE,
+    departureDate: DataTypes.DATE,
     requestId: DataTypes.INTEGER,
     reasons: DataTypes.STRING,
     isFinal: DataTypes.BOOLEAN
