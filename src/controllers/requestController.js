@@ -10,14 +10,15 @@ import requestServices from '../services/requestServices/requestServices';
 import destinationController from './destinationController';
 import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
-import findRequests from '../helpers/findRequests';
+import notifServices from '../services/notifServices';
+import notifSender from '../helpers/notifSender';
+import findOneRequest from '../helpers/findOneRequest';
+import findUser from '../helpers/findUser';
 
 const { Op } = Sequelize;
-
-const {
-  APPROVED, REJECTED, SUCCESSFULLY_RETRIEVED_REQUESTS
-} = strings.requests;
+const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
+const { notifSaver, notifBuilder } = notifServices;
 
 const { allSearch } = searchRequestsServices;
 
@@ -57,31 +58,36 @@ export default class requestController {
       : SUCCESSFULLY_RETRIEVED_REQUESTS, requests);
   }
 
-  static async approveRequest(req, res) {
+  static async changeStatus(req, res) {
     const { id } = req.params;
+    const {
+      statusId, activity, subject, responseMessage
+    } = req;
 
-    const requestToApprove = findRequests(req);
+    const requestToProcess = await findOneRequest({ id });
+    const { userId } = requestToProcess;
+    const user = await findUser({ id: userId });
 
-    if (requestToApprove) {
-      await models.requests.update({ statusId: 3 }, { where: { id } });
+    if (user.lineManager !== req.user.payload.id) {
+      return responseHelper(res, text.user.requests.NOT_MANAGER, null, 403);
+    }
 
-      return responseHelper(res, APPROVED, null, 200);
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
+
+    if (requestToProcess) {
+      let request = await models.requests.update(
+        { statusId },
+        { where: { id }, returning: true, }
+      );
+
+      request = request[1][0].dataValues;
+
+      const notification = await notifBuilder(request, request.userId, activity);
+      await notifSaver(notification);
+      await notifSender(subject, request, request.userId, notification, APP_URL_BACKEND);
+      return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
-  }
-
-  static async rejectRequest(req, res) {
-    const { id } = req.params;
-
-    const requestToReject = findRequests(req);
-
-    if (requestToReject) {
-      await models.requests.update({ statusId: 2 }, { where: { id } });
-
-      return responseHelper(res, REJECTED, null, 200);
-    }
-    return responseHelper(res, strings.user.requests.NOT_FOUND, null, 404);
-
   }
 
   static async updateRequest(req, res) {
@@ -138,8 +144,9 @@ export default class requestController {
     );
   }
 
-  static async storeRequest({ body, user }, res) {
+  static async storeRequest(req, res) {
+    const { body, user } = req;
     const request = await requestServices.createRequest(body, user.payload.id);
-    return destinationController.storeDestination(res, body, user, request);
+    return destinationController.storeDestination(req, res, body, user, request);
   }
 }

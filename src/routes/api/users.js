@@ -9,7 +9,7 @@ import InputValidation from '../../middlewares/inputValidation';
 import confirmPassword from '../../middlewares/confirmPassword';
 import user from '../../middlewares/users';
 
-const { signup, signIn } = UserController;
+const { signup, signIn, switchEmailNotif } = UserController;
 const { updateProfile, getProfile } = profile;
 const { validateProfile, validateLogin, validateSignup } = InputValidation;
 
@@ -250,6 +250,26 @@ const router = express.Router();
  *       '400':
  *         description: invalid data
  */
+/**
+ * @swagger
+ * /users/email-notif:
+ *   patch:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Notifications
+ *     name: Subscribe/Unsubscribe email Notifications
+ *     summary: Subscribe/Unsubscribe email Notifications
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       '200':
+ *         description: Email Notification Activated/Deactivated
+ *       '401':
+ *         description: Please Login
+ */
 
 router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
@@ -258,5 +278,6 @@ router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateRes
 router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
 router.post('/login', validateLogin, signIn);
 router.get('/profile/:email', validateToken, user.compareData, getProfile);
+router.patch('/email-notification', validateToken, switchEmailNotif);
 
 export default router;
