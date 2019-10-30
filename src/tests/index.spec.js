@@ -11,13 +11,13 @@ import editDeleteAccommodationsTests from './editDeleteAccommodationsTests.spec'
 import adminTest from './adminTest.spec';
 import searchRequestsTests from './searchRequestsTests.spec';
 import notificationsTests from './notificationsTests.spec';
+import ratingsTest from './ratingsTests.spec';
 
 describe('Default Tests', defaultTests);
-describe('Edit Request Tests',editRequest);
+describe('Edit Request Tests', editRequest);
 describe('Social Authentication Tests', authTests);
 describe('Signup Tests', signupTests);
 describe('Login Tests', loginTest);
-// describe('Edit Request Tests',editRequest);
 describe('Request Test', requestTest);
 describe('Request Tests', requestTests);
 describe('Accommodation Tests', accommodationTest);
@@ -30,3 +30,4 @@ describe('Social Authentication Tests', loginTest);
 describe('Admin routes test', adminTest);
 describe('Search Requests Tests', searchRequestsTests);
 describe('Notifications Tests', notificationsTests);
+describe('Ratings Tests', ratingsTest);
