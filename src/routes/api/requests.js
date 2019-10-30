@@ -9,10 +9,11 @@ import checkUserIdField from '../../middlewares/checkUserIdField';
 import managerUserIdField from '../../middlewares/managerUserIdField';
 import catchSearchQueries from '../../middlewares/catchSearchQueries';
 import isProcessed from '../../middlewares/isProcessed';
+import wrongAction from '../../middlewares/wrongAction';
 
 const router = new Router();
 const {
-  viewMyRequests, approveRequest, rejectRequest, viewManagerRequests, searchRequests
+  viewMyRequests, changeStatus, viewManagerRequests, searchRequests
 } = requestController;
 
 const { validateSearchRequestUser, validateSearchRequestManager } = InputValidation;
@@ -20,8 +21,7 @@ const { checkManagerRole, supplierNotAllowed } = checkRole;
 
 router.get('/', validateToken, viewMyRequests);
 router.get('/manager', validateToken, checkManagerRole, viewManagerRequests);
-router.patch('/manager/approve/:id', validateToken, checkManagerRole, checkId, isProcessed, approveRequest);
-router.patch('/manager/reject/:id', validateToken, checkManagerRole, checkId, isProcessed, rejectRequest);
+router.patch('/manager/:action/:id', validateToken, checkManagerRole, checkId, wrongAction, isProcessed, changeStatus);
 
 /**
  * @swagger
