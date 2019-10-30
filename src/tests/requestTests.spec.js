@@ -11,6 +11,7 @@ const { expect } = chai;
 let tokenForNoRequests;
 let tokenForRequests;
 let managerToken;
+let anotherManagerToken;
 let userToken;
 
 const facebookAccessToken = process.env.FACEBOOK_ACCESS_TOKEN
@@ -80,6 +81,16 @@ describe('Request Tests', () => {
             done();
         });
     });
+    it('Should log in a anotherManager', (done) => {
+        chai.request(app)
+        .post('/api/v1/users/login')
+        .send(mockData.anotherManager)
+        .end((err, res) => {
+            const { body } = res;
+            anotherManagerToken = body.data.token;
+            done();
+        });
+    });
 
     it('Should return requests that are assigned to the logged in manager', (done) => {
         chai.request(app)
@@ -89,6 +100,29 @@ describe('Request Tests', () => {
             const { status, body } = res;
             expect(status).to.be.eql(200);
             expect(body.message).to.be.eql(strings.user.requests.ASSIGNED_REQUESTS);
+            done();
+        });
+    });
+
+    it('Should return a wrong action message', (done) => {
+        chai.request(app)
+        .patch('/api/v1/requests/manager/skibidipapa/1')
+        .set('Authorization', `Bearer ${managerToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(400);
+            expect(body.message).to.be.eql('Ooops! Cannot do action \'skibidipapa\' on a request');
+            done();
+        });
+    });
+
+    it('Should not allow another manager to change status', (done) => {
+        chai.request(app)
+        .patch('/api/v1/requests/manager/approve/1')
+        .set('Authorization', `Bearer ${anotherManagerToken}`)
+        .end((err, res) => {
+            const { status } = res;
+            expect(status).to.be.eql(403);
             done();
         });
     });

@@ -10,10 +10,11 @@ import managerUserIdField from '../../middlewares/managerUserIdField';
 import catchSearchQueries from '../../middlewares/catchSearchQueries';
 import pendingRequest from '../../middlewares/request';
 import isProcessed from '../../middlewares/isProcessed';
+import wrongAction from '../../middlewares/wrongAction';
 
 const router = new Router();
 const {
-  viewMyRequests, approveRequest, rejectRequest, viewManagerRequests, searchRequests, updateRequest
+  viewMyRequests, changeStatus, viewManagerRequests, searchRequests, updateRequest
 } = requestController;
 
 const {
@@ -149,8 +150,7 @@ router.get('/search', validateToken, catchSearchQueries, supplierNotAllowed, val
 router.get('/manager/search', validateToken, catchSearchQueries, supplierNotAllowed, checkManagerRole, validateSearchRequestManager, managerUserIdField, searchRequests);
 router.get('/', validateToken, viewMyRequests);
 router.get('/manager', validateToken, checkManagerRole, viewManagerRequests);
-router.patch('/manager/approve/:id', validateToken, checkManagerRole, checkId, approveRequest);
-router.patch('/manager/reject/:id', validateToken, checkManagerRole, checkId, rejectRequest);
+router.patch('/manager/:action/:id', validateToken, checkManagerRole, checkId, wrongAction, isProcessed, changeStatus);
 router.patch('/:id', validateToken, pendingRequest.requestOwner, pendingRequest.selectPending, validateRequest, pendingRequest.validateBody, updateRequest);
 
 export default router;
