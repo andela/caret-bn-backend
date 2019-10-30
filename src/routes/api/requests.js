@@ -8,19 +8,19 @@ import InputValidation from '../../middlewares/inputValidation';
 import checkUserIdField from '../../middlewares/checkUserIdField';
 import managerUserIdField from '../../middlewares/managerUserIdField';
 import catchSearchQueries from '../../middlewares/catchSearchQueries';
+import pendingRequest from '../../middlewares/request';
 
 const router = new Router();
 const {
-  viewMyRequests, approveRequest, rejectRequest, viewManagerRequests, searchRequests
+  viewMyRequests, approveRequest, rejectRequest, viewManagerRequests, searchRequests, updateRequest
 } = requestController;
 
-const { validateSearchRequestUser, validateSearchRequestManager } = InputValidation;
+const {
+  validateSearchRequestUser,
+  validateSearchRequestManager,
+  validateRequest,
+} = InputValidation;
 const { checkManagerRole, supplierNotAllowed } = checkRole;
-
-router.get('/', validateToken, viewMyRequests);
-router.get('/manager', validateToken, checkManagerRole, viewManagerRequests);
-router.patch('/manager/approve/:id', validateToken, checkManagerRole, checkId, approveRequest);
-router.patch('/manager/reject/:id', validateToken, checkManagerRole, checkId, rejectRequest);
 
 /**
  * @swagger
@@ -143,10 +143,13 @@ router.patch('/manager/reject/:id', validateToken, checkManagerRole, checkId, re
 router.use(validateToken);
 
 router.post('/', verifyRelationships, (req, res) => requestController.storeRequest(req, res));
-router.get('/', validateToken, (req, res) => requestController.viewRequests(req, res));
 router.get('/search', validateToken, catchSearchQueries, supplierNotAllowed, validateSearchRequestUser, checkUserIdField, searchRequests);
 // eslint-disable-next-line max-len
 router.get('/manager/search', validateToken, catchSearchQueries, supplierNotAllowed, checkManagerRole, validateSearchRequestManager, managerUserIdField, searchRequests);
-router.get('/:id', (req, res) => requestController.findOne(req, res));
+router.get('/', validateToken, viewMyRequests);
+router.get('/manager', validateToken, checkManagerRole, viewManagerRequests);
+router.patch('/manager/approve/:id', validateToken, checkManagerRole, checkId, approveRequest);
+router.patch('/manager/reject/:id', validateToken, checkManagerRole, checkId, rejectRequest);
+router.patch('/:id', validateToken, pendingRequest.requestOwner, pendingRequest.selectPending, validateRequest, pendingRequest.validateBody, updateRequest);
 
 export default router;

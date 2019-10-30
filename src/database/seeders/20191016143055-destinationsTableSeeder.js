@@ -69,6 +69,29 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        locationId: 5,
+        bookingId: 2,
+        arrivalDate: '10-29-2019',
+        departureDate: null,
+        requestId: 2,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 5,
+        bookingId: 2,
+        arrivalDate: '10-29-2019',
+        departureDate: null,
+        requestId: 6,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      
   ])
   ]),
 

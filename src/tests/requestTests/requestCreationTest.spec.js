@@ -19,6 +19,7 @@ describe('Request Tests', () => {
             .send({ access_token: facebookAccessToken })
             .end((err, res) => {
                 authToken = res.body.data.token;
+                
                 done();
             });
     });
@@ -225,9 +226,6 @@ describe('Request Tests', () => {
             })
             .timeout(4000);
     });
-
-
-
 
 
 

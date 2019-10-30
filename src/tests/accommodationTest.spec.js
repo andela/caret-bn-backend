@@ -14,7 +14,7 @@ let adminToken;
 let supplierToken;
 
 let invalidToken = 'wdsfwsadwsadsadsqa';
-
+// it should not book an accommodation with supplier Token:
 describe('Accommodation Test', () => {
     before((done) => {
         chai.request(app)
@@ -307,17 +307,7 @@ describe('Accommodation Test', () => {
                     done();
                   });
                 });
-                it('it should not book an accommodation with supplier Token', done => {
-                  chai.request(app)
-                    .patch('/api/v1/accommodations/book')
-                    .set('Authorization', `Bearer ${supplierToken}`)
-                    .send(mockData.bookingdata)
-                    .end((err, res) => {
-                      res.should.have.status(403);
-                      res.body.should.have.property('message').eql('Access denied! a supplier can not access this part of the system!')
-                      done();
-                    });
-                  });
+                
                   it('it should get all bookings', done => {
                     chai.request(app)
                       .get('/api/v1/accommodations/bookings')
