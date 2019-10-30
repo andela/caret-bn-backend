@@ -1,3 +1,5 @@
+/* eslint-disable no-irregular-whitespace */
+import Sequelize from 'sequelize';
 import models from '../database/models';
 import strings from '../utils/stringsUtil';
 import text from '../utils/strings';
@@ -13,6 +15,7 @@ import notifSender from '../helpers/notifSender';
 import findOneRequest from '../helpers/findOneRequest';
 import findUser from '../helpers/findUser';
 
+const { Op } = Sequelize;
 const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
 const { notifSaver, notifBuilder } = notifServices;
@@ -85,6 +88,27 @@ export default class requestController {
       return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
+  }
+
+  static async updateRequest(req, res) {
+    const { id } = req.request;
+    try {
+      await models.requests.update(req.body, {
+        where: { id }, returning: true, raw: true,
+      });
+      const destination = req.body.destinations;
+      destination.forEach(async element => {
+        await models.destinations.update(element, {
+          where: {
+            [Op.and]: [{ requestId: id }, { id: element.id }]
+          },
+        });
+      });
+      const request = await allSearch({ id });
+      return responseUtil(res, 200, strings.request.success.SUCCESS_UPDATE_REQUEST, request);
+    } catch (error) {
+      return res.status(500).json({ error: 'Something wrong' });
+    }
   }
 
   static async searchRequests(req, res) {

@@ -8,6 +8,7 @@ import validationErrorFormatter from '../../utils/validationErrorFormatter';
 import Utilities from '../../utils/index';
 
 export default async (req, res, next) => {
+
   const { body, user } = req;
   const {
     locationId, typeId, departureDate, returnDate, destinations

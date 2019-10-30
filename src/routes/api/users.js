@@ -278,6 +278,6 @@ router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateRes
 router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
 router.post('/login', validateLogin, signIn);
 router.get('/profile/:email', validateToken, user.compareData, getProfile);
-router.patch('/email-notif', validateToken, switchEmailNotif);
+router.patch('/email-notification', validateToken, switchEmailNotif);
 
 export default router;

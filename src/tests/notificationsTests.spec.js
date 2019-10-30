@@ -85,7 +85,7 @@ describe('Notifications Tests', () => {
   // Acivate/Deactivate Email Notifications
   it('Should deactivate email notifications', done => {
     chai.request(app)
-      .patch('/api/v1/users/email-notif')
+      .patch('/api/v1/users/email-notification')
       .set('Authorization', `Bearer ${anotherToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(200);
@@ -96,7 +96,7 @@ describe('Notifications Tests', () => {
 
   it('Should activate email notifications', done => {
     chai.request(app)
-      .patch('/api/v1/users/email-notif')
+      .patch('/api/v1/users/email-notification')
       .set('Authorization', `Bearer ${anotherToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(200);

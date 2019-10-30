@@ -13,7 +13,6 @@ const requestData = {
             }
         ]
     },
-
     oneWayTripNoType: {
         "typeId": 5,
         "locationId": 3,
@@ -29,7 +28,6 @@ const requestData = {
             }
         ]
     },
-
     oneWayTripNoLocation: {
         "typeId": 5,
         "locationId": 60,
@@ -45,7 +43,6 @@ const requestData = {
             }
         ]
     },
-
     oneWayTripNoLocationInDestination: {
         "typeId": 2,
         "locationId": 3,
@@ -62,8 +59,6 @@ const requestData = {
             }
         ]
     },
-
-
     TripBadDates: {
         "typeId": 3,
         "locationId": 3,
@@ -88,14 +83,12 @@ const requestData = {
             }
         ]
     },
-
     originalLocationTravel: {
         "typeId": 2,
         "locationId": 3,
         "departureDate": "2020-10-29",
         "returnDate": "2020-11-15",
         "destinations": [
-
             {
                 "arrivalDate": "2020-11-30",
                 "departureDate": "2020-12-10",
@@ -106,7 +99,6 @@ const requestData = {
             }
         ]
     },
-
     returnTrip: {
         "typeId": 2,
         "locationId": 2,
@@ -123,7 +115,6 @@ const requestData = {
             }
         ]
     },
-
     returnTripBadDates: {
         "typeId": 2,
         "locationId": 2,
@@ -140,7 +131,6 @@ const requestData = {
             }
         ]
     },
-
     multiCityTrip: {
         "typeId": 3,
         "locationId": 2,
@@ -205,7 +195,6 @@ const requestData = {
             }
         ]
     },
-
     multiCityTripSameDest: {
         "typeId": 3,
         "locationId": 2,
@@ -238,7 +227,6 @@ const requestData = {
             }
         ]
     },
-
     multiCityTripMultipleFinalFlags: {
         "typeId": 3,
         "locationId": 2,
@@ -271,7 +259,6 @@ const requestData = {
             }
         ]
     },
-
     multiCityTripNoFinalFlags: {
         "typeId": 3,
         "locationId": 2,
@@ -304,7 +291,6 @@ const requestData = {
             }
         ]
     },
-
     multiCityTripPreceedingDates: {
         "typeId": 3,
         "locationId": 2,
@@ -337,7 +323,6 @@ const requestData = {
             }
         ]
     },
-
     multiCityTripOneDestination: {
         "typeId": 3,
         "locationId": 2,
@@ -354,7 +339,6 @@ const requestData = {
             }
         ]
     },
-
     returnTripNoReturnDate: {
         "typeId": 2,
         "locationId": 2,
