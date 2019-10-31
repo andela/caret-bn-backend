@@ -18,8 +18,7 @@ describe('Request Tests', () => {
             .post('/api/v1/users/login')
             .send(mockData.registeredUser)
             .end((err, res) => {
-                authToken = res.body.data.token;
-                
+                authToken = res.body.data.token
                 done();
             });
     });

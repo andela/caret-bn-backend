@@ -1,4 +1,5 @@
 /* eslint-disable radix */
+/* eslint-disable indent */
 import cloudinary from 'cloudinary';
 import slugify from 'slugify';
 import models from '../database/models';
@@ -13,7 +14,6 @@ import sendEmail from '../helpers/emailHelper';
 
 cloudinary.config({ CLOUDINARY_URL: process.env.CLOUDINARY_URL });
 
-// const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
 
 const { getOneAccommodation, getAllAccommodations } = getAccommodation;
 
@@ -62,10 +62,10 @@ export default class AccommodationController {
   }
 
   static async getAllAccommodations(req, res) {
-    const allAccommodations = await getAllAccommodations({ isActivated: true });
-
-    return responseUtil(res, 200, (allAccommodations.length === 0)
-      ? NO_ACCOMMODATION : RETRIEVED, allAccommodations);
+    const { id } = req.user.payload;
+    await getAllAccommodations({ isActivated: true }, id)
+      .then(accommodations => responseUtil(res, 200, (accommodations.length === 0)
+        ? NO_ACCOMMODATION : RETRIEVED, accommodations));
   }
 
   static async editAccommodation(req, res) {
@@ -115,7 +115,7 @@ export default class AccommodationController {
       },
       attributes: { exclude: ['accommodationId', 'userId'] },
       include: [{ association: 'accommodation', attributes: ['id', 'name', 'description', 'cost', 'currency', 'owner', 'images'] },
-        { association: 'user', attributes: ['id', 'username', 'email'] }],
+      { association: 'user', attributes: ['id', 'username', 'email'] }],
     }).then(book => responseUtil(res, 200, BOOKED_FOUND, book));
   }
 
@@ -164,16 +164,16 @@ export default class AccommodationController {
   }
 
   static async viewSpecificAccommodation(req, res) {
-    const { role } = req.user.payload;
+    const { role, id } = req.user.payload;
     const { slug } = req.params;
 
     if (role === 2) {
-      const accommodation = await getOneAccommodation({ slug });
+      const accommodation = await getOneAccommodation({ slug }, id);
 
       return responseUtil(res, 200, (!accommodation)
         ? NOT_FOUND : SINGLE_ACCOMMODATION, accommodation);
     }
-    const available = await getOneAccommodation({ slug, isActivated: true });
+    const available = await getOneAccommodation({ slug, isActivated: true }, id);
 
     return responseUtil(res, 200, (!available)
       ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, available);
@@ -208,10 +208,10 @@ export default class AccommodationController {
   }
 
   static async viewDeactivated(req, res) {
-    const { role } = req.user.payload;
+    const { role, id } = req.user.payload;
 
     if (role === 2) {
-      const deactivatedAccommodations = await getAllAccommodations({ isActivated: false });
+      const deactivatedAccommodations = await getAllAccommodations({ isActivated: false }, id);
 
       return responseUtil(res, 200, (!deactivatedAccommodations.length)
         ? NO_ACCOMMODATION : DEACTIVATED_ACCOMMODATIONS, deactivatedAccommodations);

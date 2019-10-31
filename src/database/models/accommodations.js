@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'locationId',
       targetKey: 'id',
     });
+    accommodations.hasMany(models.ratings, {
+      targetKey: 'accommodationId',
+      sourceKey: 'id',
+      as: 'ratings'
+    });
   };
   return accommodations;
 };

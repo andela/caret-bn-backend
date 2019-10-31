@@ -13,6 +13,7 @@ module.exports = {
         highlights: 'Lorem Ipsum',
         amenities: 'Lorem Ipasum',
         owner: 4,
+        slug: 'isimbi-hotel',
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8luasp8j.png"',
         slug: 'isimbi-hotel',
         createdAt: new Date(),
@@ -28,6 +29,7 @@ module.exports = {
         highlights: 'Kampolama',
         amenities: 'Kampolama',
         owner: 4,
+        slug: 'el-gorillaz',
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/itwk2ro51fa8laspg8j.png"',
         slug: 'el-gorillaz',
         createdAt: new Date(),
@@ -43,6 +45,7 @@ module.exports = {
         highlights: 'BoneFire Camp',
         amenities: 'BoneFire Camp',
         owner: 3,
+        slug: 'moto-no-moto-inn',
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/i2ro51fa8luaspg8j.png"',
         slug: 'moto-ni-moto-inn',
         createdAt: new Date(),
@@ -58,11 +61,12 @@ module.exports = {
         highlights: 'BoneFire Camp',
         amenities: 'BoneFire Camp',
         owner: 3,
+        slug: 'marriot',
         images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/i2ro51fa8luaspg8j.png"',
         createdAt: new Date(),
         updatedAt: new Date()
       },
-  ])
+    ])
   ]),
 
   down: (queryInterface, Sequelize) => Promise.all([
