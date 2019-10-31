@@ -10,15 +10,13 @@ import requestServices from '../services/requestServices/requestServices';
 import destinationController from './destinationController';
 import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
-import notifServices from '../services/notifServices';
-import notifSender from '../helpers/notifSender';
 import findOneRequest from '../helpers/findOneRequest';
 import findUser from '../helpers/findUser';
+import notifSender from '../helpers/notifSender';
 
 const { Op } = Sequelize;
 const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
-const { notifSaver, notifBuilder } = notifServices;
 
 const { allSearch } = searchRequestsServices;
 
@@ -82,9 +80,7 @@ export default class requestController {
 
       request = request[1][0].dataValues;
 
-      const notification = await notifBuilder(request, request.userId, activity);
-      await notifSaver(notification);
-      await notifSender(subject, request, request.userId, notification, APP_URL_BACKEND);
+      await notifSender(subject, request, request.userId, APP_URL_BACKEND, activity);
       return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
