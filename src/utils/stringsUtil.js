@@ -37,7 +37,8 @@ const strings = {
       USER_SAME_EMAIL: 'this email is not for this token',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
       NO_PENDED_REQUEST: 'Access denied! you have no pending request',
-      NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!'
+      NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
+      TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
     },
   },
   request: {
@@ -51,7 +52,6 @@ const strings = {
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
       NOT_ALLOWED: 'Access denied! a supplier can not access this part of the system!',
-      TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
     },
   },
   token: {

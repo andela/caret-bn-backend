@@ -1,10 +1,8 @@
 import destinationServices from '../services/requestServices/destinationServices';
 import requestServices from '../services/requestServices/requestServices';
 import Utilities from '../utils/index';
-import notifServices from '../services/notifServices';
 import notifSender from '../helpers/notifSender';
 
-const { notifSaver, notifBuilder } = notifServices;
 
 export default class destinationController {
   static async storeDestination(req, res, body, user, request) {
@@ -21,9 +19,7 @@ export default class destinationController {
 
     const { lineManager } = user.payload;
 
-    const notification = await notifBuilder(request, lineManager, 'created');
-    await notifSaver(notification);
-    await notifSender('Request Created', request, lineManager, notification, APP_URL_BACKEND);
+    await notifSender('Request Created', request, lineManager, APP_URL_BACKEND, 'created');
 
     return Utilities.responseHelper(
       res,

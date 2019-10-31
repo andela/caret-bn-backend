@@ -104,4 +104,27 @@ describe('Notifications Tests', () => {
         done();
       });
   });
+
+  // Acivate/Deactivate App Notifications
+  it('Should deactivate App notifications', done => {
+    chai.request(app)
+      .patch('/api/v1/users/app-notification')
+      .set('Authorization', `Bearer ${anotherToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        res.body.should.have.property('message').eql('App Notifcation Deactivated');
+        done();
+      });
+  });
+
+  it('Should activate App notifications', done => {
+    chai.request(app)
+      .patch('/api/v1/users/app-notification')
+      .set('Authorization', `Bearer ${anotherToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        res.body.should.have.property('message').eql('App Notifcation Activated');
+        done();
+      });
+  });
 });

@@ -8,8 +8,9 @@ import validateToken from '../../middlewares/auth/validateToken';
 import InputValidation from '../../middlewares/inputValidation';
 import confirmPassword from '../../middlewares/confirmPassword';
 import user from '../../middlewares/users';
+import wrongSwitch from '../../middlewares/wrongSwitch';
 
-const { signup, signIn, switchEmailNotif } = UserController;
+const { signup, signIn, switchNotif } = UserController;
 const { updateProfile, getProfile } = profile;
 const { validateProfile, validateLogin, validateSignup } = InputValidation;
 
@@ -278,6 +279,6 @@ router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateRes
 router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
 router.post('/login', validateLogin, signIn);
 router.get('/profile/:email', validateToken, user.compareData, getProfile);
-router.patch('/email-notification', validateToken, switchEmailNotif);
+router.patch('/:switchParam', validateToken, wrongSwitch, switchNotif);
 
 export default router;

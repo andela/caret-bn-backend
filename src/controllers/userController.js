@@ -9,6 +9,7 @@ import strings from '../utils/stringsUtil';
 import hashPassword from '../utils/hashPassword';
 import generateToken from '../utils/generateToken';
 import EmailToken from '../utils/EmailToken';
+import updateUser from '../helpers/updateUser';
 
 dotenv.config();
 
@@ -155,21 +156,14 @@ export default class UserController {
     return responseUtil(res, 200, strings.users.success.SUCCESSFUL_LOGIN, userInfo);
   }
 
-  static async switchEmailNotif(req, res) {
+  static async switchNotif(req, res) {
     const { id } = req.user.payload;
-    const { emailNotif } = await models.users.findOne({ where: { id } });
+    const { message, ObjectToUpdate, switchIsEmail } = req;
+    const propertyToGet = switchIsEmail ? 'emailNotif' : 'appNotif';
 
-    const user = await models.users.update(
-      { emailNotif: !emailNotif },
-      {
-        where: {
-          id,
-        },
-        returning: true,
-      }
-    );
+    const user = await updateUser(ObjectToUpdate, id);
 
-    const status = (user[1][0].dataValues.emailNotif) ? 'Activated' : 'Deactivated';
-    return responseUtil(res, 200, `Email Notifcation ${status}`);
+    const status = (user[1][0].dataValues[propertyToGet]) ? 'Activated' : 'Deactivated';
+    return responseUtil(res, 200, `${message} Notifcation ${status}`);
   }
 }

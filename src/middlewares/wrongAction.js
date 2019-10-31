@@ -7,8 +7,8 @@ const wrongAction = (req, res, next) => {
   }
 
   const actionIsApprove = (action.includes('approve'));
-  const statusId = actionIsApprove ? 3 : 2;
-  req.statusId = statusId;
+  req.statusId = actionIsApprove ? 3 : 2;
+  req.actionIsApprove = actionIsApprove;
 
   return next();
 };
