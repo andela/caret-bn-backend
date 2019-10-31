@@ -193,4 +193,11 @@ export default class InputValidation {
     });
     validation(req, res, schema, next);
   }
+
+  static validateReasons(req, res, next) {
+    const schema = Joi.object({
+      reasons: Joi.string().min(10).max(500).required()
+    });
+    validation(req, res, schema, next);
+  }
 }

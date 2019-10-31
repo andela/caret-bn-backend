@@ -17,13 +17,20 @@ const {
   getAllAccommodations,
   editAccommodation,
   deleteAccommodation,
-  availableAccommdation,
   bookAccommdation,
-  viewBookings
+  viewBookings,
+  viewSpecificAccommodation,
+  accommodationActivation,
+  viewDeactivated,
 } = AccommodationController;
 
 const {
-  validateAddNew, validateImage, validateExistence, validateAccommodationEdit, validateBooking
+  validateAddNew,
+  validateImage,
+  validateExistence,
+  validateAccommodationEdit,
+  validateBooking,
+  validateReasons,
 } = InputValidation;
 const { checkSupplierRole, checkBookingRole } = checkRole;
 
@@ -193,8 +200,11 @@ router.post('/', validateToken, checkSupplierRole, catchEmptyForm, multipartMidd
 router.get('/', validateToken, getAllAccommodations);
 router.patch('/:id/edit', validateToken, checkId, catchEmptyForm, multipartMiddleware, isAccommodationFound, isOwner, validateAccommodationEdit, editAccommodation);
 router.delete('/:id/delete', validateToken, checkId, isAccommodationFound, isOwner, deleteAccommodation);
-router.get('/available', validateToken, availableAccommdation);
 router.get('/bookings', validateToken, viewBookings);
 router.patch('/book', validateToken, checkBookingRole, validateBooking, bookAccommdation);
+router.get('/:slug', validateToken, viewSpecificAccommodation);
+router.patch('/activate/:slug', validateToken, validateReasons, accommodationActivation);
+router.get('/admin/deactivated', validateToken, viewDeactivated);
+
 
 export default router;

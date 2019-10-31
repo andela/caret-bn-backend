@@ -15,8 +15,8 @@ let authToken;
 describe('Request Tests', () => {
     before('Sign in ', (done) => {
         chai.request(app)
-            .post('/api/v1/auth/facebook/')
-            .send({ access_token: facebookAccessToken })
+            .post('/api/v1/users/login')
+            .send(mockData.registeredUser)
             .end((err, res) => {
                 authToken = res.body.data.token;
                 

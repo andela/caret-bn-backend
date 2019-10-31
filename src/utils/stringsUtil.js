@@ -51,6 +51,7 @@ const strings = {
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
       NOT_ALLOWED: 'Access denied! a supplier can not access this part of the system!',
+      TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
     },
   },
   token: {
@@ -61,11 +62,17 @@ const strings = {
     success: {
       CREATED: 'New accommodation facility added successfully!',
       NO_INFO_YET: 'You have not added any accommodation facilities yet!',
-      NO_ACCOMMODATION: 'No accommodatin facilities were found',
+      NO_ACCOMMODATION: 'No accommodation facilities were found',
       RETRIEVED: 'Accommodation facilities are retrieved successfully!',
       FOUND: 'all available accommodation',
       BOOKED_FOUND: 'Your bookings',
-      SUCCESSFUL_BOOKED: 'Booking done successfully'
+      SUCCESSFUL_BOOKED: 'Booking done successfully',
+      SINGLE_ACCOMMODATION: 'Accommodation retrieved successfully!',
+      SINGLE_NOT_FOUND: 'Accommodation not found or fully booked!',
+      NOT_FOUND: 'Accommodation not found',
+      ACTIVATED: 'Accommodation successfully activated!',
+      DEACTIVATED: 'Accommodation successfully deactivated!',
+      DEACTIVATED_ACCOMMODATIONS: 'All Deactivated accommodations are retrieved successfully!',
     },
     error: {
       EXISTING: 'This accommodation already exists!',

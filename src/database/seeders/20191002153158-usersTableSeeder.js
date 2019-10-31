@@ -96,7 +96,7 @@ module.exports = {
       email: 'manager@caretbn.com',
       password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
       isVerified: true,
-      lineManager: 8,
+      lineManager: 9,
       role: 4,
       emailNotif: true,
       createdAt: new Date(),
@@ -110,6 +110,17 @@ module.exports = {
       lineManager: 8,
       role: 4,
       emailNotif: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      username: 'travelAdmin',
+      email: 'travelAdmin@caretbn.com',
+      password: '$2b$10$VyldWKIyiuVSqZYjmz4u8OepsFJFKzQipOQzhrhQKthgn8a9OI2Au',
+      isVerified: true,
+      emailNotif: true,
+      lineManager: 8,
+      role: 2,
       createdAt: new Date(),
       updatedAt: new Date()
     },

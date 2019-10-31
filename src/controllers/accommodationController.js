@@ -1,7 +1,6 @@
 /* eslint-disable radix */
 import cloudinary from 'cloudinary';
 import slugify from 'slugify';
-import sequelize from 'sequelize';
 import models from '../database/models';
 import strings from '../utils/stringsUtil';
 import responseUtil from '../utils/responseUtil';
@@ -9,11 +8,25 @@ import responseError from '../utils/responseError';
 import imageUploader from '../helpers/imageUploader';
 import checkDate from '../helpers/checkDateHelper';
 import bookingHelper from '../helpers/bookingHelper';
+import getAccommodation from '../helpers/getAccommodation';
+import sendEmail from '../helpers/emailHelper';
 
 cloudinary.config({ CLOUDINARY_URL: process.env.CLOUDINARY_URL });
 
+// const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
+
+const { getOneAccommodation, getAllAccommodations } = getAccommodation;
+
 const {
-  CREATED, NO_INFO_YET, RETRIEVED, NO_ACCOMMODATION, FOUND, BOOKED_FOUND
+  CREATED,
+  RETRIEVED,
+  NO_ACCOMMODATION,
+  BOOKED_FOUND,
+  SINGLE_ACCOMMODATION,
+  SINGLE_NOT_FOUND, NOT_FOUND,
+  ACTIVATED,
+  DEACTIVATED,
+  DEACTIVATED_ACCOMMODATIONS,
 } = strings.accommodation.success;
 
 export default class AccommodationController {
@@ -41,37 +54,18 @@ export default class AccommodationController {
       const newAccommodation = await models.accommodations.create(accommodation);
 
       return responseUtil(res, 201, CREATED, newAccommodation);
-    } catch (error) { return responseError(res, 400, error); }
+    } catch (error) {
+      if (error.sql) return responseError(res, 400, error.parent.detail);
+
+      return responseError(res, 400, 'error');
+    }
   }
 
   static async getAllAccommodations(req, res) {
-    const { role, id: owner } = req.user.payload;
-    if (role === 5) {
-      const MyAccommodations = await models.accommodations.findAll({
-        where: { owner },
-        attributes: { exclude: ['locationId'] },
-        include: [{
-          model: models.locations, as: 'accommodationLocation', attributes: ['id', 'name']
-        }]
-      });
+    const allAccommodations = await getAllAccommodations({ isActivated: true });
 
-      return responseUtil(res, 200, (MyAccommodations.length === 0)
-        ? NO_INFO_YET
-        : RETRIEVED, MyAccommodations);
-    }
-    if (role === 1) {
-      const allAccommodations = await models.accommodations.findAll({
-        attributes: { exclude: ['locationId'] },
-        include: [{
-          model: models.locations, as: 'accommodationLocation', attributes: ['id', 'name']
-        }]
-      });
-
-      return responseUtil(res, 200, (allAccommodations.length === 0)
-        ? NO_ACCOMMODATION
-        : RETRIEVED, allAccommodations);
-    }
-    return responseError(res, 403, strings.users.error.NO_ACCESS);
+    return responseUtil(res, 200, (allAccommodations.length === 0)
+      ? NO_ACCOMMODATION : RETRIEVED, allAccommodations);
   }
 
   static async editAccommodation(req, res) {
@@ -112,27 +106,6 @@ export default class AccommodationController {
     models.accommodations.destroy({ where: { id: accommodation.id } }).then(() => {
       responseUtil(res, 200, strings.accommodations.success.ACCOMMODATION_DELETED);
     });
-  }
-
-  static availableAccommdation(req, res) {
-    const { Op } = sequelize;
-    models.accommodations.findAll({
-      where: {
-        availableSpace: {
-          [Op.gt]: 0,
-        }
-      },
-      attributes: { exclude: ['locationId', 'owner'] },
-      include: [{
-        model: models.locations,
-        as: 'accommodationLocation',
-        attributes: ['id', 'name']
-      }, {
-        model: models.users,
-        as: 'ownerUser',
-        attributes: ['id', 'username', 'email']
-      }]
-    }).then(accommodation => responseUtil(res, 200, FOUND, accommodation));
   }
 
   static viewBookings(req, res) {
@@ -190,4 +163,59 @@ export default class AccommodationController {
     });
   }
 
+  static async viewSpecificAccommodation(req, res) {
+    const { role } = req.user.payload;
+    const { slug } = req.params;
+
+    if (role === 2) {
+      const accommodation = await getOneAccommodation({ slug });
+
+      return responseUtil(res, 200, (!accommodation)
+        ? NOT_FOUND : SINGLE_ACCOMMODATION, accommodation);
+    }
+    const available = await getOneAccommodation({ slug, isActivated: true });
+
+    return responseUtil(res, 200, (!available)
+      ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, available);
+  }
+
+  static async accommodationActivation(req, res) {
+    const { role } = req.user.payload;
+    const { slug } = req.params;
+    const { reasons } = req.body;
+
+    if (role === 2) {
+      try {
+        const accommodation = await getOneAccommodation({ slug });
+        const { name, ownerUser } = accommodation;
+
+        if (accommodation.isActivated === true) {
+          models.accommodations.update({ isActivated: false }, { where: { slug } });
+
+          sendEmail(ownerUser.email, 'Deactivated', name, reasons);
+
+          return responseUtil(res, 200, DEACTIVATED);
+        }
+        await models.accommodations.update({ isActivated: true }, { where: { slug } });
+
+        sendEmail(ownerUser.email, 'Activated', name, reasons);
+
+        return responseUtil(res, 200, ACTIVATED);
+
+      } catch (error) { return responseUtil(res, 200, NOT_FOUND); }
+    }
+    return responseUtil(res, 403, strings.users.error.TRAVEL_ADMINS_ONLY);
+  }
+
+  static async viewDeactivated(req, res) {
+    const { role } = req.user.payload;
+
+    if (role === 2) {
+      const deactivatedAccommodations = await getAllAccommodations({ isActivated: false });
+
+      return responseUtil(res, 200, (!deactivatedAccommodations.length)
+        ? NO_ACCOMMODATION : DEACTIVATED_ACCOMMODATIONS, deactivatedAccommodations);
+    }
+    return responseUtil(res, 403, strings.users.error.TRAVEL_ADMINS_ONLY);
+  }
 }
