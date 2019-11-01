@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import requestController from '../../controllers/requestController';
+import commentsController from '../../controllers/commentsController';
 import validateToken from '../../middlewares/auth/validateToken';
 import verifyRelationships from '../../middlewares/requests/relationVerification';
 import checkId from '../../middlewares/checkId';
@@ -18,11 +19,11 @@ const {
 } = requestController;
 
 const {
-  validateSearchRequestUser,
-  validateSearchRequestManager,
-  validateRequest,
+  validateSearchRequestUser, validateSearchRequestManager,
+  validateComment, validateRequest,
 } = InputValidation;
 const { checkManagerRole, supplierNotAllowed } = checkRole;
+const { editComment, deleteComment } = commentsController;
 
 /**
  * @swagger
@@ -152,5 +153,6 @@ router.get('/', validateToken, viewMyRequests);
 router.get('/manager', validateToken, checkManagerRole, viewManagerRequests);
 router.patch('/manager/:action/:id', validateToken, checkManagerRole, checkId, wrongAction, isProcessed, changeStatus);
 router.patch('/:id', validateToken, pendingRequest.requestOwner, pendingRequest.selectPending, validateRequest, pendingRequest.validateBody, updateRequest);
-
+router.put('/comments/:id', validateToken, checkId, validateComment, editComment);
+router.delete('/comments/:id', validateToken, checkId, deleteComment);
 export default router;

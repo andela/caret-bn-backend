@@ -203,4 +203,86 @@ describe('Request Tests', () => {
             done();
         });
     });
+    it('it Should be able to edit comment', (done) => {
+        chai.request(app)
+        .put('/api/v1/requests/comments/1')
+        .send(mockData.commentData)
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(200);
+            expect(body.message).to.be.eql('Comment Successfully Updated!');
+            done();
+        });
+    });
+    it('it Should not be able to edit comment with wrong id', (done) => {
+        chai.request(app)
+        .put('/api/v1/requests/comments/1677')
+        .send(mockData.commentData)
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(404);
+            expect(body.message).to.be.eql('Ooops! This comment does not exist!');
+            done();
+        });
+    });
+    it('it Should not be able to edit comment with empty comment', (done) => {
+        chai.request(app)
+        .put('/api/v1/requests/comments/1')
+        .send(mockData.emptyComment)
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+            const { status } = res;
+            expect(status).to.be.eql(400);
+            done();
+        });
+    });
+    it('it Should not be able to edit comment with anauthorized user', (done) => {
+        chai.request(app)
+        .put('/api/v1/requests/comments/1')
+        .send(mockData.commentData)
+        .set('Authorization', `Bearer ${managerToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(403);
+            expect(body.message).to.be.eql('Oops! You are not the owner of this comment!');
+            done();
+        });
+    });
+    
+    it('it Should not be able to delete a comment with wrong id', (done) => {
+        chai.request(app)
+        .delete('/api/v1/requests/comments/15566')
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(404);
+            expect(body.message).to.be.eql('Ooops! This comment does not exist!');
+            done();
+        });
+    });
+
+   it('it Should not be able to delete a comment with anauthorized user', (done) => {
+        chai.request(app)
+        .delete('/api/v1/requests/comments/1')
+        .set('Authorization', `Bearer ${managerToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(403);
+            expect(body.message).to.be.eql('Oops! You are not the owner of this comment!');
+            done();
+        });
+    });
+    it('it Should be able to delete a comment', (done) => {
+        chai.request(app)
+        .delete('/api/v1/requests/comments/1')
+        .set('Authorization', `Bearer ${userToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(200);
+            expect(body.message).to.be.eql('Comment Successfully Deleted!');
+            done();
+        });
+    });
 });
