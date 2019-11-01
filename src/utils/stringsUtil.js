@@ -44,14 +44,18 @@ const strings = {
   request: {
     success: {
       SUCCESS_UPDATE_REQUEST: 'Request Updated',
+      SUCCESS_ADD_COMMENT: 'Comment Added',
     },
     error: {
       INTERNAL_ERROR: 'Internal server error',
+      NO_REQUEST_REQUEST: 'This Id request does not exist',
       EDIT_YOUR_REQUEST: 'Access denied! you are not the owner of this request',
       NO_REQUEST: 'Access denied! You have no request to edit',
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
       SUPPLIER_NOT_ALLOWED: 'Access denied! Suppliers can not access this part of the system!',
       NOT_ALLOWED: 'Access denied! a supplier can not access this part of the system!',
+      TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
+      NOT_YOUR_REQUEST: 'You are not the owner of the request or the line manager of the user who placed it!',
     },
   },
   token: {

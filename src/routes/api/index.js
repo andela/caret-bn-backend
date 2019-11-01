@@ -5,6 +5,7 @@ import authRoutes from './auth/index';
 import requestRoutes from './requests';
 import accommodationsRoutes from './accommodations';
 import notificationsRoutes from './notifications';
+import comments from './comments';
 import swaggerRoute from '../swagger-doc';
 import ratingRoutes from './ratings';
 
@@ -16,6 +17,7 @@ router.use('/users', usersRoutes);
 router.use('/accommodations', accommodationsRoutes);
 router.use('/notifications', notificationsRoutes);
 router.use('/ratings', ratingRoutes);
+router.use('/comments', comments);
 router.use('/api-docs', swaggerRoute);
 
 export default router;

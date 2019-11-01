@@ -200,4 +200,11 @@ export default class InputValidation {
     });
     validation(req, res, schema, next);
   }
+
+  static validateComment(req, res, next) {
+    const schema = Joi.object({
+      comment: Joi.string().required(),
+    });
+    validation(req, res, schema, next);
+  }
 }
