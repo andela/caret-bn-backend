@@ -31,20 +31,24 @@ const ResetToken = user => {
 // Access token required for a user
 const UseraccessRequired = (req, res, next) => {
   const { token } = req.params;
-  const { email } = req.body;
   const decodedToken = jwt.decode(token, process.env.JWT_SECRET);
 
-  models.users.findOne({ where: { id: decodedToken.payload.id } })
-    .then(user => {
-      const now = moment().unix();
-      if (now > decodedToken.payload.expiration) {
-        return responseUtil(res, 400, strings.users.error.EXPERED);
-      }
-      if (!user || decodedToken.payload.send !== true || decodedToken.payload.email !== email) {
-        return responseUtil(res, 403, strings.users.error.ANAUTHORIZED);
-      }
-    });
-  next();
+  try {
+    models.users.findOne({ where: { id: decodedToken.payload.id } })
+      .then(user => {
+        const now = moment().unix();
+        if (now > decodedToken.payload.expiration) {
+          return responseUtil(res, 400, strings.users.error.EXPERED);
+        }
+        if (!user || decodedToken.payload.send !== true) {
+          return responseUtil(res, 403, strings.users.error.ANAUTHORIZED);
+        }
+      });
+    next();
+  } catch (error) {
+    return responseUtil(res, 400, strings.token.INVALID_TOKEN);
+  }
+
 };
 
 export default { ResetToken, UseraccessRequired };
