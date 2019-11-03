@@ -1,9 +1,9 @@
+import { Op } from 'sequelize';
 import models from '../database/models';
-import Utilities from '../utils/index';
 
 const managerUserIdField = async (req, res, next) => {
   // eslint-disable-next-line max-len
-  if ((Object.keys(req.body).length === 0) || (Object.keys(req.body).length > 0 && !Object.keys(req.body).includes('userId'))) {
+  if ((Object.keys(req.body).length === 0) || (Object.keys(req.body).length > 0 && !Object.keys(req.body).includes('username'))) {
     const managerId = req.user.payload.id;
     const myUsers = [];
 
@@ -16,20 +16,22 @@ const managerUserIdField = async (req, res, next) => {
     return next();
   }
 
-  const user = await models.users.findOne({
-    where: {
-      id: req.body.userId,
-    }
+  const users = await models.users.findAll({
+    where: { username: { [Op.iLike]: `%${req.body.username}%` }, lineManager: req.user.payload.id }
   });
 
-  if (user.lineManager !== req.user.payload.id) {
-    return Utilities.responseHelper(
-      res,
-      Utilities.stringsHelper.user.requests.NOT_MANAGER,
-      {},
-      403
-    );
+  const userId = [];
+
+  if (users.length) {
+    users.forEach(user => {
+      userId.push(user.id);
+    });
+  } else {
+    userId.push(0);
   }
+
+  req.body.userId = userId;
+
   return next();
 };
 

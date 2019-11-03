@@ -12,6 +12,7 @@ import catchSearchQueries from '../../middlewares/catchSearchQueries';
 import pendingRequest from '../../middlewares/request';
 import isProcessed from '../../middlewares/isProcessed';
 import wrongAction from '../../middlewares/wrongAction';
+import catchOriginDestination from '../../middlewares/catchOriginDestination';
 
 const router = new Router();
 const {
@@ -148,7 +149,7 @@ router.use(validateToken);
 router.post('/', verifyRelationships, (req, res) => requestController.storeRequest(req, res));
 router.get('/search', validateToken, catchSearchQueries, supplierNotAllowed, validateSearchRequestUser, checkUserIdField, searchRequests);
 // eslint-disable-next-line max-len
-router.get('/manager/search', validateToken, catchSearchQueries, supplierNotAllowed, checkManagerRole, validateSearchRequestManager, managerUserIdField, searchRequests);
+router.get('/manager/search', validateToken, catchSearchQueries, supplierNotAllowed, checkManagerRole, validateSearchRequestManager, managerUserIdField, catchOriginDestination, searchRequests);
 router.get('/', validateToken, viewMyRequests);
 router.get('/manager', validateToken, checkManagerRole, viewManagerRequests);
 router.patch('/manager/:action/:id', validateToken, checkManagerRole, checkId, wrongAction, isProcessed, changeStatus);
