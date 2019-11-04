@@ -83,16 +83,6 @@ describe('Search Requests Tests', () => {
       });
   });
 
-  it('Should not return requests of users not assigned to the manager by sending 403 status code', done => {
-    chai.request(app)
-      .get('/api/v1/requests/manager/search?userId=3')
-      .set('Authorization', `Bearer ${anotherManagerToken}`)
-      .end((err, res) => {
-        res.should.have.property('status').eql(403);
-        done();
-      });
-  });
-
   it('Should not give access to non-Managers by returning 403', done => {
     chai.request(app)
       .get('/api/v1/requests/manager/search?userId=3')
@@ -109,6 +99,46 @@ describe('Search Requests Tests', () => {
       .set('Authorization', `Bearer ${managerToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(200);
+        done();
+      });
+  });
+
+  it('Should return requests that match username, 200 status code', done => {
+    chai.request(app)
+      .get('/api/v1/requests/manager/search?username=alain')
+      .set('Authorization', `Bearer ${managerToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        done();
+      });
+  });
+
+  it('Should return requests that match origin, 200 status code', done => {
+    chai.request(app)
+      .get('/api/v1/requests/manager/search?origin=kamp')
+      .set('Authorization', `Bearer ${managerToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        done();
+      });
+  });
+
+  it('Should return requests that match destination, 200 status code', done => {
+    chai.request(app)
+      .get('/api/v1/requests/manager/search?destination=lagos')
+      .set('Authorization', `Bearer ${managerToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        done();
+      });
+  });
+
+  it('Should not return requests that match username, 404 status code', done => {
+    chai.request(app)
+      .get('/api/v1/requests/manager/search?username=krinkun')
+      .set('Authorization', `Bearer ${managerToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(404);
         done();
       });
   });

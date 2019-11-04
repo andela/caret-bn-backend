@@ -116,10 +116,8 @@ export default class InputValidation {
   static validateSearchRequestUser(req, res, next) {
     const schema = Joi.object({
       id: Joi.number().integer().min(1),
-      destination: Joi.number().integer().min(1)
-        .message('Enter the id of the location'),
-      origin: Joi.number().integer().min(1)
-        .message('Enter the id of the location'),
+      destination: Joi.string().trim().min(3),
+      origin: Joi.string().trim().min(3),
       duration: Joi.number().integer().min(1),
       departureDate: Joi.string()
         .regex(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/)
@@ -134,11 +132,9 @@ export default class InputValidation {
   static validateSearchRequestManager(req, res, next) {
     const schema = Joi.object({
       id: Joi.number().integer().min(1),
-      userId: Joi.number().integer().min(1),
-      destination: Joi.number().integer().min(1)
-        .message('Enter the id of the location'),
-      origin: Joi.number().integer().min(1)
-        .message('Enter the id of the location'),
+      username: Joi.string().trim().min(3),
+      destination: Joi.string().trim().min(3),
+      origin: Joi.string().trim().min(3),
       duration: Joi.number().integer().min(1),
       departureDate: Joi.string()
         .regex(/^\d{4}(-)(((0)[0-9])|((1)[0-2]))(-)([0-2][0-9]|(3)[0-1])$/)
