@@ -21,7 +21,7 @@ const notifSender = async (subject, request, userId, APP_URL_BACKEND, activity) 
     const user = await findUser({ id: userId });
 
     if (user.appNotif) {
-      const notification = await notifBuilder(request, userId, activity);
+      const notification = await notifBuilder(request, userId, `A request has been ${activity}. Click here to view: ${APP_URL_BACKEND}/api/v1/requests/${request.id}.`);
       await notifSaver(notification);
     }
 
