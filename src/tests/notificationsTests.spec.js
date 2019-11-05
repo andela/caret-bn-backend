@@ -85,7 +85,7 @@ describe('Notifications Tests', () => {
 
   it('Should mark all notifications as read', done => {
     chai.request(app)
-      .patch('/api/v1/notifications/mark/read')
+      .patch('/api/v1/notifications/mark-all/read')
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(200);
@@ -96,11 +96,44 @@ describe('Notifications Tests', () => {
 
   it('Should not mark all notifications as read twice', done => {
     chai.request(app)
-      .patch('/api/v1/notifications/mark/read')
+      .patch('/api/v1/notifications/mark-all/read')
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(409);
-        res.body.should.have.property('message').eql('You have no unread notifications');
+        res.body.should.have.property('message').eql('All notifications marked as read already.');
+        done();
+      });
+  });
+
+  it('Should mark all notifications as unread', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/unread')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        res.body.should.have.property('message').eql('marked all notifications as unread');
+        done();
+      });
+  });
+
+  it('Should not mark all notifications as read twice', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/unread')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(409);
+        res.body.should.have.property('message').eql('All notifications marked as unread already.');
+        done();
+      });
+  });
+
+  it('Should reject unknown actions', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/unreads')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(400);
+        res.body.should.have.property('message').eql('Unspecified action');
         done();
       });
   });

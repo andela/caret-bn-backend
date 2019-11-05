@@ -1,3 +1,4 @@
+/* eslint-disable  require-jsdoc */
 import models from '../database/models';
 
 export default class notifServices {

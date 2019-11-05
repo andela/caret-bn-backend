@@ -2,7 +2,6 @@ import express from 'express';
 import UserController from '../../controllers/userController';
 import profile from '../../controllers/profileController';
 import EmailToken from '../../utils/EmailToken';
-import validateResetpassword from '../../middlewares/checkResetpassword';
 import verifyExist from '../../middlewares/verifyExist';
 import validateToken from '../../middlewares/auth/validateToken';
 import InputValidation from '../../middlewares/inputValidation';
@@ -12,7 +11,9 @@ import wrongSwitch from '../../middlewares/wrongSwitch';
 
 const { signup, signIn, switchNotif } = UserController;
 const { updateProfile, getProfile } = profile;
-const { validateProfile, validateLogin, validateSignup } = InputValidation;
+const {
+  validateProfile, validateLogin, validateSignup, validateEmail, validateResetpassword
+} = InputValidation;
 
 
 const router = express.Router();
@@ -274,8 +275,8 @@ const router = express.Router();
 
 router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
-router.post('/forgotpassword', validateResetpassword.checkEmail, UserController.Providelink);
-router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword.checkReset, UserController.Changepassword);
+router.post('/forgotpassword', validateEmail, UserController.Providelink);
+router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword, UserController.Changepassword);
 router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
 router.post('/login', validateLogin, signIn);
 router.get('/profile/:email', validateToken, user.compareData, getProfile);
