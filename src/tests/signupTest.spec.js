@@ -10,6 +10,7 @@ import EmailToken from '../utils/EmailToken';
 const token = generateToken(testdata.verifyUser);
 const validTroken = EmailToken.ResetToken(testdata.validuser);
 const invalidToken = EmailToken.ResetToken(testdata.invaliduser);
+const invalidToken2 = 'hdhdhdhj';
 
 chai.should();
 chai.use(chaiHttp);
@@ -158,24 +159,34 @@ describe('Signup Test Suite', () => {
         done();
       });
   });
-
-  it('user Should not reset password with wrong email', done => {
+  
+  it('user Should not reset password with wrong Token', done => {
     chai.request(app)
-      .patch(`/api/v1/users/resetpassword/${validTroken}`)
-      .send(testdata.wrongEmail)
+      .patch(`/api/v1/users/resetpassword/${invalidToken}`)
+      .send(testdata.passwordData2)
+      .end((err, res) => {
+        res.should.have.property('status').eql(404);
+        res.body.should.have.property('message').eql('can not find that user');
+        done();
+      });
+  });
+  it('user Should not reset password with wrong Token', done => {
+    chai.request(app)
+      .patch(`/api/v1/users/resetpassword/${token}`)
+      .send(testdata.passwordData2)
       .end((err, res) => {
         res.should.have.property('status').eql(403);
         res.body.should.have.property('message').eql('you are not authorized to access this page');
         done();
       });
   });
-  it('user Should not reset password with wrong Token', done => {
+  it('user Should not reset password with invalid Token', done => {
     chai.request(app)
-      .patch(`/api/v1/users/resetpassword/${invalidToken}`)
+      .patch(`/api/v1/users/resetpassword/${invalidToken2}`)
       .send(testdata.passwordData2)
       .end((err, res) => {
-        res.should.have.property('status').eql(403);
-        res.body.should.have.property('message').eql('you are not authorized to access this page');
+        res.should.have.property('status').eql(400);
+        res.body.should.have.property('message').eql('Invalid token!');
         done();
       });
   });

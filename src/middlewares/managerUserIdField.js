@@ -6,7 +6,6 @@ const managerUserIdField = async (req, res, next) => {
   if ((Object.keys(req.body).length === 0) || (Object.keys(req.body).length > 0 && !Object.keys(req.body).includes('username'))) {
     const managerId = req.user.payload.id;
     const myUsers = [];
-
     await models.users.findAll({
       where: {
         lineManager: managerId,

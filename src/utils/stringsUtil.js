@@ -9,7 +9,7 @@ const strings = {
       PASSWORD_CHANGED: 'password changed successfully',
       SUCCESS_UPDATE: 'User Updated',
       SUCCESSFUL_LOGIN: 'User logged in successfully!',
-      SUCCESSFUL_ASSIGN: 'you assign the role to user',
+      SUCCESSFUL_ASSIGN: 'you have assigned the role to this user',
       ROLE_ADDED: 'role added successfully'
     },
     error: {

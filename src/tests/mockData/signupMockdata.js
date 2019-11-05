@@ -114,29 +114,24 @@ const testdata = {
     email: 'teamcaret41@gmail.com',
   },
   passwordData2: {
-    email: 'teamcaret@gmail.com',
-    newpassword: 'Pa$6W0rd',
-    confirmpassword: 'Pa$6W0rd',
+    newPassword: 'Pa$6W0rd',
+    confirmPassword: 'Pa$6W0rd',
   },
   Missingpassword: {
-    email: 'teamcaret@gmail.com',
-    newpassword: '',
-    confirmpassword: 'Pa$6W0rd',
+    newPassword: '',
+    confirmPassword: 'Pa$6W0rd',
   },
   Invalidpassword: {
-    email: 'teamcaret@gmail.com',
-    newpassword: 'Pa$6W0re',
-    confirmpassword: 'Pa$6W0rd',
+    newPassword: 'Pa$6W0re',
+    confirmPassword: 'Pa$6W0rd',
   },
   invaliduser2: {
-    email: 'teamcaret41@gmail.com',
-    newpassword: 'Pa$5W0re',
-    confirmpassword: 'Pa$6W0rd',
+    newPassword: 'Pa$5W0re',
+    confirmPassword: 'Pa$6W0rd',
   },
   wrongEmail: {
-    email: 'teamcaret41@gmail.com',
-    newpassword: 'Pa$5W0re',
-    confirmpassword: 'Pa$6W0rd',
+    newPassword: 'Pa$5W0re',
+    confirmPassword: 'Pa$6W0rd',
   },
 
 };
