@@ -1,4 +1,5 @@
 /* eslint-disable no-irregular-whitespace */
+/* eslint-disable require-jsdoc */
 import Sequelize from 'sequelize';
 import models from '../database/models';
 import strings from '../utils/stringsUtil';

@@ -31,7 +31,7 @@ describe('<=== Destination Tests ===>', () => {
 
     it('Should retrieve the top visited locations', (done) => {
         chai.request(app)
-            .get('/api/v1/destinations/top-locations')
+            .get('/api/v1/destinations/most-visited')
             .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
                 expect(res.status).to.be.eql(200, 'Invalid Status Returned');
@@ -41,10 +41,10 @@ describe('<=== Destination Tests ===>', () => {
 
     it('Should not allow suppliers to view route', (done) => {
         chai.request(app)
-            .get('/api/v1/destinations/top-locations')
+            .get('/api/v1/destinations/most-visited')
             .set('Authorization', `Bearer ${supplierToken}`)
             .end((err, res) => {
-                expect(res.status).to.be.eql(401, 'Invalid Status Returned');
+                expect(res.status).to.be.eql(403, 'Invalid Status Returned');
                 done();
             });
     });

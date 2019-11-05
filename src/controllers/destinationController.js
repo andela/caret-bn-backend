@@ -1,6 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable max-len */
 /* eslint-disable function-paren-newline */
+/* eslint-disable require-jsdoc */
 import destinationServices from '../services/requestServices/destinationServices';
 import { findOne, allRequests } from '../services/requestServices/requestServices';
 import { allDestinations } from '../utils/db/queries/destinationQueries';
@@ -34,10 +35,8 @@ export default class destinationController {
   }
 
   static async viewTopDestinations(req, res) {
-
-    const allTravelledRequests = await allRequests(allDestinations);
-
-    const destinations = await Promise.all(allTravelledRequests.map(async request => {
+    const approvedTravelRequests = await allRequests(allDestinations);
+    const destinations = await Promise.all(approvedTravelRequests.map(async request => {
       const destination = await request.destinations;
       return destination;
     }));
@@ -62,7 +61,7 @@ export default class destinationController {
 
     return Utilities.responseHelper(
       res,
-      'Top visited locations',
+      'Top 5 locations',
       singleLocations.sort((first, second) => second.numberOfVisits - first.numberOfVisits).slice(0, 5),
       200
     );
