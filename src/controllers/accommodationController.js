@@ -7,7 +7,7 @@ import strings from '../utils/stringsUtil';
 import responseUtil from '../utils/responseUtil';
 import responseError from '../utils/responseError';
 import imageUploader from '../helpers/imageUploader';
-import checkDate from '../helpers/checkDateHelper';
+import checkDateHelper from '../helpers/checkDateHelper';
 import bookingHelper from '../helpers/bookingHelper';
 import getAccommodation from '../helpers/getAccommodation';
 import sendEmail from '../helpers/emailHelper';
@@ -139,7 +139,7 @@ export default class AccommodationController {
           return responseUtil(res, 400, strings.accommodation.error.NOT_AVAILABLE);
         }
 
-        checkDate(res, checkInDate, checkOutDate);
+        checkDateHelper.checkDate(res, checkInDate, checkOutDate);
         const bookingData = {
           userId: req.user.payload.id,
           accommodationId: accomodationId,
