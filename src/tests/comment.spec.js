@@ -8,6 +8,8 @@ import generateToken from '../utils/generateToken';
 const token = generateToken(mockdata.verifiedUser1);
 const token2 = generateToken(mockdata.requester);
 const token3 = generateToken(mockdata.verifiedUser);
+let managerToken;
+let userToken;
 
 chai.should();
 chai.use(chaiHttp);
@@ -19,10 +21,37 @@ const newRequest = {
 }
 
 describe('comment tests', () =>{
+    before(done => {
+        chai.request(app)
+          .post('/api/v1/users/login')
+          .send(mockdata.registeredUser)
+          .end((err, res) => {
+            userToken = res.body.data.token;
+          });
+        chai.request(app)
+          .post('/api/v1/users/login')
+          .send(mockdata.manager)
+          .end((err, res) => {
+            managerToken = res.body.data.token;
+            done();
+          });
+      });
+    
+
     it('should add new comment', (done) => {
       chai.request(app)  
       .post('/api/v1/comments/2')
-      .set('Authorization', `Bearer ${token}`)
+      .set('Authorization', `Bearer ${userToken}`)
+      .send(newRequest)
+      .end((err, res) => {
+          res.should.have.property('status').eql(200);
+      done();
+      });
+  });
+    it('should add new comment', (done) => {
+      chai.request(app)  
+      .post('/api/v1/comments/2')
+      .set('Authorization', `Bearer ${managerToken}`)
       .send(newRequest)
       .end((err, res) => {
           res.should.have.property('status').eql(200);
