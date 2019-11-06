@@ -33,9 +33,9 @@ describe('Notifications Tests', () => {
     chai.request(app)
       .patch('/api/v1/notifications/3/mark')
       .set('Authorization', `Bearer ${userToken}`)
-      .end((err, res) => {        
+      .end((err, res) => {
         res.should.have.property('status').eql(200);
-        res.body.should.have.property('message').eql(`This notification status has been marked as 'read'`);
+        res.body.should.have.property('message').eql('This notification status has been marked as read');
         done();
       });
   });
@@ -46,7 +46,7 @@ describe('Notifications Tests', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(200);
-        res.body.should.have.property('message').eql(`This notification status has been marked as 'unread'`);
+        res.body.should.have.property('message').eql('This notification status has been marked as unread');
         done();
       });
   });
@@ -56,11 +56,12 @@ describe('Notifications Tests', () => {
     chai.request(app)
       .get('/api/v1/notifications/')
       .set('Authorization', `Bearer ${userToken}`)
-      .end((err, res) => {        
+      .end((err, res) => {
         res.should.have.property('status').eql(200);
         done();
       });
   });
+
 
   it('Should get one notification', done => {
     chai.request(app)
@@ -81,6 +82,62 @@ describe('Notifications Tests', () => {
         done();
       });
   });
+
+  it('Should mark all notifications as read', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/read')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        res.body.should.have.property('message').eql('marked all notifications as read');
+        done();
+      });
+  });
+
+  it('Should not mark all notifications as read twice', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/read')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(409);
+        res.body.should.have.property('message').eql('All notifications marked as read already.');
+        done();
+      });
+  });
+
+  it('Should mark all notifications as unread', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/unread')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(200);
+        res.body.should.have.property('message').eql('marked all notifications as unread');
+        done();
+      });
+  });
+
+  it('Should not mark all notifications as read twice', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/unread')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(409);
+        res.body.should.have.property('message').eql('All notifications marked as unread already.');
+        done();
+      });
+  });
+
+  it('Should reject unknown actions', done => {
+    chai.request(app)
+      .patch('/api/v1/notifications/mark-all/unreads')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        res.should.have.property('status').eql(400);
+        res.body.should.have.property('message').eql('Unspecified action');
+        done();
+      });
+  });
+
 
   // Acivate/Deactivate Email Notifications
   it('Should deactivate email notifications', done => {
