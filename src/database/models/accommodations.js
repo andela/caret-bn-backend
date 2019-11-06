@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const accommodations = sequelize.define('accommodations', {
+  const accommodations = sequelize.define( "accommodations",{
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     locationId: DataTypes.INTEGER,
@@ -11,29 +11,34 @@ module.exports = (sequelize, DataTypes) => {
     owner: DataTypes.INTEGER,
     images: DataTypes.JSONB,
     slug: DataTypes.STRING,
-    isActivated: DataTypes.BOOLEAN,
-  }, { tableName: 'accommodations' });
+    isActivated: DataTypes.BOOLEAN
+  }, { tableName: "accommodations" });
   accommodations.associate = models => {
     // associations can be defined here
     accommodations.belongsTo(models.users, {
-      as: 'ownerUser',
-      foreignKey: 'owner',
-      targetKey: 'id',
+      as: "ownerUser",
+      foreignKey: "owner",
+      targetKey: "id"
     });
     accommodations.belongsTo(models.locations, {
-      as: 'accommodationLocation',
-      foreignKey: 'locationId',
-      targetKey: 'id',
+      as: "accommodationLocation",
+      foreignKey: "locationId",
+      targetKey: "id"
     });
     accommodations.hasMany(models.ratings, {
-      targetKey: 'accommodationId',
-      sourceKey: 'id',
-      as: 'ratings'
+      targetKey: "accommodationId",
+      sourceKey: "id",
+      as: "ratings"
     });
     accommodations.hasMany(models.bookmarks, {
-      targetKey: 'accommodationId',
-      sourceKey: 'id',
-      as: 'bookmarks'
+      targetKey: "accommodationId",
+      sourceKey: "id",
+      as: "bookmarks"
+    });
+    accommodations.hasMany(models.likes, {
+      targetKey: "accommodationId",
+      sourceKey: "id",
+      as: "accomodationLike"
     });
   };
   return accommodations;

@@ -9,8 +9,6 @@ chai.should();
 chai.use(chaiHttp);
 
 const userToken = generateToken(mockData.verifiedUser1);
-console.log(userToken);
-
 const userToken2 = generateToken(mockData.verifiedUser3);
 const wrongToken = 'wrongToken'
 
