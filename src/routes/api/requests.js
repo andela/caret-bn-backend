@@ -144,6 +144,32 @@ const { editComment, deleteComment } = commentsController;
  *       '404':
  *         description: No Requests Registered!
 */
+/**
+ * @swagger
+ * /requests/{id}:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Requests
+ *     name: Get a single request
+ *     summary: Get a single request
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema:
+ *          type: integer
+ *          example: 3
+ *     responses:
+ *       '200':
+ *         description: Request Fetched Successfully!
+ *       '404':
+ *         description: No Requests Registered!
+*/
 
 router.use(validateToken);
 
@@ -159,4 +185,5 @@ router.put('/comments/:id', validateToken, checkId, validateComment, editComment
 router.delete('/comments/:id', validateToken, checkId, deleteComment);
 router.get('/stats/', validateToken, supplierNotAllowed, catchSearchQueries, validateRequestStas, getStats);
 router.get('/:id', (req, res) => requestController.findOne(req, res));
+
 export default router;

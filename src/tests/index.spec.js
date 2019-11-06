@@ -16,6 +16,7 @@ import commentsTests from './comment.spec';
 import destinationTests from './destinationTests.spec';
 import chatTests from './chatTests.spec';
 import RequestStats from './RequestStats.spec'
+import bookingTests from './bookingsTests.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -39,4 +40,5 @@ describe('Comments Tests', commentsTests);
 describe('Destination Tests', destinationTests);
 describe('Chat Tests', chatTests);
 describe('RequestStats Tests', RequestStats);
+describe('Booking Tests', bookingTests);
 

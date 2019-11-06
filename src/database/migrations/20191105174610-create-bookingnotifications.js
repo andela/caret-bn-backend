@@ -1,27 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('bookings', {
+    return queryInterface.createTable('bookingNotifications', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      bookingId: {
         type: Sequelize.INTEGER
       },
-      accommodationId: {
+      userNotified: {
         type: Sequelize.INTEGER
       },
-      bookedSpace: {
-        type: Sequelize.INTEGER
+      activity: {
+        type: Sequelize.STRING
       },
-      checkIn: {
-        type: Sequelize.DATEONLY
-      },
-      checkOut: {
-        type: Sequelize.DATEONLY
+      isRead: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('bookings');
+    return queryInterface.dropTable('bookingNotifications');
   }
 };

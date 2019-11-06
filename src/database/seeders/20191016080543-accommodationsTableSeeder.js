@@ -66,6 +66,36 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        name: 'Crocs Hotel',
+        description: 'Chop Chop',
+        locationId: 3,
+        availableSpace: '20',
+        cost: 150,
+        currency: 'USD',
+        highlights: 'Alligators',
+        amenities: 'Swim with Crocs',
+        owner: 7,
+        slug: 'crocs-hotel',
+        images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/i2ro51fa8luaspg8j.png"',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Clouds',
+        description: 'Poua Poua',
+        locationId: 3,
+        availableSpace: '50',
+        cost: 75,
+        currency: 'USD',
+        highlights: 'Nuages',
+        amenities: 'Sky DIving',
+        owner: 11,
+        slug: 'crocs-hotel',
+        images: '"http://res.cloudinary.com/codeal/image/upload/v15712/19161/i2ro51fa8luaspg8j.png"',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ])
   ]),
 

@@ -24,7 +24,7 @@ export default class destinationController {
 
     const { lineManager } = user.payload;
 
-    await notifSender('Request Created', request, lineManager, APP_URL_BACKEND, 'created');
+    await notifSender('Request Created', request, lineManager, APP_URL_BACKEND, 'created', 'request');
 
     return Utilities.responseHelper(
       res,

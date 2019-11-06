@@ -11,6 +11,8 @@ import checkDate from '../helpers/checkDateHelper';
 import bookingHelper from '../helpers/bookingHelper';
 import getAccommodation from '../helpers/getAccommodation';
 import sendEmail from '../helpers/emailHelper';
+import responseHelper from '../utils/responseHelper';
+import notifSender from '../helpers/notifSender';
 
 cloudinary.config({ CLOUDINARY_URL: process.env.CLOUDINARY_URL });
 
@@ -27,6 +29,8 @@ const {
   ACTIVATED,
   DEACTIVATED,
   DEACTIVATED_ACCOMMODATIONS,
+  NO_BOOKING,
+  FOUND_BOOKINGS,
 } = strings.accommodation.success;
 
 export default class AccommodationController {
@@ -113,9 +117,8 @@ export default class AccommodationController {
       where: {
         userId: req.user.payload.id
       },
-      attributes: { exclude: ['accommodationId', 'userId'] },
-      include: [{ association: 'accommodation', attributes: ['id', 'name', 'description', 'cost', 'currency', 'owner', 'images'] },
-      { association: 'user', attributes: ['id', 'username', 'email'] }],
+      attributes: { exclude: ['accommodationId', 'userId', 'statusId'] },
+      include: bookingHelper.bookingAssociations,
     }).then(book => responseUtil(res, 200, BOOKED_FOUND, book));
   }
 
@@ -123,6 +126,8 @@ export default class AccommodationController {
     const {
       checkInDate, checkOutDate, accomodationId, roomsNumber
     } = req.body;
+
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
 
     bookingHelper.findAccomodation(req).then(bookings => {
       if (!bookings) {
@@ -142,18 +147,23 @@ export default class AccommodationController {
           checkIn: checkInDate,
           checkOut: checkOutDate,
         };
-        bookingHelper.findBooked(req, accommodation[0].id).then(booked => {
+        bookingHelper.findBooked(req, accommodation[0].id).then(async booked => {
           if (booked.length === 0) {
 
             if (accommodation[0].availableSpace < roomsNumber) {
 
               return responseUtil(res, 400, strings.accommodation.error.EXCEED_NUMBER);
             }
-            models.booking.create(bookingData);
+            const newBooking = await models.booking.create(bookingData);
 
-            const remainingSpace = parseInt(accommodation[0].availableSpace) - roomsNumber;
-
-            bookingHelper.updateAccomodation(req, remainingSpace);
+            await notifSender(
+              'Accommodation Booked',
+              newBooking,
+              accommodation[0].owner,
+              APP_URL_BACKEND,
+              'placed',
+              'booking'
+              );
 
             return responseUtil(res, 200, strings.accommodation.success.SUCCESSFUL_BOOKED);
           }
@@ -217,5 +227,76 @@ export default class AccommodationController {
         ? NO_ACCOMMODATION : DEACTIVATED_ACCOMMODATIONS, deactivatedAccommodations);
     }
     return responseUtil(res, 403, strings.users.error.TRAVEL_ADMINS_ONLY);
+  }
+
+  static async searchBookings(req, res) {
+    const bookings = await bookingHelper.findBookings(req.body);
+    let myBookings = [];
+
+    if (bookings.length) {
+      bookingHelper.filterOwner(bookings, myBookings, req.user.payload.id);
+    } else {
+      myBookings = bookings;
+    }
+
+    return responseUtil(res, (!myBookings.length) ? 404 : 200, (!myBookings.length)
+        ? NO_BOOKING : FOUND_BOOKINGS, myBookings.reverse());
+  }
+
+  static async changeStatus(req, res) {
+    const { id } = req.params;
+    const {
+      statusId, activity, subject, responseMessage, actionIsApprove
+    } = req;
+
+    const bookingToProcess = await bookingHelper.findOneBooking({ id });
+    const { accommodationId } = bookingToProcess;
+
+    const accommodation = await bookingHelper.findOneAccommodation({ id: accommodationId });
+
+    if (accommodation.owner !== req.user.payload.id) {
+      return responseHelper(res, strings.accommodations.error.NOT_OWNER, null, 403);
+    }
+
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
+
+    if (bookingToProcess) {
+      let booking = await models.booking.update({ statusId }, { where: { id }, returning: true, });
+
+      booking = booking[1][0].dataValues;
+
+      if (actionIsApprove) {
+        const remainingSpace = accommodation.availableSpace - bookingToProcess.bookedSpace;
+        req.body.accomodationId = accommodation.id;
+        await bookingHelper.updateAccomodation(req, remainingSpace);
+      }
+
+      await notifSender(subject, booking, booking.userId, APP_URL_BACKEND, activity, 'booking');
+      return responseHelper(res, responseMessage, null, 200);
+    }
+    return responseHelper(res, strings.accommodations.error.BOOKING_NOT_FOUND, null, 404);
+  }
+
+  static async viewOneBooking(req, res) {
+    const { id } = req.params;
+    const { role } = req.user.payload;
+    models.booking.findOne({
+      where: {
+        id,
+      },
+      attributes: { exclude: ['accommodationId', 'userId', 'statusId'] },
+      include: bookingHelper.bookingAssociations,
+    }).then(booking => {
+      if (!booking) {
+        return responseUtil(res, 404, NO_BOOKING);
+      }
+      // eslint-disable-next-line max-len
+      if ((role === 5 && booking.accommodation.owner !== req.user.payload.id) || (role !== 5 && booking.user.id !== req.user.payload.id)) {
+        return responseUtil(res, 404, NO_BOOKING);
+      }
+
+     return responseUtil(res, 200, BOOKED_FOUND, booking);
+    });
+
   }
 }

@@ -229,4 +229,11 @@ export default class InputValidation {
     validation(req, res, schema, next);
   }
 
+  static validateStatusQuery(req, res, next) {
+    const schema = Joi.object({
+      status: Joi.string().required().valid('pending', 'approved', 'rejected'),
+    });
+    validation(req, res, schema, next);
+  }
+
 }
