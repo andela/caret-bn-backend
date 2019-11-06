@@ -3,7 +3,9 @@ import notificationController from '../../controllers/notificationController';
 import validateToken from '../../middlewares/auth/validateToken';
 import checkId from '../../middlewares/checkId';
 
-const { allNotifications, oneNotification, switchRead } = notificationController;
+const {
+  allNotifications, oneNotification, switchRead, markAll
+} = notificationController;
 const router = express.Router();
 
 /**
@@ -78,9 +80,31 @@ const router = express.Router();
  *       '404':
  *         description: No Notification Found!
 */
-
+/**
+ * @swagger
+ * /notifications/mark-all/mark:
+ *   patch:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Notifications
+ *     name: Mark all notifications as read/unread
+ *     summary: Mark all notifications as read/unread
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       '200':
+ *         description: marked all notifications as read/unread
+ *       '404':
+ *         description: All notifications marked as read/unread already
+ *       '400':
+ *         description: Unspecified action
+*/
 router.get('/', validateToken, allNotifications);
 router.get('/:id', validateToken, checkId, oneNotification);
 router.patch('/:id/mark', validateToken, checkId, switchRead);
+router.patch('/mark-all/:action', validateToken, markAll);
 
 export default router;

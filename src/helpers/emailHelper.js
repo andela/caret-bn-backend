@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -30,7 +33,27 @@ const sendEmail = (email, action, name, reasons) => {
   } catch (error) {
     return error;
   }
-
 };
 
-export default sendEmail;
+const resetEmail = (req, email, verifyToken) => {
+  try {
+    const message = {
+      to: email,
+      from: 'BarefootNomad@gmail.com',
+      subject: 'Barefoot Nomad Reset password Link',
+      html: `<div style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:35px;">
+        <h1 style="color: #848484;">Barefoot Nomad</h1>
+        <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">Welcome Back,<br> We are happy to be with you. Please you can reset your password now.<br> Click the button below to reset your password.</p>
+        <p><a style="background-color: #3097d1; border: 2px solid #3097d1; padding: 8px; color: #fff; font-size: 16px; text-decoration: none;cursor: pointer;" href="${req.protocol}://${req.headers.host}/api/v1/users/resetpassword/${verifyToken}">Reset password</a>
+        </a></p>
+        <p style="color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">Thank you for using our application!</p>
+        <p style="color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;">Regards,<br>Barefoot Nomad Caret Team</p>
+        </div>`
+    };
+    transporter.sendMail(message);
+  } catch (error) {
+    return error;
+  }
+};
+
+export default { sendEmail, resetEmail };

@@ -205,4 +205,20 @@ export default class InputValidation {
     });
     validation(req, res, schema, next);
   }
+
+  static validateResetpassword(req, res, next) {
+    const schema = Joi.object({
+      newPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/).message('password field should contain at least 8 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
+      confirmPassword: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/).message('confirmpassword field should contain at least 8 characters, at least 1 lowercase, 1 uppercase and 1 number and a special character.').required(),
+    });
+    validation(req, res, schema, next);
+  }
+
+  static validateEmail(req, res, next) {
+    const schema = Joi.object({
+      email: Joi.string().email({ minDomainSegments: 2 }).message('email field should be a valid email address. e.g: johndoe@gmail.com.').required(),
+    });
+    validation(req, res, schema, next);
+  }
+
 }

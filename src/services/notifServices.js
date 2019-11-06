@@ -1,3 +1,4 @@
+/* eslint-disable  require-jsdoc */
 import models from '../database/models';
 
 export default class notifServices {
@@ -6,8 +7,8 @@ export default class notifServices {
     return notification;
   }
 
-  static async allNotif(userNotified) {
-    const notifications = await models.notifications.findAll({ where: { userNotified } });
+  static async allNotif(query) {
+    const notifications = await models.notifications.findAll(query);
     return notifications;
   }
 
@@ -21,25 +22,24 @@ export default class notifServices {
     return notification;
   }
 
-  static async updateNotif(id, userNotified) {
-    const findNotification = await models.notifications.findOne({
-      where: {
-        id,
-        userNotified,
-      }
-    });
+  static async updateNotif(query) {
+    const findNotification = await models.notifications.findOne(query);
 
     if (!findNotification) {
-      return null;
+      throw new Error('Notification Not Available');
     }
-
-    const updatedNotif = await models.notifications.update(
-      { isRead: !findNotification.isRead },
-      {
-        where: { id, userNotified }, returning: true, plain: true,
-      }
-    );
-    return updatedNotif[1].dataValues;
+    const whereClause = query.where;
+    try {
+      const updatedNotif = await models.notifications.update(
+        { isRead: !findNotification.isRead },
+        {
+          where: whereClause, returning: true, plain: true,
+        }
+      );
+      return updatedNotif[1];
+    } catch (error) {
+      throw new Error(`Something went wrong: ${error.message}`);
+    }
   }
 
   static async notifBuilder(request, userNotified, activity) {

@@ -27,7 +27,24 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-  ])
+      {
+        requestId: 2,
+        userNotified: 3,
+        activity: 'approved',
+        isRead: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        requestId: 2,
+        userNotified: 3,
+        activity: 'approved',
+        isRead: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+    ])
   ]),
 
   down: (queryInterface, Sequelize) => Promise.all([
