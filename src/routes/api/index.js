@@ -8,6 +8,7 @@ import notificationsRoutes from './notifications';
 import comments from './comments';
 import swaggerRoute from '../swagger-doc';
 import ratingRoutes from './ratings';
+import destinationRoutes from './destinations';
 
 const router = new Router();
 router.use('/auth', authRoutes);
@@ -19,5 +20,6 @@ router.use('/notifications', notificationsRoutes);
 router.use('/ratings', ratingRoutes);
 router.use('/comments', comments);
 router.use('/api-docs', swaggerRoute);
+router.use('/destinations', destinationRoutes);
 
 export default router;

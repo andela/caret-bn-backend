@@ -91,8 +91,85 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      
-  ])
+
+      {
+        locationId: 5,
+        bookingId: 2,
+        arrivalDate: '01-11-2019',
+        departureDate: '01-20-2019',
+        requestId: 11,
+        reasons: 'Partner Company Meeting',
+        isFinal: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 1,
+        bookingId: 2,
+        arrivalDate: '01-20-2019',
+        departureDate: '01-25-2019',
+        requestId: 11,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 3,
+        bookingId: 2,
+        arrivalDate: '01-25-2019',
+        departureDate: '01-30-2019',
+        requestId: 11,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 4,
+        bookingId: 2,
+        arrivalDate: '03-02-2019',
+        departureDate: '03-03-2019',
+        requestId: 12,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 3,
+        bookingId: 2,
+        arrivalDate: '03-03-2019',
+        departureDate: '03-05-2019',
+        requestId: 12,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 3,
+        bookingId: 2,
+        arrivalDate: '04-10-2019',
+        departureDate: '04-19-2019',
+        requestId: 13,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        locationId: 3,
+        bookingId: 2,
+        arrivalDate: '05-10-2019',
+        departureDate: '05-19-2019',
+        requestId: 14,
+        reasons: 'Partner Company Meeting',
+        isFinal: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ])
   ]),
 
   down: (queryInterface, Sequelize) => Promise.all([

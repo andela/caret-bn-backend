@@ -13,6 +13,7 @@ import searchRequestsTests from './searchRequestsTests.spec';
 import notificationsTests from './notificationsTests.spec';
 import ratingsTest from './ratingsTests.spec';
 import commentsTests from './comment.spec';
+import destinationTests from './destinationTests.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -33,4 +34,5 @@ describe('Search Requests Tests', searchRequestsTests);
 describe('Notifications Tests', notificationsTests);
 describe('Ratings Tests', ratingsTest);
 describe('Comments Tests', commentsTests);
+describe('Destination Tests', destinationTests);
 

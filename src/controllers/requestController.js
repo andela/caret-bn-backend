@@ -1,12 +1,13 @@
 /* eslint-disable no-irregular-whitespace */
-import Sequelize from 'sequelize';
+/* eslint-disable require-jsdoc */
+import Sequelize from 'sequelize';
 import models from '../database/models';
 import strings from '../utils/stringsUtil';
 import text from '../utils/strings';
 import responseHelper from '../utils/responseHelper';
 import responseUtil from '../utils/responseUtil';
 import userServices from '../services/userServices';
-import requestServices from '../services/requestServices/requestServices';
+import { createRequest, findOne } from '../services/requestServices/requestServices';
 import destinationController from './destinationController';
 import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
@@ -14,7 +15,7 @@ import findOneRequest from '../helpers/findOneRequest';
 import findUser from '../helpers/findUser';
 import notifSender from '../helpers/notifSender';
 
-const { Op } = Sequelize;
+const { Op } = Sequelize;
 const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
 
@@ -86,23 +87,23 @@ export default class requestController {
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
   }
 
-  static async updateRequest(req, res) {
+  static async updateRequest(req, res) {
     const { id } = req.request;
-    try {
-      await models.requests.update(req.body, {
-        where: { id }, returning: true, raw: true,
+    try {
+      await models.requests.update(req.body, {
+        where: { id }, returning: true, raw: true,
       });
-      const destination = req.body.destinations;
-      destination.forEach(async element => {
-        await models.destinations.update(element, {
-          where: {
-            [Op.and]: [{ requestId: id }, { id: element.id }]
+      const destination = req.body.destinations;
+      destination.forEach(async element => {
+        await models.destinations.update(element, {
+          where: {
+            [Op.and]: [{ requestId: id }, { id: element.id }]
           },
         });
       });
       const request = await allSearch({ id });
       return responseUtil(res, 200, strings.request.success.SUCCESS_UPDATE_REQUEST, request);
-    } catch (error) {
+    } catch (error) {
       return res.status(500).json({ error: 'Something wrong' });
     }
   }
@@ -131,7 +132,7 @@ export default class requestController {
     const { id } = req.params;
     const { user } = req;
     const query = Utilities.requestQueries.singleRequest(id, user.payload.id);
-    const request = await requestServices.findOne(query);
+    const request = await findOne(query);
     return Utilities.responseHelper(
       res,
       Utilities.stringsHelper.user.requests.SUCCESSFULLY_RETRIEVED_REQUESTS,
@@ -142,7 +143,7 @@ export default class requestController {
 
   static async storeRequest(req, res) {
     const { body, user } = req;
-    const request = await requestServices.createRequest(body, user.payload.id);
+    const request = await createRequest(body, user.payload.id);
     return destinationController.storeDestination(req, res, body, user, request);
   }
 }
