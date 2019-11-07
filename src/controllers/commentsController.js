@@ -4,18 +4,31 @@ import models from '../database/models';
 import responseUtil from '../utils/responseUtil';
 import strings from '../utils/stringsUtil';
 import commentsHelper from '../helpers/commentsHelper';
+import notifServices from '../services/notifServices';
+import findOneRequest from '../helpers/findOneRequest';
 
+const { notifSaver, notifBuilder } = notifServices;
 
 export default class CommentsController {
 
   static async addComment(req, res) {
+    const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
     const { comment } = req.body;
-    const { id } = req.user.payload;
+    const { id, role, lineManager } = req.user.payload;
     const requestId = parseInt(req.params.id, 10);
+
+    const request = await findOneRequest({ id: requestId });
+    const userNotiified = (role === 4) ? request.userId : lineManager;
 
     try {
       const newComment = { comment, userId: id, requestId };
       const addedComment = await models.comments.create(newComment);
+      const notification = await notifBuilder(
+        request,
+        userNotiified,
+        `A comment has been made on request ${requestId}. Click here to view: ${APP_URL_BACKEND}/api/v1/requests/${requestId}.`
+      );
+      await notifSaver(notification);
       const {
         deleted, createdAt, updatedAt, userId,
         ...data
