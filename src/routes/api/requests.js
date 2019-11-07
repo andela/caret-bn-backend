@@ -147,7 +147,7 @@ const { editComment, deleteComment } = commentsController;
 router.use(validateToken);
 
 router.post('/', verifyRelationships, (req, res) => requestController.storeRequest(req, res));
-router.get('/search', validateToken, catchSearchQueries, supplierNotAllowed, validateSearchRequestUser, checkUserIdField, searchRequests);
+router.get('/search', validateToken, catchSearchQueries, supplierNotAllowed, validateSearchRequestUser, checkUserIdField, catchOriginDestination, searchRequests);
 // eslint-disable-next-line max-len
 router.get('/manager/search', validateToken, catchSearchQueries, supplierNotAllowed, checkManagerRole, validateSearchRequestManager, managerUserIdField, catchOriginDestination, searchRequests);
 router.get('/', validateToken, viewMyRequests);
