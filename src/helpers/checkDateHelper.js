@@ -11,4 +11,6 @@ const checkDate = (res, startDate, endDate) => {
     responseUtil(res, 400, strings.accommodation.error.DATE_ERROR);
   }
 };
+
+
 export default checkDate;

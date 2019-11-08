@@ -16,12 +16,13 @@ import catchOriginDestination from '../../middlewares/catchOriginDestination';
 
 const router = new Router();
 const {
-  viewMyRequests, changeStatus, viewManagerRequests, searchRequests, updateRequest
+  viewMyRequests, changeStatus, viewManagerRequests, searchRequests, updateRequest,
+  getStats,
 } = requestController;
 
 const {
   validateSearchRequestUser, validateSearchRequestManager,
-  validateComment, validateRequest,
+  validateComment, validateRequest, validateRequestStas
 } = InputValidation;
 const { checkManagerRole, supplierNotAllowed } = checkRole;
 const { editComment, deleteComment } = commentsController;
@@ -156,4 +157,6 @@ router.patch('/manager/:action/:id', validateToken, checkManagerRole, checkId, w
 router.patch('/:id', validateToken, pendingRequest.requestOwner, pendingRequest.selectPending, validateRequest, pendingRequest.validateBody, updateRequest);
 router.put('/comments/:id', validateToken, checkId, validateComment, editComment);
 router.delete('/comments/:id', validateToken, checkId, deleteComment);
+router.get('/stats/', validateToken, supplierNotAllowed, catchSearchQueries, validateRequestStas, getStats);
+router.get('/:id', (req, res) => requestController.findOne(req, res));
 export default router;

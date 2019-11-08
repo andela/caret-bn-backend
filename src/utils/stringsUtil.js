@@ -45,8 +45,11 @@ const strings = {
     success: {
       SUCCESS_UPDATE_REQUEST: 'Request Updated',
       SUCCESS_ADD_COMMENT: 'Comment Added',
+      RESULT: 'Your number of trips are:',
     },
+
     error: {
+      DATE_ERROR: 'startDate  must not be greater than endDate',
       INTERNAL_ERROR: 'Internal server error',
       NO_REQUEST_REQUEST: 'This Id request does not exist',
       EDIT_YOUR_REQUEST: 'Access denied! you are not the owner of this request',

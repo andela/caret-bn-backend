@@ -13,6 +13,7 @@ import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
 import findOneRequest from '../helpers/findOneRequest';
 import findUser from '../helpers/findUser';
+import requestHelper from '../helpers/requestHelper';
 import notifSender from '../helpers/notifSender';
 
 const { Op } = Sequelize;
@@ -146,4 +147,11 @@ export default class requestController {
     const request = await createRequest(body, user.payload.id);
     return destinationController.storeDestination(req, res, body, user, request);
   }
+
+  static async getStats(req, res) {
+    const requestResults = await requestHelper.findStatRequest(req, res);
+    return responseUtil(res, 200, strings.request.success.RESULT, requestResults.count);
+
+  }
+
 }

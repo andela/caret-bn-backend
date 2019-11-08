@@ -221,4 +221,12 @@ export default class InputValidation {
     validation(req, res, schema, next);
   }
 
+  static validateRequestStas(req, res, next) {
+    const schema = Joi.object().keys({
+      startDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('startDate format must be YYYY-MM-DD').required(),
+      endDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('endDate format must be YYYY-MM-DD').required(),
+    });
+    validation(req, res, schema, next);
+  }
+
 }
