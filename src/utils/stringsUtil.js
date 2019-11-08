@@ -131,6 +131,10 @@ const strings = {
       NOT_OWNER: 'Oops! You are not the owner of this comment!',
     },
   },
+  chat: {
+    EMPTY_HISTORY: 'Chat history is empty!',
+    CHAT_HISTORY: 'Chats retrieved successfully!',
+  }
 };
 
 export default strings;

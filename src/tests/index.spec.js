@@ -14,6 +14,7 @@ import notificationsTests from './notificationsTests.spec';
 import ratingsTest from './ratingsTests.spec';
 import commentsTests from './comment.spec';
 import destinationTests from './destinationTests.spec';
+import chatTests from './chatTests.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -35,4 +36,5 @@ describe('Notifications Tests', notificationsTests);
 describe('Ratings Tests', ratingsTest);
 describe('Comments Tests', commentsTests);
 describe('Destination Tests', destinationTests);
+describe('Chat Tests', chatTests);
 
