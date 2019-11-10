@@ -8,6 +8,12 @@ import isAccommodationFound from '../../middlewares/isAccommodationFound';
 import isOwner from '../../middlewares/isOwner';
 import checkId from '../../middlewares/checkId';
 import catchEmptyForm from '../../middlewares/catchEmptyForm';
+import wrongQuery from '../../middlewares/wrongQuery';
+import catchSearchQueries from '../../middlewares/catchSearchQueries';
+import findStatusId from '../../middlewares/findStatusId';
+import wrongAction from '../../middlewares/wrongAction';
+import bookingNotPending from '../../middlewares/bookingNotPending';
+import bookingFound from '../../middlewares/bookingFound';
 
 const router = express.Router();
 const multipartMiddleware = multipart();
@@ -19,9 +25,12 @@ const {
   deleteAccommodation,
   bookAccommdation,
   viewBookings,
+  searchBookings,
   viewSpecificAccommodation,
   accommodationActivation,
   viewDeactivated,
+  changeStatus,
+  viewOneBooking,
 } = AccommodationController;
 
 const {
@@ -31,6 +40,7 @@ const {
   validateAccommodationEdit,
   validateBooking,
   validateReasons,
+  validateStatusQuery,
 } = InputValidation;
 const { checkSupplierRole, checkBookingRole } = checkRole;
 
@@ -195,16 +205,102 @@ const { checkSupplierRole, checkBookingRole } = checkRole;
  *       '404':
  *         description: Accommodation Not Found!
  */
+/**
+ * @swagger
+ * /accommodations/bookings/search:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Accommodations
+ *     name: Search Bookings By status Route For Suppliers
+ *     summary: Search Bookings By status Route For Suppliers
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: status
+ *         in: query
+ *         schema:
+ *          type: string
+ *          example: pending
+ *     responses:
+ *       '200':
+ *         description: Bookings Fetched successfully!
+ *       '404':
+ *         description: No Booking Found!
+*/
+/**
+ * @swagger
+ * /accommodations/bookings/{action}/{id}:
+ *   patch:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Accommodations
+ *     name: Approve/Reject Bookings
+ *     summary: Approve/Reject Bookings
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: action
+ *         in: path
+ *         schema:
+ *          type: string
+ *          example: approve
+ *       - name: id
+ *         in: path
+ *         schema:
+ *          type: integer
+ *          example: 3
+ *     responses:
+ *       '200':
+ *         description: Booking Approved/Rejected Successfully!
+ *       '404':
+ *         description: No Booking Found!
+*/
+/**
+ * @swagger
+ * /accommodations/bookings/{id}:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Accommodations
+ *     name: Get a single booking
+ *     summary: Get a single booking
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema:
+ *          type: integer
+ *          example: 3
+ *     responses:
+ *       '200':
+ *         description: Booking Fetched Successfully!
+ *       '404':
+ *         description: No Booking Found!
+*/
 
 router.post('/', validateToken, checkSupplierRole, catchEmptyForm, multipartMiddleware, validateAddNew, validateExistence, validateImage, createAccommodation);
 router.get('/', validateToken, getAllAccommodations);
 router.patch('/:id/edit', validateToken, checkId, catchEmptyForm, multipartMiddleware, isAccommodationFound, isOwner, validateAccommodationEdit, editAccommodation);
 router.delete('/:id/delete', validateToken, checkId, isAccommodationFound, isOwner, deleteAccommodation);
 router.get('/bookings', validateToken, viewBookings);
+router.get('/bookings/search', validateToken, checkSupplierRole, wrongQuery, catchSearchQueries, validateStatusQuery, findStatusId, searchBookings);
 router.patch('/book', validateToken, checkBookingRole, validateBooking, bookAccommdation);
 router.get('/:slug', validateToken, viewSpecificAccommodation);
 router.patch('/activate/:slug', validateToken, validateReasons, accommodationActivation);
 router.get('/admin/deactivated', validateToken, viewDeactivated);
+router.patch('/bookings/:action/:id', validateToken, checkSupplierRole, checkId, wrongAction, bookingFound, bookingNotPending, changeStatus);
+router.get('/bookings/:id', validateToken, checkId, viewOneBooking);
 
 
 export default router;

@@ -1,6 +1,12 @@
 import sequelize from 'sequelize';
 import models from '../database/models';
 
+const bookingAssociations = [
+  { association: 'status', attributes: ['id', 'name'] },
+  { association: 'user', attributes: ['id', 'username', 'email'] },
+  { association: 'accommodation', attributes: ['id', 'name', 'description', 'cost', 'currency', 'owner', 'images'] },
+];
+
 const availableAccommodation = req => {
   const { Op } = sequelize;
   const {
@@ -27,6 +33,7 @@ const findBooked = (req, id) => {
   });
   return bookings;
 };
+
 const findAccomodation = req => {
   const { accomodationId } = req.body;
   const accommodation = models.accommodations.findOne({
@@ -34,6 +41,7 @@ const findAccomodation = req => {
   });
   return accommodation;
 };
+
 const updateAccomodation = (req, remainingSpace) => {
   const { accomodationId } = req.body;
   const data = models.accommodations.update(
@@ -42,6 +50,46 @@ const updateAccomodation = (req, remainingSpace) => {
   );
   return data;
 };
+
+const findBookings = option => {
+  const bookings = models.booking.findAll({
+    where: option,
+    attributes: { exclude: ['accommodationId', 'userId', 'statusId'] },
+    include: bookingAssociations,
+  });
+  return bookings;
+};
+
+const filterOwner = (bookings, mybookings, supplierId) => {
+  bookings.forEach(booking => {
+    if (booking.accommodation.owner === supplierId) {
+      mybookings.push(booking);
+    }
+  });
+};
+
+const findOneBooking = option => {
+  const booking = models.booking.findOne({
+    where: option,
+  });
+  return booking;
+};
+
+const findOneAccommodation = option => {
+  const accommodation = models.accommodations.findOne({
+    where: option,
+  });
+  return accommodation;
+};
+
 export default {
-  availableAccommodation, findBooked, findAccomodation, updateAccomodation
+  availableAccommodation,
+  findBooked,
+  findAccomodation,
+  updateAccomodation,
+  findBookings,
+  findOneBooking,
+  findOneAccommodation,
+  filterOwner,
+  bookingAssociations,
 };

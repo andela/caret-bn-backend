@@ -3,7 +3,7 @@ import responseError from '../utils/responseError';
 const wrongAction = (req, res, next) => {
   const { action } = req.params;
   if ((action !== 'approve') && (action !== 'reject')) {
-    return responseError(res, 400, `Ooops! Cannot do action '${action}' on a request`);
+    return responseError(res, 400, `Ooops! Cannot proceed with action '${action}'. Action must be 'approve' or 'reject'`);
   }
 
   const actionIsApprove = (action.includes('approve'));

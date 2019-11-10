@@ -104,6 +104,30 @@ describe('Request Tests', () => {
         });
     });
 
+    it('Should return requests that are assigned to the logged in manager', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/manager')
+        .set('Authorization', `Bearer ${anotherManagerToken}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(200);
+            expect(body.message).to.be.eql(strings.user.requests.NO_REQUESTS);
+            done();
+        });
+    });
+
+    it('Should return requests that are assigned to the logged in user', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/')
+        .set('Authorization', `Bearer ${tokenForNoRequests}`)
+        .end((err, res) => {
+            const { status, body } = res;
+            expect(status).to.be.eql(200);
+            expect(body.message).to.be.eql(strings.user.requests.NO_REQUESTS);
+            done();
+        });
+    });
+
     it('Should return a wrong action message', (done) => {
         chai.request(app)
         .patch('/api/v1/requests/manager/skibidipapa/1')
@@ -111,7 +135,7 @@ describe('Request Tests', () => {
         .end((err, res) => {
             const { status, body } = res;
             expect(status).to.be.eql(400);
-            expect(body.message).to.be.eql('Ooops! Cannot do action \'skibidipapa\' on a request');
+            expect(body.message).to.be.eql('Ooops! Cannot proceed with action \'skibidipapa\'. Action must be \'approve\' or \'reject\'');
             done();
         });
     });

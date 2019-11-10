@@ -82,7 +82,7 @@ export default class requestController {
 
       request = request[1][0].dataValues;
 
-      await notifSender(subject, request, request.userId, APP_URL_BACKEND, activity);
+      await notifSender(subject, request, request.userId, APP_URL_BACKEND, activity, 'request');
       return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);

@@ -25,6 +25,7 @@ const mockData = {
   travelAdmin:{email: 'travelAdmin@caretbn.com', password: 'Pa55w0rd'},
   activationInfo: {reasons: 'This is a valid reason to take action on your accommodation'},
   commentData:{comment:'change dates'},
-  emptyComment:{comment:''}
+  emptyComment:{comment:''},
+  anotherSupplier:{email: 'anothersupplier@caretbn.com', password: 'Pa55w0rd'},
 };
 export default mockData;

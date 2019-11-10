@@ -70,6 +70,7 @@ const strings = {
       CREATED: 'New accommodation facility added successfully!',
       NO_INFO_YET: 'You have not added any accommodation facilities yet!',
       NO_ACCOMMODATION: 'No accommodation facilities were found',
+      NO_BOOKING: 'No booking found!',
       RETRIEVED: 'Accommodation facilities are retrieved successfully!',
       FOUND: 'all available accommodation',
       BOOKED_FOUND: 'Your bookings',
@@ -80,6 +81,7 @@ const strings = {
       ACTIVATED: 'Accommodation successfully activated!',
       DEACTIVATED: 'Accommodation successfully deactivated!',
       DEACTIVATED_ACCOMMODATIONS: 'All Deactivated accommodations are retrieved successfully!',
+      FOUND_BOOKINGS: 'These bookings match you search!',
     },
     error: {
       EXISTING: 'This accommodation already exists!',
@@ -97,10 +99,13 @@ const strings = {
   accommodations: {
     success: {
       ACCOMMODATION_UPDATED: 'Accommodation Successfully Updated!',
-      ACCOMMODATION_DELETED: 'Accommodation Successfully Deleted!'
+      ACCOMMODATION_DELETED: 'Accommodation Successfully Deleted!',
+      BOOKING_APPROVED: 'Booking Successfully Approved!',
+      BOOKING_REJECTED: 'Booking Successfully Rejected!',
     },
     error: {
       ACCOMMODATION_NOT_FOUND: 'Ooops! This accommodation id does not exist!',
+      BOOKING_NOT_FOUND: 'Ooops! This booking does not exist!',
       ACCOMMODATION_BAD_REQUEST: 'Bad Request, The accommodation information is invalid',
       NOT_OWNER: 'Oops! You are not the owner of this accommodation!',
       EMPTY_FORM: 'Oops! You have submitted an empty form! Make sure to add information to the form-data!',
