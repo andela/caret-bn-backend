@@ -10,6 +10,7 @@ import swaggerRoute from '../swagger-doc';
 import ratingRoutes from './ratings';
 import destinationRoutes from './destinations';
 import chatRoutes from './chats';
+import bookmarksRoutes from './bookmarks';
 
 const router = new Router();
 router.use('/auth', authRoutes);
@@ -23,5 +24,6 @@ router.use('/comments', comments);
 router.use('/api-docs', swaggerRoute);
 router.use('/destinations', destinationRoutes);
 router.use('/chats', chatRoutes);
+router.use('/bookmarks', bookmarksRoutes);
 
 export default router;

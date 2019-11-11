@@ -142,7 +142,11 @@ const strings = {
   chat: {
     EMPTY_HISTORY: 'Chat history is empty!',
     CHAT_HISTORY: 'Chats retrieved successfully!',
-  }
+  },
+  bookmarks: {
+    YOUR_BOOKMARKS: 'Your bookmarks are retrieved successfully!',
+    NO_BOOKMARKS: 'No bookmarks found!',
+  },
 };
 
 export default strings;
