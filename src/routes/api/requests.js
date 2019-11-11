@@ -185,4 +185,5 @@ router.put('/comments/:id', validateToken, checkId, validateComment, editComment
 router.delete('/comments/:id', validateToken, checkId, deleteComment);
 router.get('/stats/', validateToken, supplierNotAllowed, catchSearchQueries, validateRequestStas, getStats);
 router.get('/:id', (req, res) => requestController.findOne(req, res));
+
 export default router;

@@ -19,7 +19,6 @@ import notifSender from '../helpers/notifSender';
 const { Op } = Sequelize;
 const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
-
 const { allSearch } = searchRequestsServices;
 
 export default class requestController {
@@ -90,23 +89,35 @@ export default class requestController {
 
   static async updateRequest(req, res) {
     const { id } = req.request;
+
     try {
       await models.requests.update(req.body, {
         where: { id }, returning: true, raw: true,
       });
+
       const destination = req.body.destinations;
+      const { lineManager } = req.user.payload;
+      const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
+
       destination.forEach(async element => {
         await models.destinations.update(element, {
-          where: {
-            [Op.and]: [{ requestId: id }, { id: element.id }]
-          },
+          where: { [Op.and]: [{ requestId: id }, { id: element.id }] },
         });
       });
+
       const request = await allSearch({ id });
+      const requestData = request[0].dataValues;
+      await notifSender(
+        'Request edited',
+        requestData,
+        lineManager,
+        APP_URL_BACKEND,
+        'edited',
+        'request'
+      );
       return responseUtil(res, 200, strings.request.success.SUCCESS_UPDATE_REQUEST, request);
-    } catch (error) {
-      return res.status(500).json({ error: 'Something wrong' });
-    }
+
+    } catch (error) { return res.status(500).json({ error: 'Something wrong' }); }
   }
 
   static async searchRequests(req, res) {
