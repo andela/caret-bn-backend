@@ -6,6 +6,7 @@ import bookingsChecker from './bookingsVerification';
 import destinationChecker from './destinationVerification';
 import validationErrorFormatter from '../../utils/validationErrorFormatter';
 import Utilities from '../../utils/index';
+import strings from '../../utils/stringsUtil';
 
 export default async (req, res, next) => {
 
@@ -34,7 +35,7 @@ export default async (req, res, next) => {
   if (!result) {
     return Utilities.responseHelper(
       res,
-      Utilities.stringsHelper.validation.requests.locations.DOES_NOT_EXIST,
+      strings.request.error.NO_LOCATION,
       null,
       400
     );
