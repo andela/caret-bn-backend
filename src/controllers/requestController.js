@@ -1,6 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 /* eslint-disable require-jsdoc */
 import Sequelize from 'sequelize';
+import moment from 'moment';
 import models from '../database/models';
 import strings from '../utils/stringsUtil';
 import text from '../utils/strings';
@@ -15,6 +16,8 @@ import findOneRequest from '../helpers/findOneRequest';
 import findUser from '../helpers/findUser';
 import requestHelper from '../helpers/requestHelper';
 import notifSender from '../helpers/notifSender';
+import dateValidator from '../helpers/datesValidator';
+
 
 const { Op } = Sequelize;
 const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
@@ -160,8 +163,23 @@ export default class requestController {
   }
 
   static async getStats(req, res) {
-    const requestResults = await requestHelper.findStatRequest(req, res);
-    return responseUtil(res, 200, strings.request.success.RESULT, requestResults.count);
+    const { startDate, endDate } = req.query;
+    const checkDate = dateValidator(startDate, endDate);
+
+    if (checkDate) {
+      return responseUtil(res, 400, strings.request.error.DATE_ERROR);
+    }
+
+    if (endDate > moment().format('YYYY-MM-DD')) {
+      return responseUtil(res, 400, strings.request.error.OUT_OF_BOUND);
+    }
+
+    const requestResults = await requestHelper.findStatRequest(req);
+    const tripsNumber = requestResults.length;
+
+    return responseUtil(res, 200, (!tripsNumber)
+      ? NO_REQUESTS
+      : strings.request.success.RESULT, { NumberOfTrips: tripsNumber, Trips: requestResults });
 
   }
 

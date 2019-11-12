@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 
 let userToken;
 let supplierToken;
+let requesterToken; 
 
 describe('stats Requests Tests', () => {
   before(done => {
@@ -23,6 +24,12 @@ describe('stats Requests Tests', () => {
       .send(mockData.supplier)
       .end((err, res) => {
         supplierToken = res.body.data.token;
+      });
+      chai.request(app)
+      .post('/api/v1/users/login')
+      .send(mockData.requester)
+      .end((err, res) => {
+        requesterToken = res.body.data.token;
         done();
       });
   });
@@ -33,6 +40,8 @@ describe('stats Requests Tests', () => {
       .get('/api/v1/requests/stats?startDate=2019-03-03&endDate=2019-11-07')
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
+        console.log(res.body);
+        
         res.should.have.property('status').eql(200);
         res.body.should.have.property('message').eql('Your number of trips are:');
         done();
@@ -46,6 +55,19 @@ describe('stats Requests Tests', () => {
       .end((err, res) => {
         res.should.have.property('status').eql(400);
         res.body.should.have.property('message').eql('startDate  must not be greater than endDate');
+        done();
+      });
+  });
+
+  it('Should tell the user that Either startDate or endDate must not be greater than today\'s date', done => {
+    chai.request(app)
+      .get('/api/v1/requests/stats?startDate=2019-12-07&endDate=2020-11-03')
+      .set('Authorization', `Bearer ${userToken}`)
+      .end((err, res) => {
+        console.log(res.body);
+        
+        res.should.have.property('status').eql(400);
+        res.body.should.have.property('message').eql('Either startDate or endDate must not be greater than today\'s date');
         done();
       });
   });
@@ -66,6 +88,18 @@ describe('stats Requests Tests', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
         res.should.have.property('status').eql(400);
+        done();
+      });
+  });
+
+  it('Should tell the user that they have no trips', done => {
+    chai.request(app)
+      .get('/api/v1/requests/stats?startDate=2019-01-07&endDate=2019-11-12')
+      .set('Authorization', `Bearer ${requesterToken}`)
+      .end((err, res) => {
+        console.log(res.body);
+        
+        res.should.have.property('status').eql(200);
         done();
       });
   });
