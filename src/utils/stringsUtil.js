@@ -59,6 +59,7 @@ const strings = {
       NOT_ALLOWED: 'Access denied! a supplier can not access this part of the system!',
       TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
       NOT_YOUR_REQUEST: 'You are not the owner of the request or the line manager of the user who placed it!',
+      NO_LOCATION: 'Location does not exist on the system!',
     },
   },
   token: {
