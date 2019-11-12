@@ -13,6 +13,16 @@ export default queryParams => ({
             description: {
                 [Op.iLike]: `%${queryParams.description.trim()}%`
             }
+        },
+        ...queryParams.highlights && {
+            highlights: {
+                [Op.iLike]: `%${queryParams.highlights.trim()}%`
+            }
+        },
+        ...queryParams.amenities && {
+            amenities: {
+                [Op.iLike]: `%${queryParams.amenities.trim()}%`
+            }
         }
     },
     include: [

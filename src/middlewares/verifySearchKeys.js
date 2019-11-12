@@ -23,7 +23,7 @@ export default (req, res, next) => {
   const invalidKeys = searchKeys.filter(key => key === false);
 
   if (invalidKeys.length > 0) {
-    return responseHelper(res, 'You Provided Invalid Search Keys. Only Name, Description & Locaton Allowed.', null, 400);
+    return responseHelper(res, 'You Provided Invalid Search Keys. Only Name, Description, Highlights, Amenities & Locaton Allowed.', null, 400);
   }
 
   if (query.location === ''

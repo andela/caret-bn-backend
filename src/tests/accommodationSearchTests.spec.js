@@ -61,7 +61,7 @@ describe('====> Authenticated Search Tests <=====', () => {
             .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
                 expect(res.status).to.be.eql(400, 'Wrong status returned');
-                expect(res.body.message).to.be.eql('You Provided Invalid Search Keys. Only Name, Description & Locaton Allowed.', 'Wrong status returned');
+                expect(res.body.message).to.be.eql('You Provided Invalid Search Keys. Only Name, Description, Highlights, Amenities & Locaton Allowed.', 'Wrong status returned');
                 done();
             });
     });
