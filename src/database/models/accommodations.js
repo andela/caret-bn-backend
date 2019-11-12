@@ -30,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'id',
       as: 'ratings'
     });
+    accommodations.hasMany(models.bookmarks, {
+      targetKey: 'accommodationId',
+      sourceKey: 'id',
+      as: 'bookmarks'
+    });
   };
   return accommodations;
 };

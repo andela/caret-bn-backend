@@ -1,6 +1,7 @@
 import express from 'express';
 import multipart from 'connect-multiparty';
 import AccommodationController from '../../controllers/accommodationController';
+import BookmarkController from '../../controllers/bookmarksController';
 import validateToken from '../../middlewares/auth/validateToken';
 import InputValidation from '../../middlewares/inputValidation';
 import checkRole from '../../middlewares/checkRole';
@@ -34,6 +35,8 @@ const {
   changeStatus,
   viewOneBooking,
 } = AccommodationController;
+
+const { bookmark } = BookmarkController;
 
 const {
   validateAddNew,
@@ -290,6 +293,32 @@ const { checkSupplierRole, checkBookingRole } = checkRole;
  *       '404':
  *         description: No Booking Found!
 */
+/**
+ * @swagger
+ * /accommodations/{slug}/bookmark:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Accommodations
+ *     name: Bookmark an accommodation
+ *     summary: Bookmark an accommodation
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: slug
+ *         in: path
+ *         schema:
+ *          type: string
+ *          example: isimbi-hotel
+ *     responses:
+ *       '200':
+ *         description: Accommodation Bookmarked/Unbookmarked Successfully!
+ *       '404':
+ *         description: No Accommodation Found!
+*/
 
 router.get('/search', validateToken, checkRole.supplierNotAllowed, verifySearchKeys, searchController.accommodations);
 router.post('/', validateToken, checkSupplierRole, catchEmptyForm, multipartMiddleware, validateAddNew, validateExistence, validateImage, createAccommodation);
@@ -300,6 +329,7 @@ router.get('/bookings', validateToken, viewBookings);
 router.get('/bookings/search', validateToken, checkSupplierRole, wrongQuery, catchSearchQueries, validateStatusQuery, findStatusId, searchBookings);
 router.patch('/book', validateToken, checkBookingRole, validateBooking, bookAccommdation);
 router.get('/:slug', validateToken, viewSpecificAccommodation);
+router.post('/:slug/bookmark', validateToken, bookmark);
 router.patch('/activate/:slug', validateToken, validateReasons, accommodationActivation);
 router.get('/admin/deactivated', validateToken, viewDeactivated);
 router.patch('/bookings/:action/:id', validateToken, checkSupplierRole, checkId, wrongAction, bookingFound, bookingNotPending, changeStatus);
