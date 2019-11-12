@@ -17,6 +17,9 @@ import destinationTests from './destinationTests.spec';
 import chatTests from './chatTests.spec';
 import RequestStats from './RequestStats.spec'
 import bookingTests from './bookingsTests.spec';
+import accommodationSearchTests from './accommodationSearchTests.spec'
+import bookmarkTests from './bookmarkTests.spec';
+import unitTests from './unitTests.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -41,4 +44,6 @@ describe('Destination Tests', destinationTests);
 describe('Chat Tests', chatTests);
 describe('RequestStats Tests', RequestStats);
 describe('Booking Tests', bookingTests);
-
+describe('Accommodation Search Tests', accommodationSearchTests);
+describe('Bookmarks Tests', bookmarkTests);
+describe('Unit Tests', unitTests);
