@@ -1,8 +1,5 @@
 import sequelize from 'sequelize';
 import models from '../database/models';
-import dateValidator from './datesValidator';
-import responseUtil from '../utils/responseUtil';
-import strings from '../utils/stringsUtil';
 
 const findOneRequest = properties => {
   const request = models.requests.findOne({
@@ -12,21 +9,25 @@ const findOneRequest = properties => {
   return request;
 };
 
-const findStatRequest = async (req, res) => {
-  const { startDate, endDate } = req.query;
+const findStatRequest = req => {
   const { Op } = sequelize;
-  const checkDate = dateValidator(startDate, endDate);
-  if (checkDate === true) {
-    responseUtil(res, 400, strings.request.error.DATE_ERROR);
-  }
-  const requestResult = await models.requests.findAndCountAll({
+  const { startDate, endDate } = req.query;
+
+  const requestResult = models.requests.findAll({
     where: {
       userId: req.user.payload.id,
       statusId: 3,
       departureDate: {
         [Op.between]: [startDate, endDate],
       }
-    }
+    },
+    attributes: { exclude: ['typeId', 'userId', 'statusId', 'locationId'] },
+    include: [
+      { model: models.destinations, attributes: ['id', 'arrivalDate', 'departureDate', 'reasons'], include: [{ model: models.locations, as: 'location', attributes: ['name'] }] },
+      { model: models.locations, as: 'origin', attributes: ['id', 'name', 'country'] },
+      { model: models.requestStatus, as: 'status', attributes: ['id', 'name'] },
+      { model: models.tripTypes, as: 'type', attributes: ['id', 'name'] },
+    ]
   });
   return requestResult;
 };

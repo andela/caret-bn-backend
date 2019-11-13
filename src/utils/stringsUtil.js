@@ -60,6 +60,7 @@ const strings = {
       TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
       NOT_YOUR_REQUEST: 'You are not the owner of the request or the line manager of the user who placed it!',
       NO_LOCATION: 'Location does not exist on the system!',
+      OUT_OF_BOUND: 'Either startDate or endDate must not be greater than today\'s date',
     },
   },
   token: {
