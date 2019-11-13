@@ -64,14 +64,23 @@
         });
         $("form").submit(event => {
           event.preventDefault(); // prevents page reloading
-          socket.emit("chatMessage", {
+          socket.emit("sendMessage", {
+            target: {
+              type: localStorage.getItem("messageType"),
+              userId: localStorage.getItem("userId")
+            },
             message: $("#message").val()
           });
+          console.log(`You: ${$("#message").val()}`);
           $("#message").val("");
           return false;
         });
         socket.on("chatMessage", message => {
           console.log(message);
+        });
+
+        socket.on("privateChat", data => {
+          console.log(`Private Message from ${data.sender}: ${data.message}`);
         });
       });
     </script>
