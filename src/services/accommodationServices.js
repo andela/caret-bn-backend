@@ -6,4 +6,8 @@ export default class AccommodationServices {
       where: property
     }).then(accommodation => accommodation);
   }
+
+  static findAccommodations(query) {
+    return models.accommodations.findAll(query).then(accommodations => accommodations);
+  }
 }

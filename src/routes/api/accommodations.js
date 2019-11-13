@@ -14,6 +14,8 @@ import findStatusId from '../../middlewares/findStatusId';
 import wrongAction from '../../middlewares/wrongAction';
 import bookingNotPending from '../../middlewares/bookingNotPending';
 import bookingFound from '../../middlewares/bookingFound';
+import searchController from '../../controllers/searchController';
+import verifySearchKeys from '../../middlewares/verifySearchKeys';
 
 const router = express.Router();
 const multipartMiddleware = multipart();
@@ -289,6 +291,7 @@ const { checkSupplierRole, checkBookingRole } = checkRole;
  *         description: No Booking Found!
 */
 
+router.get('/search', validateToken, checkRole.supplierNotAllowed, verifySearchKeys, searchController.accommodations);
 router.post('/', validateToken, checkSupplierRole, catchEmptyForm, multipartMiddleware, validateAddNew, validateExistence, validateImage, createAccommodation);
 router.get('/', validateToken, getAllAccommodations);
 router.patch('/:id/edit', validateToken, checkId, catchEmptyForm, multipartMiddleware, isAccommodationFound, isOwner, validateAccommodationEdit, editAccommodation);

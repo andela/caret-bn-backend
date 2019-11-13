@@ -10,6 +10,9 @@ const ratineOne = {
     accommodationId: 4,
     rating: 4
 }
+const ratingTwo = {
+    accommodationId: 4,
+}
 
 let authToken;
 let authTokenUnbooked;
@@ -62,6 +65,17 @@ describe('<==== Ratings Tests ====> ', () => {
             .set('Authorization', `Bearer ${authTokenUnbooked}`)
             .end((error, res) => {
                 expect(res.status).to.be.eql(403, 'Incorrect Status Code Being Returned');
+                done();
+            });
+    });
+
+    it('===> Should Not Rate an Accomodation If Format is Wrong <===', (done) => {
+        chai.request(app)
+            .post('/api/v1/ratings')
+            .send(ratingTwo)
+            .set('Authorization', `Bearer ${authTokenUnbooked}`)
+            .end((error, res) => {
+                expect(res.status).to.be.eql(400, 'Incorrect Status Code Being Returned');
                 done();
             });
     });
