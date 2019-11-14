@@ -16,6 +16,7 @@ module.exports = (sequelize, Datatypes) => {
     currency: Datatypes.STRING,
     company: Datatypes.STRING,
     department: Datatypes.STRING,
+    logoutTime: Datatypes.DATE,
     isVerified: {
       type: Datatypes.BOOLEAN,
       defaultValue: false,

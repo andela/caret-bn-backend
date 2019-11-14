@@ -12,6 +12,7 @@ module.exports = {
         role: 6,
         emailNotif: true,
         appNotif: true,
+        logoutTime: null,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -34,6 +35,7 @@ module.exports = {
       updatedAt: new Date(),
       password: '$2b$10$vQp2ahUwAnRS.HHxNLK0pOQ/E41TRnxtlDJL.5vVRHsvL7DC9svNm',
       isVerified: false,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     },
@@ -46,6 +48,7 @@ module.exports = {
       role: 6,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -58,6 +61,7 @@ module.exports = {
       role: 5,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -71,6 +75,7 @@ module.exports = {
       role: 1,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -83,6 +88,7 @@ module.exports = {
       role: 6,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -95,6 +101,7 @@ module.exports = {
       role: 5,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -107,6 +114,7 @@ module.exports = {
       role: 4,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -119,6 +127,7 @@ module.exports = {
       role: 4,
       emailNotif: true,
       appNotif: true,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -131,6 +140,7 @@ module.exports = {
       appNotif: true,
       lineManager: 8,
       role: 2,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -143,6 +153,7 @@ module.exports = {
       appNotif: true,
       lineManager: 8,
       role: 5,
+      logoutTime: null,
       createdAt: new Date(),
       updatedAt: new Date()
     },

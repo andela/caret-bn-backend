@@ -9,7 +9,9 @@ import confirmPassword from '../../middlewares/confirmPassword';
 import user from '../../middlewares/users';
 import wrongSwitch from '../../middlewares/wrongSwitch';
 
-const { signup, signIn, switchNotif } = UserController;
+const {
+  signup, signIn, switchNotif, logoutUser
+} = UserController;
 const { updateProfile, getProfile } = profile;
 const {
   validateProfile, validateLogin, validateSignup, validateEmail, validateResetpassword
@@ -272,7 +274,7 @@ const router = express.Router();
  *       '401':
  *         description: Please Login
  */
-
+router.patch('/logout', validateToken, logoutUser);
 router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
 router.post('/forgotpassword', validateEmail, UserController.Providelink);
@@ -281,5 +283,6 @@ router.patch('/profile/:email', validateToken, user.compareData, validateProfile
 router.post('/login', validateLogin, signIn);
 router.get('/profile/:email', validateToken, user.compareData, getProfile);
 router.patch('/:switchParam', validateToken, wrongSwitch, switchNotif);
+
 
 export default router;

@@ -153,4 +153,10 @@ export default class UserController {
     const status = (user[1][0].dataValues[propertyToGet]) ? 'Activated' : 'Deactivated';
     return responseUtil(res, 200, `${message} Notifcation ${status}`);
   }
+
+  static async logoutUser(req, res) {
+    const { id } = req.user.payload;
+    await updateUser({ logoutTime: new Date() }, id);
+    return responseUtil(res, 200, strings.users.success.LOGOUT);
+  }
 }
