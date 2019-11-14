@@ -84,6 +84,8 @@ const strings = {
       DEACTIVATED: 'Accommodation successfully deactivated!',
       DEACTIVATED_ACCOMMODATIONS: 'All Deactivated accommodations are retrieved successfully!',
       FOUND_BOOKINGS: 'These bookings match you search!',
+      NO_RATED: 'No rated accommodations were found!',
+      HIGHEST_RATED: 'The top 5 highest rated accommodations are:',
     },
     error: {
       EXISTING: 'This accommodation already exists!',
