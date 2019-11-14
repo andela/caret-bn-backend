@@ -1,9 +1,13 @@
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const notifications = sequelize.define('notifications', {
     requestId: DataTypes.INTEGER,
     userNotified: DataTypes.INTEGER,
     activity: DataTypes.STRING,
+    timestamp: {
+      type: DataTypes.TIME,
+    },
     isRead: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

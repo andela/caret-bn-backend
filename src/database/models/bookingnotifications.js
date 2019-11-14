@@ -1,3 +1,4 @@
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const bookingNotifications = sequelize.define('bookingNotifications', {
@@ -7,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     isRead: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    timestamp: {
+      type: DataTypes.TIME,
     },
   }, {
     tableName: 'bookingNotifications'

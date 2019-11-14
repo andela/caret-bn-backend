@@ -1,4 +1,5 @@
 /* eslint-disable  require-jsdoc */
+import moment from 'moment';
 import models from '../database/models';
 
 export default class notifServices {
@@ -43,10 +44,12 @@ export default class notifServices {
   }
 
   static async notifBuilder(request, userNotified, activity) {
+    const timestamp = moment().format('HH:mm:ss');
     const notification = await models.notifications.build({
       requestId: request.id,
       userNotified,
       activity,
+      timestamp,
     });
     return notification;
   }
