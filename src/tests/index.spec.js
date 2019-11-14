@@ -20,6 +20,7 @@ import bookingTests from './bookingsTests.spec';
 import accommodationSearchTests from './accommodationSearchTests.spec'
 import bookmarkTests from './bookmarkTests.spec';
 import unitTests from './unitTests.spec';
+import likeTests from './likeTests.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -47,3 +48,4 @@ describe('Booking Tests', bookingTests);
 describe('Accommodation Search Tests', accommodationSearchTests);
 describe('Bookmarks Tests', bookmarkTests);
 describe('Unit Tests', unitTests);
+describe('Likes Tests', likeTests);

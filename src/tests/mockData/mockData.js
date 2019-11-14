@@ -1,5 +1,6 @@
 const mockData = {
   verifiedUser: { email: 'user@caretbn.com', password: 'Pa55w0rd' },
+  verifiedUser4: { email: 'ghost@caretbn.com', password: 'Pa55w0rd' },
   verifiedUser1: { id: 3, email: 'ghost@caretbn.com', password: 'Pa55w0rd' },
   verifiedUser3: { id: 100, email: 'ghos@caretbn.com', password: 'Pa55w0rd' },
   registeredUser: { email: 'ghost@caretbn.com', password: 'Pa55w0rd' },

@@ -13,6 +13,7 @@ import getAccommodation from '../helpers/getAccommodation';
 import sendEmail from '../helpers/emailHelper';
 import responseHelper from '../utils/responseHelper';
 import notifSender from '../helpers/notifSender';
+import likesServices from '../services/likesServices/likesServices';
 
 cloudinary.config({ CLOUDINARY_URL: process.env.CLOUDINARY_URL });
 
@@ -32,6 +33,14 @@ const {
   NO_BOOKING,
   FOUND_BOOKINGS,
 } = strings.accommodation.success;
+
+const {
+  findLikes,
+  addNewLike,
+  updateLike,
+  likesSum,
+  hasliked,
+} = likesServices;
 
 export default class AccommodationController {
   static async createAccommodation(req, res) {
@@ -176,17 +185,23 @@ export default class AccommodationController {
   static async viewSpecificAccommodation(req, res) {
     const { role, id } = req.user.payload;
     const { slug } = req.params;
+    const likes = await likesSum(slug, id, true);
+    const unlikes = await likesSum(slug, id, false);
+    const haslike = await hasliked(slug, id, true);
+    const hasunlike = await hasliked(slug, id, false);
 
     if (role === 2) {
       const accommodation = await getOneAccommodation({ slug }, id);
 
       return responseUtil(res, 200, (!accommodation)
-        ? NOT_FOUND : SINGLE_ACCOMMODATION, accommodation);
+        ? NOT_FOUND : SINGLE_ACCOMMODATION, { accommodation, accomodationLike: likes });
     }
     const available = await getOneAccommodation({ slug, isActivated: true }, id);
 
     return responseUtil(res, 200, (!available)
-      ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, available);
+      ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, {
+        available, Likes: likes, Unlikes: unlikes, hasLiked: haslike, hasUnliked: hasunlike
+      });
   }
 
   static async accommodationActivation(req, res) {
@@ -299,4 +314,34 @@ export default class AccommodationController {
     });
 
   }
-}
+
+  static async likeAccommodation(req, res) {
+    const { id, like } = req.params;
+    const likes = await findLikes(id, req.user.payload.id);
+
+    if (!likes && like === 'like') {
+      const newlike = { userId: req.user.payload.id, accommodationId: id, status: true };
+      addNewLike(newlike).then(() => responseUtil(res, 201, strings.likes.success.LIKED, newlike));
+    }
+
+    if (!likes && like === 'unlike') {
+      const newDislike = { userId: req.user.payload.id, accommodationId: id, status: false };
+      // eslint-disable-next-line max-len
+      addNewLike(newDislike).then(() => responseUtil(res, 201, strings.likes.success.DISLIKE, newDislike));
+      }
+
+      const updateLikeHelper = async (res, likes, like, status, action, message, id, loggedId) => {
+        if (likes.status === status && like === action) {
+          await updateLike(id, loggedId, { status: !status });
+          return responseUtil(res, 200, message);
+        }
+      };
+
+      if ((likes.status === true && like === 'like') || (likes.status === false && like === 'unlike')) {
+        return responseUtil(res, 400, `You already ${like}d this before`);
+      }
+
+      await updateLikeHelper(res, likes, like, false, 'like', strings.likes.success.LIKED, id, req.user.payload.id);
+      await updateLikeHelper(res, likes, like, true, 'unlike', strings.likes.success.DISLIKE, id, req.user.payload.id);
+    }
+  }
