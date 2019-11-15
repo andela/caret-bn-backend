@@ -40,8 +40,6 @@ describe('stats Requests Tests', () => {
       .get('/api/v1/requests/stats?startDate=2019-03-03&endDate=2019-11-07')
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
-        console.log(res.body);
-        
         res.should.have.property('status').eql(200);
         res.body.should.have.property('message').eql('Your number of trips are:');
         done();
@@ -64,8 +62,7 @@ describe('stats Requests Tests', () => {
       .get('/api/v1/requests/stats?startDate=2019-12-07&endDate=2020-11-03')
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
-        console.log(res.body);
-        
+
         res.should.have.property('status').eql(400);
         res.body.should.have.property('message').eql('Either startDate or endDate must not be greater than today\'s date');
         done();
@@ -97,8 +94,6 @@ describe('stats Requests Tests', () => {
       .get('/api/v1/requests/stats?startDate=2019-01-07&endDate=2019-11-12')
       .set('Authorization', `Bearer ${requesterToken}`)
       .end((err, res) => {
-        console.log(res.body);
-        
         res.should.have.property('status').eql(200);
         done();
       });

@@ -46,7 +46,7 @@ export default class UserController {
       sgMail.send(msg);
 
       return responseUtil(res, 201, strings.users.success.SIGNUP_SUCCESS, {
-        user_id: user.id,
+        userId: user.id,
         username: user.username,
         email: user.email,
       });

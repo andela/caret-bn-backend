@@ -14,7 +14,7 @@ export const getRatings = async (accommodation, userId) => {
         const averageRating = summation / ratings.length;
         accommodation.dataValues.hasRated = hasRated;
         accommodation.dataValues.hasBookmarked = hasBookmarked;
-        accommodation.dataValues.averageRating = (!isNaN(averageRating) ? averageRating : 0);
+        accommodation.dataValues.averageRating = (!isNaN(averageRating) ? parseFloat(averageRating.toFixed(1)) : 0);
         accommodation.dataValues.ratings = ratings;
     }
 

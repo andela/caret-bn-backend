@@ -92,6 +92,8 @@ const strings = {
       DATE_ERROR: 'checkout date must not be less than checkin date',
       INVALID_DATE: 'CheckOut and CheckIn must not be outdate dates',
       EXCEED_NUMBER: 'roomsNumber exceed number of available rooms',
+      NOT_INTEGER: 'Accommodation ID must be a number',
+
     }
   },
   images: {
@@ -148,6 +150,12 @@ const strings = {
   bookmarks: {
     YOUR_BOOKMARKS: 'Your bookmarks are retrieved successfully!',
     NO_BOOKMARKS: 'No bookmarks found!',
+  },
+  likes: {
+    success: {
+      LIKED: 'Liked successful !!!',
+      DISLIKE: 'Disliked successful !!!',
+    },
   },
 };
 

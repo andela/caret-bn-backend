@@ -6,6 +6,7 @@ import validateToken from '../../middlewares/auth/validateToken';
 import InputValidation from '../../middlewares/inputValidation';
 import checkRole from '../../middlewares/checkRole';
 import isAccommodationFound from '../../middlewares/isAccommodationFound';
+import accommodation from '../../middlewares/isAccommodationExist';
 import isOwner from '../../middlewares/isOwner';
 import checkId from '../../middlewares/checkId';
 import catchEmptyForm from '../../middlewares/catchEmptyForm';
@@ -34,20 +35,17 @@ const {
   viewDeactivated,
   changeStatus,
   viewOneBooking,
+  likeAccommodation,
 } = AccommodationController;
 
 const { bookmark } = BookmarkController;
 
 const {
-  validateAddNew,
-  validateImage,
-  validateExistence,
-  validateAccommodationEdit,
-  validateBooking,
+  validateAddNew, validateImage, validateExistence, validateAccommodationEdit, validateBooking,
   validateReasons,
   validateStatusQuery,
 } = InputValidation;
-const { checkSupplierRole, checkBookingRole } = checkRole;
+const { checkSupplierRole, checkBookingRole, supplierNotAllowed } = checkRole;
 
 /**
  * @swagger
@@ -328,12 +326,12 @@ router.delete('/:id/delete', validateToken, checkId, isAccommodationFound, isOwn
 router.get('/bookings', validateToken, viewBookings);
 router.get('/bookings/search', validateToken, checkSupplierRole, wrongQuery, catchSearchQueries, validateStatusQuery, findStatusId, searchBookings);
 router.patch('/book', validateToken, checkBookingRole, validateBooking, bookAccommdation);
-router.get('/:slug', validateToken, viewSpecificAccommodation);
 router.post('/:slug/bookmark', validateToken, bookmark);
+router.get('/:slug', validateToken, accommodation.accommodationExist, viewSpecificAccommodation);
 router.patch('/activate/:slug', validateToken, validateReasons, accommodationActivation);
 router.get('/admin/deactivated', validateToken, viewDeactivated);
 router.patch('/bookings/:action/:id', validateToken, checkSupplierRole, checkId, wrongAction, bookingFound, bookingNotPending, changeStatus);
 router.get('/bookings/:id', validateToken, checkId, viewOneBooking);
-
+router.post('/:id/:like', validateToken, checkId, supplierNotAllowed, accommodation.accommodationExist, likeAccommodation);
 
 export default router;
