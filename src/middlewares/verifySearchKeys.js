@@ -14,7 +14,8 @@ export default (req, res, next) => {
       || key === 'name'
       || key === 'description'
       || key === 'highlights'
-      || key === 'amenities') {
+      || key === 'amenities'
+      || key === 'rating') {
       return true;
     }
     return false;
@@ -30,7 +31,8 @@ export default (req, res, next) => {
     || query.name === ''
     || query.description === ''
     || query.highlights === ''
-    || query.amenities === '') {
+    || query.amenities === ''
+    || query.rating === '') {
     return responseHelper(res, 'Search keys cannot be null', null, 400);
   }
 

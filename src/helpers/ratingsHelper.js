@@ -1,6 +1,8 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable  import/prefer-default-export */
 /* eslint-disable  indent */
 /* eslint-disable  max-len */
+
 export const getRatings = async (accommodation, userId) => {
 
     if (accommodation) {
@@ -12,7 +14,7 @@ export const getRatings = async (accommodation, userId) => {
         const averageRating = summation / ratings.length;
         accommodation.dataValues.hasRated = hasRated;
         accommodation.dataValues.hasBookmarked = hasBookmarked;
-        accommodation.dataValues.averageRating = averageRating;
+        accommodation.dataValues.averageRating = (!isNaN(averageRating) ? averageRating : 0);
         accommodation.dataValues.ratings = ratings;
     }
 
