@@ -333,7 +333,7 @@ router.patch('/activate/:slug', validateToken, validateReasons, accommodationAct
 router.get('/admin/deactivated', validateToken, viewDeactivated);
 router.patch('/bookings/:action/:id', validateToken, checkSupplierRole, checkId, wrongAction, bookingFound, bookingNotPending, changeStatus);
 router.get('/bookings/:id', validateToken, checkId, viewOneBooking);
-router.post('/:id/:like', validateToken, checkId, supplierNotAllowed, accommodation.accommodationExist, likeAccommodation);
 router.get('/ratings/top-rated', validateToken, viewTopRated);
+router.post('/:slug/:like', validateToken, accommodation.checkAction, supplierNotAllowed, likeAccommodation);
 
 export default router;
