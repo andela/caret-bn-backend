@@ -10,11 +10,11 @@ chai.use(chaiHttp);
 
 let userToken;
 
-let id = 2;
-let id1 = 4;
+let slug = 'marriot';
+let slug1 = 'el-gorillaz';
 
 describe('Like and Unlike Accommodation Test', () => {
-    it('it should log in a supplier User', done => {
+    it('it should log in a User', done => {
       chai.request(app)
       .post('/api/v1/users/login')
       .send(mockData.verifiedUser4)
@@ -25,16 +25,25 @@ describe('Like and Unlike Accommodation Test', () => {
     });
     it('it should create a new like', done => {
         chai.request(app)
-        .post(`/api/v1/accommodations/${id}/like`)
+        .post(`/api/v1/accommodations/${slug}/like`)
           .set('Authorization', `Bearer ${userToken}`)
           .end((err, res) => {
             res.should.have.status(201);
             done();
           });
       });
+      it('Action should like or unlike like', done => {
+        chai.request(app)
+        .post(`/api/v1/accommodations/${slug}/likebb`)
+          .set('Authorization', `Bearer ${userToken}`)
+          .end((err, res) => {
+            res.should.have.status(404);
+            done();
+          });
+      });
       it('it should create a new unlike', done => {
         chai.request(app)
-        .post(`/api/v1/accommodations/${id1}/unlike`)
+        .post(`/api/v1/accommodations/${slug1}/unlike`)
           .set('Authorization', `Bearer ${userToken}`)
           .end((err, res) => {
             res.should.have.status(201);
@@ -43,7 +52,7 @@ describe('Like and Unlike Accommodation Test', () => {
       });
       it('it should dislike accommodation', done => {
         chai.request(app)
-        .post(`/api/v1/accommodations/${id}/unlike`)
+        .post(`/api/v1/accommodations/${slug}/unlike`)
           .set('Authorization', `Bearer ${userToken}`)
           .end((err, res) => {
             res.should.have.status(200);
@@ -52,7 +61,7 @@ describe('Like and Unlike Accommodation Test', () => {
       });
       it('it should like back', done => {
         chai.request(app)
-        .post(`/api/v1/accommodations/${id}/like`)
+        .post(`/api/v1/accommodations/${slug}/like`)
           .set('Authorization', `Bearer ${userToken}`)
           .end((err, res) => {
             res.should.have.status(200);
@@ -68,13 +77,4 @@ describe('Like and Unlike Accommodation Test', () => {
             done();
           });
         });
-        it('it should not like when ID is not integer', done => {
-            chai.request(app)
-            .post('/api/v1/accommodations/id/like')
-              .set('Authorization', `Bearer ${userToken}`)
-              .end((err, res) => {
-                res.should.have.status(400);
-                done();
-              });
-          });
 });

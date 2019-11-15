@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     accommodations.hasMany(models.likes, {
       targetKey: "accommodationId",
       sourceKey: "id",
-      as: "accomodationLike"
+      as: "likes"
     });
   };
   return accommodations;

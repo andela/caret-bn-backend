@@ -88,6 +88,16 @@ describe('====> Authenticated Search Tests <=====', () => {
             });
     });
 
+    it('Should Search and return rated accommodations', (done) => {
+        chai.request(app)
+            .get('/api/v1/accommodations/search?rating=4')
+            .set('Authorization', `Bearer ${token}`)
+            .end((err, res) => {
+                expect(res.status).to.be.eql(200, 'Wrong status returned');
+                done();
+            });
+    });
+
     it('Should not search ratings < 1', (done) => {
         chai.request(app)
             .get('/api/v1/accommodations/search?rating=0')
