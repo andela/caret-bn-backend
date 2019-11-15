@@ -1,3 +1,4 @@
+import moment from 'moment';
 import models from '../database/models';
 
 export default class bookingNotifServices {
@@ -22,10 +23,12 @@ export default class bookingNotifServices {
   }
 
   static async bookingNotifBuilder(booking, userNotified, activity) {
+    const timestamp = moment().format('HH:mm:ss');
     const notification = await models.bookingNotifications.build({
       bookingId: booking.id,
       userNotified,
       activity,
+      timestamp,
     });
     return notification;
   }

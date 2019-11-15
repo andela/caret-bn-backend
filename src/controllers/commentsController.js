@@ -26,7 +26,7 @@ export default class CommentsController {
       const notification = await notifBuilder(
         request,
         userNotiified,
-        `A comment has been made on request ${requestId}. Click here to view: ${APP_URL_BACKEND}/api/v1/requests/${requestId}.`
+        `A comment has been made on request ${requestId}. Click here to view: ${APP_URL_BACKEND}/api/v1/requests/${requestId}.`,
       );
       await notifSaver(notification);
       const {
