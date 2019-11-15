@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable radix */
 /* eslint-disable indent */
 import cloudinary from 'cloudinary';
@@ -32,6 +33,8 @@ const {
   DEACTIVATED_ACCOMMODATIONS,
   NO_BOOKING,
   FOUND_BOOKINGS,
+  NO_RATED,
+  HIGHEST_RATED,
 } = strings.accommodation.success;
 
 const {
@@ -172,7 +175,7 @@ export default class AccommodationController {
               APP_URL_BACKEND,
               'placed',
               'booking'
-              );
+            );
 
             return responseUtil(res, 200, strings.accommodation.success.SUCCESSFUL_BOOKED);
           }
@@ -200,8 +203,8 @@ export default class AccommodationController {
 
     return responseUtil(res, 200, (!available)
       ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, {
-        available, Likes: likes, Unlikes: unlikes, hasLiked: haslike, hasUnliked: hasunlike
-      });
+      available, Likes: likes, Unlikes: unlikes, hasLiked: haslike, hasUnliked: hasunlike
+    });
   }
 
   static async accommodationActivation(req, res) {
@@ -255,7 +258,7 @@ export default class AccommodationController {
     }
 
     return responseUtil(res, (!myBookings.length) ? 404 : 200, (!myBookings.length)
-        ? NO_BOOKING : FOUND_BOOKINGS, myBookings.reverse());
+      ? NO_BOOKING : FOUND_BOOKINGS, myBookings.reverse());
   }
 
   static async changeStatus(req, res) {
@@ -310,7 +313,7 @@ export default class AccommodationController {
         return responseUtil(res, 404, NO_BOOKING);
       }
 
-     return responseUtil(res, 200, BOOKED_FOUND, booking);
+      return responseUtil(res, 200, BOOKED_FOUND, booking);
     });
 
   }
@@ -328,20 +331,36 @@ export default class AccommodationController {
       const newDislike = { userId: req.user.payload.id, accommodationId: id, status: false };
       // eslint-disable-next-line max-len
       addNewLike(newDislike).then(() => responseUtil(res, 201, strings.likes.success.DISLIKE, newDislike));
-      }
-
-      const updateLikeHelper = async (res, likes, like, status, action, message, id, loggedId) => {
-        if (likes.status === status && like === action) {
-          await updateLike(id, loggedId, { status: !status });
-          return responseUtil(res, 200, message);
-        }
-      };
-
-      if ((likes.status === true && like === 'like') || (likes.status === false && like === 'unlike')) {
-        return responseUtil(res, 400, `You already ${like}d this before`);
-      }
-
-      await updateLikeHelper(res, likes, like, false, 'like', strings.likes.success.LIKED, id, req.user.payload.id);
-      await updateLikeHelper(res, likes, like, true, 'unlike', strings.likes.success.DISLIKE, id, req.user.payload.id);
     }
+
+    const updateLikeHelper = async (res, likes, like, status, action, message, id, loggedId) => {
+      if (likes.status === status && like === action) {
+        await updateLike(id, loggedId, { status: !status });
+        return responseUtil(res, 200, message);
+      }
+    };
+
+    if ((likes.status === true && like === 'like') || (likes.status === false && like === 'unlike')) {
+      return responseUtil(res, 400, `You already ${like}d this before`);
+    }
+
+    await updateLikeHelper(res, likes, like, false, 'like', strings.likes.success.LIKED, id, req.user.payload.id);
+    await updateLikeHelper(res, likes, like, true, 'unlike', strings.likes.success.DISLIKE, id, req.user.payload.id);
   }
+
+  static async viewTopRated(req, res) {
+    const accommodations = await getAllAccommodations();
+    const values = [];
+
+    accommodations.forEach(accommodation => {
+      if (!isNaN(accommodation.dataValues.averageRating)) {
+        values.push(accommodation.dataValues);
+      }
+    });
+    const sorted = values.sort((low, high) => high.averageRating - low.averageRating).slice(0, 5);
+
+    return responseUtil(res, (!sorted.length) ? 404 : 200, (!sorted.length)
+      ? NO_RATED : HIGHEST_RATED, sorted);
+
+  }
+}

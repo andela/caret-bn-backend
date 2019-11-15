@@ -36,6 +36,7 @@ const {
   changeStatus,
   viewOneBooking,
   likeAccommodation,
+  viewTopRated
 } = AccommodationController;
 
 const { bookmark } = BookmarkController;
@@ -333,5 +334,6 @@ router.get('/admin/deactivated', validateToken, viewDeactivated);
 router.patch('/bookings/:action/:id', validateToken, checkSupplierRole, checkId, wrongAction, bookingFound, bookingNotPending, changeStatus);
 router.get('/bookings/:id', validateToken, checkId, viewOneBooking);
 router.post('/:id/:like', validateToken, checkId, supplierNotAllowed, accommodation.accommodationExist, likeAccommodation);
+router.get('/ratings/top-rated', validateToken, viewTopRated);
 
 export default router;
