@@ -41,8 +41,6 @@ const {
   findLikes,
   addNewLike,
   updateLike,
-  likesSum,
-  hasliked,
 } = likesServices;
 
 export default class AccommodationController {
@@ -188,23 +186,16 @@ export default class AccommodationController {
   static async viewSpecificAccommodation(req, res) {
     const { role, id } = req.user.payload;
     const { slug } = req.params;
-    const likes = await likesSum(slug, id, true);
-    const unlikes = await likesSum(slug, id, false);
-    const haslike = await hasliked(slug, id, true);
-    const hasunlike = await hasliked(slug, id, false);
-
     if (role === 2) {
       const accommodation = await getOneAccommodation({ slug }, id);
 
       return responseUtil(res, 200, (!accommodation)
-        ? NOT_FOUND : SINGLE_ACCOMMODATION, { accommodation, accomodationLike: likes });
+        ? NOT_FOUND : SINGLE_ACCOMMODATION, accommodation);
     }
     const available = await getOneAccommodation({ slug, isActivated: true }, id);
 
     return responseUtil(res, 200, (!available)
-      ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, {
-      available, Likes: likes, Unlikes: unlikes, hasLiked: haslike, hasUnliked: hasunlike
-    });
+      ? SINGLE_NOT_FOUND : SINGLE_ACCOMMODATION, available);
   }
 
   static async accommodationActivation(req, res) {
@@ -319,7 +310,11 @@ export default class AccommodationController {
   }
 
   static async likeAccommodation(req, res) {
-    const { id, like } = req.params;
+    const { slug, like } = req.params;
+    const loggedId = req.user.payload.id;
+    const accommodation = await getOneAccommodation({ slug, isActivated: true }, loggedId);
+    if (!accommodation) { return responseUtil(res, 404, NOT_FOUND); }
+    const { id } = accommodation;
     const likes = await findLikes(id, req.user.payload.id);
 
     if (!likes && like === 'like') {
@@ -332,7 +327,6 @@ export default class AccommodationController {
       // eslint-disable-next-line max-len
       addNewLike(newDislike).then(() => responseUtil(res, 201, strings.likes.success.DISLIKE, newDislike));
     }
-
     const updateLikeHelper = async (res, likes, like, status, action, message, id, loggedId) => {
       if (likes.status === status && like === action) {
         await updateLike(id, loggedId, { status: !status });
