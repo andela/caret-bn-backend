@@ -159,7 +159,7 @@ describe('Signup Test Suite', () => {
         done();
       });
   });
-  
+
   it('user Should not reset password with wrong Token', done => {
     chai.request(app)
       .patch(`/api/v1/users/resetpassword/${invalidToken}`)

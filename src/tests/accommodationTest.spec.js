@@ -414,6 +414,7 @@ describe("Accommodation Test", () => {
         res.should.have.status(200);
         done();
       });
+    setTimeout(done, 15000);
   });
 
   it("it should deactivate an accommodation and send an email", done => {

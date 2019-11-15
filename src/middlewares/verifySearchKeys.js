@@ -14,7 +14,8 @@ export default (req, res, next) => {
       || key === 'name'
       || key === 'description'
       || key === 'highlights'
-      || key === 'amenities') {
+      || key === 'amenities'
+      || key === 'rating') {
       return true;
     }
     return false;
@@ -30,8 +31,16 @@ export default (req, res, next) => {
     || query.name === ''
     || query.description === ''
     || query.highlights === ''
-    || query.amenities === '') {
+    || query.amenities === ''
+    || query.rating === '') {
     return responseHelper(res, 'Search keys cannot be null', null, 400);
+  }
+
+  if (query.rating) {
+    const rating = parseFloat(query.rating);
+    if (rating % 1 !== 0 || rating < 1) {
+      return responseHelper(res, 'Please use whole numbers greater than 0', null, 400);
+    }
   }
 
   next();

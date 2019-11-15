@@ -35,18 +35,17 @@ describe('<==== Ratings Tests ====> ', () => {
             });
     });
 
-    it('it should tell the user that no accommodations were found', done => {
+    it('it should retrieve the top 5 highest rated accommodations', done => {
         chai.request(app)
             .get(`/api/v1/accommodations/ratings/top-rated`)
             .set('Authorization', `Bearer ${authToken}`)
             .end((err, res) => {
-                res.should.have.status(404);
+                res.should.have.status(200);
                 done();
             });
     });
 
-
-    it('===> Should Successfully Rate an Accomodation <===', (done) => {
+    it('===> Should Rate an Accomodation <===', (done) => {
         chai.request(app)
             .post('/api/v1/ratings')
             .send(ratineOne)
@@ -56,16 +55,6 @@ describe('<==== Ratings Tests ====> ', () => {
                 done();
             });
     });
-
-    it('it should retrieve the top 5 highest rated accommodations', done => {
-        chai.request(app)
-          .get(`/api/v1/accommodations/ratings/top-rated`)
-          .set('Authorization', `Bearer ${authToken}`)
-          .end((err, res) => {
-            res.should.have.status(200);
-            done();
-          });
-      });
 
     it('===> Should Not Rate an Accomodation Twice <===', (done) => {
         chai.request(app)

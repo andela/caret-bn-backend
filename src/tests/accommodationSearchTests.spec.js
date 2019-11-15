@@ -79,7 +79,7 @@ describe('====> Authenticated Search Tests <=====', () => {
 
     it('Should Search and return no accommodations found with valid search keys', (done) => {
         chai.request(app)
-            .get('/api/v1/accommodations/search?description=fire&location=kampala&name=marriott')
+            .get('/api/v1/accommodations/search?description=fire&location=kampala&name=marriott&rating=1')
             .set('Authorization', `Bearer ${token}`)
             .end((err, res) => {
                 expect(res.status).to.be.eql(404, 'Wrong status returned');
@@ -87,6 +87,40 @@ describe('====> Authenticated Search Tests <=====', () => {
                 done();
             });
     });
+
+    it('Should Search and return rated accommodations', (done) => {
+        chai.request(app)
+            .get('/api/v1/accommodations/search?rating=4')
+            .set('Authorization', `Bearer ${token}`)
+            .end((err, res) => {
+                expect(res.status).to.be.eql(200, 'Wrong status returned');
+                done();
+            });
+    });
+
+    it('Should not search ratings < 1', (done) => {
+        chai.request(app)
+            .get('/api/v1/accommodations/search?rating=0')
+            .set('Authorization', `Bearer ${token}`)
+            .end((err, res) => {
+                expect(res.status).to.be.eql(400, 'Wrong status returned');
+                expect(res.body.message).to.be.eql('Please use whole numbers greater than 0', 'Wrong status returned');
+                done();
+            });
+    });
+
+
+    it('Should not decimal point ratings', (done) => {
+        chai.request(app)
+            .get('/api/v1/accommodations/search?rating=3.2')
+            .set('Authorization', `Bearer ${token}`)
+            .end((err, res) => {
+                expect(res.status).to.be.eql(400, 'Wrong status returned');
+                expect(res.body.message).to.be.eql('Please use whole numbers greater than 0', 'Wrong status returned');
+                done();
+            });
+    });
+
 
 
 });
