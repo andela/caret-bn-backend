@@ -129,7 +129,7 @@ const strings = {
     MANAGERS_ONLY: 'Unable to proceed! This is reserved for managers only',
     RESQUEST_ALREADY_APPROVED: 'This request has already been approved!',
     RESQUEST_ALREADY_REJECTED: 'This request has already been rejected!',
-    SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
+    SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieved successfully!',
   },
   id: {
     error: {

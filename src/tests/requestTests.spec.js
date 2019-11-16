@@ -66,7 +66,7 @@ describe('Request Tests', () => {
         .end((err, res) => {
             const { status, body } = res;
             expect(status).to.be.eql(200, 'Incorrect Status Code Returned.');
-            expect(body.message).to.be.eql('Your Requests are retrieveed successfully!', 'Wrong message returned');
+            expect(body.message).to.be.eql('Your Requests are retrieved successfully!', 'Wrong message returned');
             done();
         });
     });
@@ -306,6 +306,62 @@ describe('Request Tests', () => {
             const { status, body } = res;
             expect(status).to.be.eql(200);
             expect(body.message).to.be.eql('Comment Successfully Deleted!');
+            done();
+        });
+    });
+
+    // Manager View Single Request
+    it('Should return requests to requester\'s manager', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/6')
+        .set('Authorization', `Bearer ${managerToken}`)
+        .end((err, res) => {            
+            const { status, body } = res;
+            expect(status).to.be.eql(200);
+            done();
+        });
+    });
+
+    it('Should not return requests to another manager', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/6')
+        .set('Authorization', `Bearer ${anotherManagerToken}`)
+        .end((err, res) => {            
+            const { status, body } = res;
+            expect(status).to.be.eql(403);
+            done();
+        });
+    });
+
+    it('Should return requests to requester', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/6')
+        .set('Authorization', `Bearer ${tokenForRequests}`)
+        .end((err, res) => {            
+            const { status, body } = res;
+            expect(status).to.be.eql(200);
+            done();
+        });
+    });
+
+    it('Should return 404, No requests found', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/1000')
+        .set('Authorization', `Bearer ${tokenForRequests}`)
+        .end((err, res) => {            
+            const { status, body } = res;
+            expect(status).to.be.eql(404);
+            done();
+        });
+    });
+
+    it('Should return 404, No requests found', (done) => {
+        chai.request(app)
+        .get('/api/v1/requests/11')
+        .set('Authorization', `Bearer ${tokenForRequests}`)
+        .end((err, res) => {            
+            const { status, body } = res;
+            expect(status).to.be.eql(404);
             done();
         });
     });

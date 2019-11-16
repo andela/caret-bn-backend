@@ -11,7 +11,7 @@ const strings = {
   },
   user: {
     requests: {
-      SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieveed successfully!',
+      SUCCESSFULLY_RETRIEVED_REQUESTS: 'Your Requests are retrieved successfully!',
       NO_REQUESTS: 'No requests were found',
       ASSIGNED_REQUESTS: 'All requests assigned to you are retrived successfully!',
       SUCCESSFULLY_FOUND_REQUESTS: 'These are the requests that match your search options',
