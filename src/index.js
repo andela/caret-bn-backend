@@ -19,10 +19,8 @@ const http = require('http').createServer(app);
 
 const io = socketIo(http);
 const { chat } = chatController;
-
 const port = process.env.APPLICATION_PORT || process.env.PORT;
 const isProduction = process.env.NODE_ENV === 'production';
-
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
