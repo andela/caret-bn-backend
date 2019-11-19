@@ -62,7 +62,6 @@ describe('stats Requests Tests', () => {
       .get('/api/v1/requests/stats?startDate=2019-12-07&endDate=2020-11-03')
       .set('Authorization', `Bearer ${userToken}`)
       .end((err, res) => {
-
         res.should.have.property('status').eql(400);
         res.body.should.have.property('message').eql('Either startDate or endDate must not be greater than today\'s date');
         done();

@@ -21,6 +21,7 @@ import accommodationSearchTests from './accommodationSearchTests.spec'
 import bookmarkTests from './bookmarkTests.spec';
 import unitTests from './unitTests.spec';
 import likeTests from './likeTests.spec';
+import logoutTests from './logoutTests.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -49,3 +50,4 @@ describe('Accommodation Search Tests', accommodationSearchTests);
 describe('Bookmarks Tests', bookmarkTests);
 describe('Unit Tests', unitTests);
 describe('Likes Tests', likeTests);
+describe('Logout Tests', logoutTests);

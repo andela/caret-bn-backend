@@ -10,7 +10,8 @@ const strings = {
       SUCCESS_UPDATE: 'User Updated',
       SUCCESSFUL_LOGIN: 'User logged in successfully!',
       SUCCESSFUL_ASSIGN: 'you have assigned the role to this user',
-      ROLE_ADDED: 'role added successfully'
+      ROLE_ADDED: 'role added successfully',
+      LOGOUT: 'You have been logged out successfully!'
     },
     error: {
       BAD_SIGNUP_REQUEST: 'Input Error please check error!',
