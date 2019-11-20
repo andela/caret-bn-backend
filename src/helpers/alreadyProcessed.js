@@ -5,13 +5,9 @@ const alreadyProcessed = async (res, id, statusId, message, next) => {
   const request = await findOneRequest({ id, statusId });
 
   if (request) {
-    return responseError(
-      res,
-      400,
-      message,
-      {}
-    );
+    return responseError(res, 400, message, {});
   }
+
   return next();
 };
 

@@ -8,7 +8,10 @@ import text from '../utils/strings';
 import responseHelper from '../utils/responseHelper';
 import responseUtil from '../utils/responseUtil';
 import userServices from '../services/userServices';
-import { createRequest, findOne } from '../services/requestServices/requestServices';
+import {
+  createRequest,
+  findOne
+} from '../services/requestServices/requestServices';
 import destinationController from './destinationController';
 import searchRequestsServices from '../services/searchRequestsServices';
 import Utilities from '../utils/index';
@@ -18,14 +21,12 @@ import requestHelper from '../helpers/requestHelper';
 import notifSender from '../helpers/notifSender';
 import dateValidator from '../helpers/datesValidator';
 
-
 const { Op } = Sequelize;
 const { SUCCESSFULLY_RETRIEVED_REQUESTS } = strings.requests;
 const { NO_REQUESTS, ASSIGNED_REQUESTS } = text.user.requests;
 const { allSearch } = searchRequestsServices;
 
 export default class requestController {
-
   static async viewManagerRequests(req, res) {
     const { id: lineManager } = req.user.payload;
 
@@ -43,21 +44,30 @@ export default class requestController {
             { model: models.locations, as: 'origin', attributes: ['id', 'name', 'country'] },
             { model: models.destinations, attributes: ['id', 'arrivalDate', 'departureDate', 'reasons'], include: [{ model: models.locations, as: 'location', attributes: ['name'] }] }
           ]
-        },
+        }
       ]
     });
-    return responseUtil(res, 200, (!users.length)
-      ? NO_REQUESTS
-      : ASSIGNED_REQUESTS, users);
+    return responseUtil(
+      res,
+      200,
+      !users.length ? NO_REQUESTS : ASSIGNED_REQUESTS,
+      users
+    );
   }
 
   static async viewMyRequests({ user }, res) {
     const query = Utilities.userQueries.userRequests(user.payload);
-    const { requests } = await userServices.findOne(query, Utilities.queryScopes.responseScope);
+    const { requests } = await userServices.findOne(
+      query,
+      Utilities.queryScopes.responseScope
+    );
 
-    return responseUtil(res, 200, (!requests.length)
-      ? NO_REQUESTS
-      : SUCCESSFULLY_RETRIEVED_REQUESTS, requests);
+    return responseUtil(
+      res,
+      200,
+      !requests.length ? NO_REQUESTS : SUCCESSFULLY_RETRIEVED_REQUESTS,
+      requests
+    );
   }
 
   static async changeStatus(req, res) {
@@ -79,7 +89,7 @@ export default class requestController {
     if (requestToProcess) {
       let request = await models.requests.update(
         { statusId },
-        { where: { id }, returning: true, }
+        { where: { id }, returning: true }
       );
 
       request = request[1][0].dataValues;
@@ -90,37 +100,33 @@ export default class requestController {
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
   }
 
-  static async updateRequest(req, res) {
+  static async updateRequest(req, res) {
     const { id } = req.request;
 
     try {
       await models.requests.update(req.body, {
-        where: { id }, returning: true, raw: true,
+        where: { id },
+        returning: true,
+        raw: true
       });
 
       const destination = req.body.destinations;
       const { lineManager } = req.user.payload;
       const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
 
-      destination.forEach(async element => {
+      destination.forEach(async element => {
         await models.destinations.update(element, {
-          where: { [Op.and]: [{ requestId: id }, { id: element.id }] },
+          where: { [Op.and]: [{ requestId: id }, { id: element.id }] }
         });
       });
 
       const request = await allSearch({ id });
       const requestData = request[0].dataValues;
-      await notifSender(
-        'Request edited',
-        requestData,
-        lineManager,
-        APP_URL_BACKEND,
-        'edited',
-        'request'
-      );
+      await notifSender('Request edited', requestData, lineManager, APP_URL_BACKEND, 'edited', 'request');
       return responseUtil(res, 200, strings.request.success.SUCCESS_UPDATE_REQUEST, request);
-
-    } catch (error) { return res.status(500).json({ error: 'Something wrong' }); }
+    } catch (error) {
+      return res.status(500).json({ error: 'Something wrong' });
+    }
   }
 
   static async searchRequests(req, res) {
@@ -145,21 +151,27 @@ export default class requestController {
 
   static async findOne(req, res) {
     const { id } = req.params;
-    const { user } = req;
-    const query = Utilities.requestQueries.singleRequest(id, user.payload.id);
+    const { requesterId } = req;
+    const query = Utilities.requestQueries.singleRequest(id, requesterId);
     const request = await findOne(query);
     return Utilities.responseHelper(
       res,
-      Utilities.stringsHelper.user.requests.SUCCESSFULLY_RETRIEVED_REQUESTS,
+      !request ? NO_REQUESTS : SUCCESSFULLY_RETRIEVED_REQUESTS,
       request,
-      200
+      !request ? 404 : 200
     );
   }
 
   static async storeRequest(req, res) {
     const { body, user } = req;
     const request = await createRequest(body, user.payload.id);
-    return destinationController.storeDestination(req, res, body, user, request);
+    return destinationController.storeDestination(
+      req,
+      res,
+      body,
+      user,
+      request
+    );
   }
 
   static async getStats(req, res) {
@@ -177,10 +189,11 @@ export default class requestController {
     const requestResults = await requestHelper.findStatRequest(req);
     const tripsNumber = requestResults.length;
 
-    return responseUtil(res, 200, (!tripsNumber)
-      ? NO_REQUESTS
-      : strings.request.success.RESULT, { NumberOfTrips: tripsNumber, Trips: requestResults });
-
+    return responseUtil(
+      res,
+      200,
+      !tripsNumber ? NO_REQUESTS : strings.request.success.RESULT,
+      { NumberOfTrips: tripsNumber, Trips: requestResults }
+    );
   }
-
 }

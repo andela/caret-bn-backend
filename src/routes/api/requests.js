@@ -13,6 +13,7 @@ import pendingRequest from '../../middlewares/request';
 import isProcessed from '../../middlewares/isProcessed';
 import wrongAction from '../../middlewares/wrongAction';
 import catchOriginDestination from '../../middlewares/catchOriginDestination';
+import managerViewRequest from '../../middlewares/managerViewRequest';
 
 const router = new Router();
 const {
@@ -184,6 +185,6 @@ router.patch('/:id', validateToken, pendingRequest.requestOwner, pendingRequest.
 router.put('/comments/:id', validateToken, checkId, validateComment, editComment);
 router.delete('/comments/:id', validateToken, checkId, deleteComment);
 router.get('/stats/', validateToken, supplierNotAllowed, catchSearchQueries, validateRequestStas, getStats);
-router.get('/:id', (req, res) => requestController.findOne(req, res));
+router.get('/:id', checkId, managerViewRequest, (req, res) => requestController.findOne(req, res));
 
 export default router;
