@@ -16,7 +16,7 @@ dotenv.config();
 
 const { users } = models;
 
-dotenv.config();
+const { FRONT_END_URL } = process.env;
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default class UserController {
@@ -66,7 +66,7 @@ export default class UserController {
       );
 
       if (updatedUser) {
-        return responseUtil(res, 200, strings.users.success.SUCCESS_VERIFIED, { token });
+        return res.redirect(`${FRONT_END_URL}`);
       }
     } catch (error) {
       return responseUtil(res, 500, strings.users.error.SOMETHING_WRONG);

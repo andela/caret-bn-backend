@@ -7,6 +7,7 @@ import testdata from "./mockData/signupMockdata";
 import generateToken from "../utils/generateToken";
 import EmailToken from "../utils/EmailToken";
 
+const {expect} = chai;
 const token = generateToken(testdata.verifyUser);
 const validTroken = EmailToken.ResetToken(testdata.validuser);
 const invalidToken = EmailToken.ResetToken(testdata.invaliduser);
@@ -77,11 +78,7 @@ describe("Signup Test Suite", () => {
       .request(app)
       .get(`/api/v1/users/verify/${token}`)
       .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        res.body.should.have
-          .property("message")
-          .eql(`${strings.users.success.SUCCESS_VERIFIED}`);
+        expect(res).to.redirect;
         done();
       });
   });
