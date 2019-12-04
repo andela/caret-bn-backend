@@ -1,15 +1,24 @@
 import 'regenerator-runtime';
 import passport from 'passport';
-import GooglePlusTokenStrategy from 'passport-google-plus-token';
-import FacebookTokenStrategy from 'passport-facebook-token';
+import GoogleOAuth from 'passport-google-oauth';
+import FacebookStrategy from 'passport-facebook';
 import utilities from '../../utils/index';
 import services from '../../services/userServices';
 
 async function getUser(query, done, scope = null) {
   done(null, await services.findOrCreate(query, scope));
 }
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
 
-passport.use(new GooglePlusTokenStrategy(
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+const GoogleStrategy = GoogleOAuth.OAuth2Strategy;
+
+passport.use(new GoogleStrategy(
   utilities.strategy(
     utilities.keys.google.clientID,
     utilities.keys.google.clientSecret,
@@ -26,7 +35,7 @@ passport.use(new GooglePlusTokenStrategy(
   )
 ));
 
-passport.use(new FacebookTokenStrategy(
+passport.use(new FacebookStrategy(
   utilities.strategy(
     utilities.keys.facebook.clientID,
     utilities.keys.facebook.clientSecret,
