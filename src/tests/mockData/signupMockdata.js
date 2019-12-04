@@ -5,6 +5,13 @@ const testdata = {
     password: 'Pa$5W0rd',
     confirmPassword: 'Pa$5W0rd',
   },
+  validSignupHost: {
+    username: 'krinkun',
+    email: 'krinkun@gmail.com',
+    password: 'Pa$5W0rd',
+    confirmPassword: 'Pa$5W0rd',
+    host: 'https://caret-bn-frontend.herokuapp.com',
+  },
   verifyUser: { id: 3, isVerified: false },
   validuser: {
     id: '3',

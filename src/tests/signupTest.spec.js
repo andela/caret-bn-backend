@@ -30,6 +30,17 @@ describe("Signup Test Suite", () => {
       });
   });
 
+  it("Should signup a user successfully by return 201 status code, host case", done => {
+    chai
+      .request(app)
+      .post("/api/v1/users/register")
+      .send(testdata.validSignupHost)
+      .end((err, res) => {
+        res.should.have.property("status").eql(201);
+        done();
+      });
+  });
+
   it("Should not signup a user with an incomplete body", done => {
     chai
       .request(app)
@@ -73,12 +84,16 @@ describe("Signup Test Suite", () => {
         done();
       });
   });
-  it("it should verify a user", done => {
+  it("Should verify a user", done => {
     chai
       .request(app)
       .get(`/api/v1/users/verify/${token}`)
       .end((err, res) => {
-        expect(res).to.redirect;
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have
+          .property("message")
+          .eql(`${strings.users.success.SUCCESS_VERIFIED}`);
         done();
       });
   });
