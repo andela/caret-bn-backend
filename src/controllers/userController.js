@@ -74,7 +74,7 @@ export default class UserController {
   }
 
   static Providelink(req, res) {
-    const { email } = req.body;
+    const { email, host } = req.body;
     models.users.findOne({
       where: {
         email,
@@ -85,7 +85,7 @@ export default class UserController {
       }
       const verifyToken = EmailToken.ResetToken(user);
 
-      emailHelper.resetEmail(req, email, verifyToken);
+      emailHelper.resetEmail(req, email, verifyToken, host);
       return responseUtil(res, 200, strings.users.success.SEND_EMAIL);
     });
   }

@@ -217,6 +217,7 @@ export default class InputValidation {
   static validateEmail(req, res, next) {
     const schema = Joi.object({
       email: Joi.string().email({ minDomainSegments: 2 }).message('email field should be a valid email address. e.g: johndoe@gmail.com.').required(),
+      host: Joi.string().uri().trim().message('host must be a valid URL'),
     });
     validation(req, res, schema, next);
   }
