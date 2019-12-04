@@ -42,11 +42,17 @@ const router = new Router();
  *         description: Authenticated User Successfully
  */
 
-router.post(
-  '/', passport.authenticate('google-plus-token', { session: false, scope: ['profile', 'email'] }),
+router.get(
+  '/', passport.authenticate('google', { session: false, scope: ['profile', 'email'] }),
   tokenMiddleware,
-  socialAuthenticationController.authenticateUser,
   errorHandler
+);
+
+router.get(
+  '/callback',
+  passport.authenticate('google'),
+  tokenMiddleware,
+  socialAuthenticationController.authenticateUser
 );
 
 export default router;
