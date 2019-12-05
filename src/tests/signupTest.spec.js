@@ -7,6 +7,7 @@ import testdata from "./mockData/signupMockdata";
 import generateToken from "../utils/generateToken";
 import EmailToken from "../utils/EmailToken";
 
+const {expect} = chai;
 const token = generateToken(testdata.verifyUser);
 const validTroken = EmailToken.ResetToken(testdata.validuser);
 const invalidToken = EmailToken.ResetToken(testdata.invaliduser);
@@ -23,6 +24,17 @@ describe("Signup Test Suite", () => {
       .request(app)
       .post("/api/v1/users/register")
       .send(testdata.validSignup)
+      .end((err, res) => {
+        res.should.have.property("status").eql(201);
+        done();
+      });
+  });
+
+  it("Should signup a user successfully by return 201 status code, host case", done => {
+    chai
+      .request(app)
+      .post("/api/v1/users/register")
+      .send(testdata.validSignupHost)
       .end((err, res) => {
         res.should.have.property("status").eql(201);
         done();
@@ -72,7 +84,7 @@ describe("Signup Test Suite", () => {
         done();
       });
   });
-  it("it should verify a user", done => {
+  it("Should verify a user", done => {
     chai
       .request(app)
       .get(`/api/v1/users/verify/${token}`)
