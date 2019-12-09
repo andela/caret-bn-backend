@@ -1,12 +1,22 @@
-const GoogleStrategyQuery = ({ id, emails, displayName }) => {
+import { Op } from 'sequelize';
+
+const GoogleStrategyQuery = ({ id, emails }) => {
   const query = {
     defaults: {
       googleId: id,
       isVerified: true,
       email: emails[0].value,
-      username: displayName
+      username: emails[0].value
     },
-    where: { googleId: id }
+    where: {
+      [Op.or]: [
+        {
+          googleId: id,
+        },
+        {
+          email: emails[0].value
+        }]
+    },
   };
   return query;
 };
