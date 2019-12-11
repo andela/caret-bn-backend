@@ -11,7 +11,7 @@ const strings = {
       SUCCESSFUL_LOGIN: 'User logged in successfully!',
       SUCCESSFUL_ASSIGN: 'you have assigned the role to this user',
       ROLE_ADDED: 'role added successfully',
-      LOGOUT: 'You have been logged out successfully!'
+      LOGOUT: 'You have been logged out successfully!',
     },
     error: {
       BAD_SIGNUP_REQUEST: 'Input Error please check error!',
@@ -40,6 +40,7 @@ const strings = {
       NO_PENDED_REQUEST: 'Access denied! you have no pending request',
       NO_ACCESS: 'Access denied! Only system administrators and pre-screened suppliers can access this part of the system!',
       TRAVEL_ADMINS_ONLY: 'Access denied! Only travel administrators can access this part of the system!',
+      UPLOAD_ERROR: 'Please Upload a valid image'
     },
   },
   request: {
@@ -101,7 +102,7 @@ const strings = {
   },
   images: {
     NO_IMAGE: 'No image file(s) selected!',
-    BAD_FORMAT: 'The selected file is not an image!'
+    BAD_FORMAT: 'The selected file is not an image!',
   },
   accommodations: {
     success: {

@@ -1,4 +1,5 @@
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import UserController from '../../controllers/userController';
 import profile from '../../controllers/profileController';
 import EmailToken from '../../utils/EmailToken';
@@ -8,6 +9,8 @@ import InputValidation from '../../middlewares/inputValidation';
 import confirmPassword from '../../middlewares/confirmPassword';
 import user from '../../middlewares/users';
 import wrongSwitch from '../../middlewares/wrongSwitch';
+import catchEmptyForm from '../../middlewares/catchEmptyForm';
+import upload from '../../middlewares/cloudUpload';
 
 const {
   signup, signIn, switchNotif, logoutUser
@@ -19,6 +22,10 @@ const {
 
 
 const router = express.Router();
+router.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
 /**
  * @swagger
  * definitions:
@@ -279,7 +286,7 @@ router.post('/register', validateSignup, verifyExist, confirmPassword, signup);
 router.get('/verify/:token', UserController.userVerify);
 router.post('/forgotpassword', validateEmail, UserController.Providelink);
 router.patch('/resetpassword/:token', EmailToken.UseraccessRequired, validateResetpassword, UserController.Changepassword);
-router.patch('/profile/:email', validateToken, user.compareData, validateProfile, updateProfile);
+router.patch('/profile/:email', validateToken, user.compareData, catchEmptyForm, validateProfile, upload, updateProfile);
 router.post('/login', validateLogin, signIn);
 router.get('/profile/:email', validateToken, user.compareData, getProfile);
 router.patch('/:switchParam', validateToken, wrongSwitch, switchNotif);
