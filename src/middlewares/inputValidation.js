@@ -18,7 +18,7 @@ const validation = (req, res, schema, next) => {
 export default class InputValidation {
   static validateProfile(req, res, next) {
     const schema = Joi.object({
-      username: Joi.string().trim().min(10).max(100),
+      username: Joi.string().trim().min(3).max(100),
       phone: Joi.string().trim().regex(/^[0-9]{3,10}$/),
       gender: Joi.string().valid('female', 'male'),
       language: Joi.string().min(2).max(15).regex(/^[a-zA-Z]/),

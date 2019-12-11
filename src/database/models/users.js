@@ -32,6 +32,10 @@ module.exports = (sequelize, Datatypes) => {
     lineManager:{
       type: Datatypes.INTEGER,
       defaultValue: 8
+    },
+    image:{
+      type: Datatypes.STRING,
+      allowNull: true,
     }
   }, {
     scopes: {

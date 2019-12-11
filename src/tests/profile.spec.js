@@ -16,7 +16,7 @@ let newEmail;
 let malformedToken;
 
 const newProfile = {
-    language: 'Spanish',
+    username: 'ericoo',
   };
 
 describe('Profile Test Suite', () => {
@@ -24,11 +24,27 @@ describe('Profile Test Suite', () => {
         chai.request(app)
             .patch(`/api/v1/users/profile/${email}`)
             .set('Authorization', `Bearer ${token}`)
-            .send(newProfile)
+            .set('Content-Type', 'multipart/form-data')
+            .field({ username: 'kampala' })
+            .attach('image', 'src/tests/mockData/AI.png')
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
                 res.body.should.have.property('message').eql(`${string.users.success.SUCCESS_UPDATE}`);
+                done();
+            });
+    });
+    it('Should allow user to upload file which is not image format', (done) => {
+        chai.request(app)
+            .patch(`/api/v1/users/profile/${email}`)
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', 'multipart/form-data')
+            .field({ username: 'kampala' })
+            .attach('image', 'src/tests/mockData/Converted.pdf')
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.should.be.a('object');
+                res.body.should.have.property('message').eql('avatar image format is invalid');
                 done();
             });
     });
