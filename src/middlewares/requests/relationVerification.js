@@ -85,15 +85,15 @@ export default async (req, res, next) => {
     );
   }
 
-  const { validDates, datesErrorMessage } = await datesVerification.verify(destinations);
-  if (!validDates) {
-    return Utilities.responseHelper(
-      res,
-      datesErrorMessage,
-      null,
-      400
-    );
-  }
+  // const { validDates, datesErrorMessage } = await datesVerification.verify(destinations);
+  // if (!validDates) {
+  //   return Utilities.responseHelper(
+  //     res,
+  //     datesErrorMessage,
+  //     null,
+  //     400
+  //   );
+  // }
 
   const { returnDatesError, returnDatesErrorMessage } = datesVerification.verifyDateSanity(body);
   if (returnDatesError) {

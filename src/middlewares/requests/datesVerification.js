@@ -50,14 +50,14 @@ const verifyTravelDates = async (departureDate, returnDate, destinations, user) 
   };
 
   requests.map(request => {
-    const requestDestinationLength = request.destinations.length;
+    //  const requestDestinationLength = request.destinations.length;
     if (departureDate === request.departureDate && returnDate === request.returnDate) {
       result.dateVerificationError = true;
       result.dateVerificationMessage = 'You are already scheduled to travel on these dates.';
       return result;
     }
 
-    if (departureDate <= request.destinations[requestDestinationLength - 1].arrivalDate
+    if (departureDate <= request.destinations[0].arrivalDate
       && departureDate >= request.departureDate
     ) {
       result.dateVerificationError = true;
