@@ -11,6 +11,7 @@ import ratingRoutes from './ratings';
 import destinationRoutes from './destinations';
 import chatRoutes from './chats';
 import bookmarksRoutes from './bookmarks';
+import locationRoutes from './locations';
 
 const router = new Router();
 router.use('/auth', authRoutes);
@@ -25,5 +26,6 @@ router.use('/api-docs', swaggerRoute);
 router.use('/destinations', destinationRoutes);
 router.use('/chats', chatRoutes);
 router.use('/bookmarks', bookmarksRoutes);
+router.use('/locations', locationRoutes);
 
 export default router;
