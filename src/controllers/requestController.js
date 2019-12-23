@@ -37,12 +37,12 @@ export default class requestController {
         {
           model: models.requests,
           where: { statusId: [1, 2, 3] },
-          attributes: ['id', 'createdAt'],
+          attributes: ['id', 'createdAt', 'departureDate', 'returnDate'],
           include: [
             { model: models.tripTypes, as: 'type', attributes: ['id', 'name'] },
             { model: models.requestStatus, as: 'status', attributes: ['id', 'name'] },
             { model: models.locations, as: 'origin', attributes: ['id', 'name', 'country'] },
-            { model: models.destinations, attributes: ['id', 'arrivalDate', 'departureDate', 'reasons'], include: [{ model: models.locations, as: 'location', attributes: ['name'] }] }
+            { model: models.destinations, attributes: ['id', 'arrivalDate', 'departureDate', 'reasons'], include: [{ model: models.locations, as: 'location', attributes: ['id', 'name', 'country'] }] }
           ]
         }
       ]
