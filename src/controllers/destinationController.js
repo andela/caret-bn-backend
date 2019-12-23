@@ -43,7 +43,9 @@ export default class destinationController {
 
     const locations = await Promise.all(destinations.map(async destination => destination.map(dest => ({
       locationId: dest.locationId,
-      name: dest.location.name
+      name: dest.location.name,
+      country: dest.location.country,
+      images: dest.location.images
     }))));
 
     const spread = [];
@@ -52,6 +54,8 @@ export default class destinationController {
     const filteredLocationArray = spread.map(local => ({
       id: local.locationId,
       name: local.name,
+      country: local.country,
+      images: local.images,
       numberOfVisits: spread.filter(
         location => (location.locationId === local.locationId)
       ).length
