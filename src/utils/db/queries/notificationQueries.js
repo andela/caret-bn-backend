@@ -8,7 +8,7 @@ export const userNotidicationQuery = userId => {
           userNotified: userId
         },
     attributes: [
-      'id', 'activity', 'isRead', 'createdAt', 'timestamp', 'updatedAt'
+      'id', 'entity', 'entityId', 'activity', 'isRead', 'createdAt', 'timestamp', 'updatedAt'
     ],
     include: [
       {

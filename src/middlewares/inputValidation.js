@@ -153,6 +153,7 @@ export default class InputValidation {
       checkOutDate: Joi.string().regex(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/).message('checkOutDate format must be YYYY-MM-DD').required(),
       accomodationId: Joi.number().integer().min(1).required(),
       roomsNumber: Joi.number().integer().min(1).required(),
+      host: Joi.string().uri().trim().message('host must be a valid URL'),
     });
     validation(req, res, schema, next);
   }
