@@ -134,7 +134,7 @@ export default class AccommodationController {
 
   static bookAccommdation(req, res) {
     const {
-      checkInDate, checkOutDate, accomodationId, roomsNumber
+      checkInDate, checkOutDate, accomodationId, roomsNumber, host
     } = req.body;
 
     const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
@@ -172,7 +172,8 @@ export default class AccommodationController {
               accommodation[0].owner,
               APP_URL_BACKEND,
               'placed',
-              'booking'
+              'booking',
+              host
             );
 
             return responseUtil(res, 200, strings.accommodation.success.SUCCESSFUL_BOOKED);
@@ -257,6 +258,7 @@ export default class AccommodationController {
     const {
       statusId, activity, subject, responseMessage, actionIsApprove
     } = req;
+    const { host } = req.body;
 
     const bookingToProcess = await bookingHelper.findOneBooking({ id });
     const { accommodationId } = bookingToProcess;
@@ -280,7 +282,7 @@ export default class AccommodationController {
         await bookingHelper.updateAccomodation(req, remainingSpace);
       }
 
-      await notifSender(subject, booking, booking.userId, APP_URL_BACKEND, activity, 'booking');
+      await notifSender(subject, booking, booking.userId, APP_URL_BACKEND, activity, 'booking', host);
       return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.accommodations.error.BOOKING_NOT_FOUND, null, 404);

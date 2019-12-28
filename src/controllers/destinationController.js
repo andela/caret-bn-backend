@@ -11,7 +11,7 @@ import arrayMapper from '../helpers/arrayMapper';
 
 export default class destinationController {
   static async storeDestination(req, res, body, user, request) {
-    const { destinations } = body;
+    const { destinations, host } = body;
     const APP_URL_BACKEND = `${req.protocol}://${req.headers.host}`;
 
     await Promise.all(destinations.map(async destination => {
@@ -24,7 +24,7 @@ export default class destinationController {
 
     const { lineManager } = user.payload;
 
-    await notifSender('Request Created', request, lineManager, APP_URL_BACKEND, 'created', 'request');
+    await notifSender('Request Created', request, lineManager, APP_URL_BACKEND, 'created', 'request', host);
 
     return Utilities.responseHelper(
       res,

@@ -45,15 +45,15 @@ describe('comment tests', () =>{
       .send(newRequest)
       .end((err, res) => {
           res.should.have.property('status').eql(200);
-      done();
-      });
-  });
+          done();
+        });
+    });
     it('should add new comment', (done) => {
-      chai.request(app)  
-      .post('/api/v1/comments/2')
-      .set('Authorization', `Bearer ${managerToken}`)
-      .send(newRequest)
-      .end((err, res) => {
+        chai.request(app)  
+        .post('/api/v1/comments/2')
+        .set('Authorization', `Bearer ${managerToken}`)
+        .send(newRequest)
+        .end((err, res) => {
           res.should.have.property('status').eql(200);
       done();
       });

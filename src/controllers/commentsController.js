@@ -24,7 +24,8 @@ export default class CommentsController {
       const newComment = { comment, userId: id, requestId };
       const addedComment = await models.comments.create(newComment);
       const notification = await notifBuilder(
-        request,
+        'request',
+        request.id,
         userNotiified,
         `A comment has been made on request ${requestId}. Click here to view: ${APP_URL_BACKEND}/api/v1/requests/${requestId}.`,
       );

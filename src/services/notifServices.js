@@ -43,10 +43,11 @@ export default class notifServices {
     }
   }
 
-  static async notifBuilder(request, userNotified, activity) {
+  static async notifBuilder(entity, entityId, userNotified, activity) {
     const timestamp = moment().format('HH:mm:ss');
     const notification = await models.notifications.build({
-      requestId: request.id,
+      entity,
+      entityId,
       userNotified,
       activity,
       timestamp,

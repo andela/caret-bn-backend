@@ -3,19 +3,16 @@
 import strings from '../utils/stringsUtil';
 import responseUtil from '../utils/responseUtil';
 import notifServices from '../services/notifServices';
-import bookingNotifServices from '../services/bookingNotifServices';
 import { userNotidicationQuery } from '../utils/db/queries/notificationQueries';
 
 const { allNotif, oneNotif, updateNotif } = notifServices;
-const { bookingAllNotif } = bookingNotifServices;
 const { NOTIF_NOT_FOUND, NOTIF_FOUND } = strings.notifications;
 
 export default class notificationController {
 
   static async allNotifications(req, res) {
     const notifications = await allNotif(userNotidicationQuery(req.user.payload.id));
-    const bookingNotifications = await bookingAllNotif(req.user.payload.id);
-    const allNotifs = notifications.reverse().concat(bookingNotifications.reverse());
+    const allNotifs = notifications.reverse();
     if (!allNotifs.length) {
       return responseUtil(res, 404, NOTIF_NOT_FOUND);
     }

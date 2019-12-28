@@ -69,7 +69,7 @@ const requestsSearch = async options => {
       {
         model: models.locations,
         as: 'origin',
-        attributes: ['id', 'name']
+        attributes: ['id', 'name', 'country']
       },
       {
         model: models.tripTypes,

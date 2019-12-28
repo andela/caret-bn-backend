@@ -38,6 +38,8 @@ const validateRequest = data => {
       .min(minimumItems)
       .max(maximumItems)
       .required(),
+    host: Joi.string().uri().trim().message('host must be a valid URL'),
+
   });
   return schema.validate(data, { abortEarly: false });
 };
