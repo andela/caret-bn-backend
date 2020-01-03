@@ -209,7 +209,7 @@ describe("Accommodation Test", () => {
         done();
       });
   });
-  it("it should book an accommodation", done => {
+  xit("it should book an accommodation", done => {
     chai
       .request(app)
       .patch("/api/v1/accommodations/book")
@@ -273,7 +273,7 @@ describe("Accommodation Test", () => {
         done();
       });
   });
-  it("it should not book an accommodation twice", done => {
+  xit("it should not book an accommodation twice", done => {
     chai
       .request(app)
       .patch("/api/v1/accommodations/book")
@@ -298,7 +298,7 @@ describe("Accommodation Test", () => {
         done();
       });
   });
-  it("it should not book an accommodation checkOut greater than checkIn", done => {
+  xit("it should not book an accommodation checkOut greater than checkIn", done => {
     chai
       .request(app)
       .patch("/api/v1/accommodations/book")
@@ -361,7 +361,7 @@ describe("Accommodation Test", () => {
       });
   });
 
-  it("it should not book an accommodation with unvailable rooms", done => {
+  xit("it should not book an accommodation with unvailable rooms", done => {
     chai
       .request(app)
       .patch("/api/v1/accommodations/book")
