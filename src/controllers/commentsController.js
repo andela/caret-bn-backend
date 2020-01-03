@@ -31,7 +31,7 @@ export default class CommentsController {
       );
       await notifSaver(notification);
       const {
-        deleted, createdAt, updatedAt, userId,
+        deleted, userId,
         ...data
       } = addedComment.dataValues;
 
