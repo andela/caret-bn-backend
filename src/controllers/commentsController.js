@@ -46,8 +46,8 @@ export default class CommentsController {
       const requestId = parseInt(req.params.id, 10);
       const { Op } = Sequelize;
       const comments = await models.comments.findAll({
-        attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
-        include: [{ association: 'user', attributes: ['id', 'username', 'email'] }],
+        attributes: { exclude: ['userId'] },
+        include: [{ association: 'user', attributes: ['id', 'username', 'email', 'image'] }],
         where: {
           [Op.and]: [{ requestId },
             { deleted: false }]

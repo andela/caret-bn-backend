@@ -24,6 +24,11 @@ const singleRequest = (id, userId) => {
         attributes: ['id', 'name', 'country']
       },
       {
+        model: database.users,
+        as: 'requester',
+        attributes: ['id', 'username', 'email']
+      },
+      {
         model: database.destinations,
         attributes: [
           'id',

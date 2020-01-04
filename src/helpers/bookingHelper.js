@@ -4,7 +4,7 @@ import models from '../database/models';
 const bookingAssociations = [
   { association: 'status', attributes: ['id', 'name'] },
   { association: 'user', attributes: ['id', 'username', 'email'] },
-  { association: 'accommodation', attributes: ['id', 'name', 'description', 'cost', 'currency', 'owner', 'images'] },
+  { association: 'accommodation', attributes: ['id', 'name', 'description', 'cost', 'currency', 'owner', 'images', 'slug'] },
 ];
 
 const availableAccommodation = req => {
