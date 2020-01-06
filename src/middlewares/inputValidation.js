@@ -38,9 +38,9 @@ export default class InputValidation {
       description: Joi.string().min(10).max(250).required(),
       locationId: Joi.number().integer().min(1).max(20)
         .required(),
-      availableSpace: Joi.number().integer().min(1).max(99990)
+      availableSpace: Joi.number().integer().min(1)
         .required(),
-      cost: Joi.number().integer().min(1).max(99999)
+      cost: Joi.number().integer().min(1)
         .required(),
       currency: Joi.string().regex(/^(rwf|RWF|ksh|KSH|ugx|UGX|usd|USD)/).message('Currency should only be RWF, KSH, UGX or USD!')
         .required(),
