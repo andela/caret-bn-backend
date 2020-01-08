@@ -32,11 +32,11 @@ export default class InputValidation {
 
   static validateAddNew(req, res, next) {
     const schema = Joi.object({
-      name: Joi.string().trim().min(10).max(100)
+      name: Joi.string().trim()
         .message('Name should be at least 10 character and not more than 100 characters!')
         .required(),
-      description: Joi.string().min(10).max(250).required(),
-      locationId: Joi.number().integer().min(1).max(20)
+      description: Joi.string().required(),
+      locationId: Joi.number().integer().min(1)
         .required(),
       availableSpace: Joi.number().integer().min(1)
         .required(),
@@ -44,8 +44,8 @@ export default class InputValidation {
         .required(),
       currency: Joi.string().regex(/^(rwf|RWF|ksh|KSH|ugx|UGX|usd|USD)/).message('Currency should only be RWF, KSH, UGX or USD!')
         .required(),
-      highlights: Joi.string().min(10).max(250).required(),
-      amenities: Joi.string().min(10).max(250).required()
+      highlights: Joi.string().required(),
+      amenities: Joi.string().required()
     });
     validation(req, res, schema, next);
   }
