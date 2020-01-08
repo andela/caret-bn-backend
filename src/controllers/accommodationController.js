@@ -11,7 +11,7 @@ import imageUploader from '../helpers/imageUploader';
 import checkDate from '../helpers/checkDateHelper';
 import bookingHelper from '../helpers/bookingHelper';
 import getAccommodation from '../helpers/getAccommodation';
-import sendEmail from '../helpers/emailHelper';
+import { sendEmail } from '../helpers/emailHelper';
 import responseHelper from '../utils/responseHelper';
 import notifSender from '../helpers/notifSender';
 import likesServices from '../services/likesServices/likesServices';
@@ -209,18 +209,16 @@ export default class AccommodationController {
         const accommodation = await getOneAccommodation({ slug });
         const { name, ownerUser } = accommodation;
 
-        if (accommodation.isActivated === true) {
-          models.accommodations.update({ isActivated: false }, { where: { slug } });
-
+        if (accommodation.isActivated === false) {
+          models.accommodations.update({ isActivated: true }, { where: { slug } });
           sendEmail(ownerUser.email, 'Deactivated', name, reasons);
+          return responseUtil(res, 200, DEACTIVATED, accommodation);
 
-          return responseUtil(res, 200, DEACTIVATED);
+        } if (accommodation.isActivated === true) {
+          await models.accommodations.update({ isActivated: false }, { where: { slug } });
+          sendEmail(ownerUser.email, 'Activated', name, reasons);
+          return responseUtil(res, 200, ACTIVATED, accommodation);
         }
-        await models.accommodations.update({ isActivated: true }, { where: { slug } });
-
-        sendEmail(ownerUser.email, 'Activated', name, reasons);
-
-        return responseUtil(res, 200, ACTIVATED);
 
       } catch (error) { return responseUtil(res, 200, NOT_FOUND); }
     }
