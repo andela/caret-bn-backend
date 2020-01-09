@@ -8,7 +8,7 @@ import strings from '../utils/stringsUtil';
 import hashPassword from '../utils/hashPassword';
 import generateToken from '../utils/generateToken';
 import EmailToken from '../utils/EmailToken';
-import emailHelper from '../helpers/emailHelper';
+import { sendVerification, resetEmail } from '../helpers/emailHelper';
 import updateUser from '../helpers/updateUser';
 
 dotenv.config();
@@ -29,7 +29,7 @@ export default class UserController {
     user.save().then(user => {
       const token = generateToken(user);
 
-      emailHelper.sendVerification(req, user.email, token, host, user.username);
+      sendVerification(req, user.email, token, host, user.username);
 
       return responseUtil(res, 201, strings.users.success.SIGNUP_SUCCESS, {
         userId: user.id,
@@ -75,7 +75,7 @@ export default class UserController {
       }
       const verifyToken = EmailToken.ResetToken(user);
 
-      emailHelper.resetEmail(req, email, verifyToken, host);
+      resetEmail(req, email, verifyToken, host);
       return responseUtil(res, 200, strings.users.success.SEND_EMAIL);
     });
   }

@@ -83,4 +83,4 @@ const sendVerification = (req, email, token, host, username) => {
   }
 };
 
-export default { sendEmail, resetEmail, sendVerification };
+export { sendEmail, resetEmail, sendVerification };
