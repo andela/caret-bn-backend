@@ -8,9 +8,12 @@ export const getRatings = async (accommodation, userId) => {
 
   if (accommodation) {
     const ratings = await accommodation.getRatings();
-    await ratings.forEach(rating => {
-      userServices.findOne({
-        id: userId
+    ratings.forEach(async rating => {
+      const id = rating.userId;
+      await userServices.findOne({
+        where: {
+          id
+        }
       }).then(user => {
         rating.dataValues.userName = user.dataValues.username;
         rating.dataValues.userImage = user.dataValues.image;
