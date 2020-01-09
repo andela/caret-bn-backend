@@ -57,7 +57,7 @@ const chat = (io, socket) => {
     const userInfo = await models.users.findOne({ where: { id: user.payload.id } })
 
     if(!target.userId){
-      io.emit('chatMessage', { sender: userInfo.username, message });
+      socket.broadcast.emit('chatMessage', { sender: userInfo.username, message });
       const newChat = { userId: user.payload.id, message };
       models.chats.create(newChat);
     }else{
