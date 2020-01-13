@@ -1,10 +1,14 @@
 /* eslint-disable  require-jsdoc */
 import moment from 'moment';
 import models from '../database/models';
+import socketNotif from '../helpers/socketNotif';
 
 export default class notifServices {
-  static async notifSaver(notif) {
+  static async notifSaver(req, notif) {
     const notification = await notif.save();
+    socketNotif(
+      notification.userNotified, notification, req.connectedClients, req.io,
+    );
     return notification;
   }
 

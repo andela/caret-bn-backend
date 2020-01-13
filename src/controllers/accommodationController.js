@@ -167,6 +167,7 @@ export default class AccommodationController {
             const newBooking = await models.booking.create(bookingData);
 
             await notifSender(
+              req,
               'Accommodation Booked',
               newBooking,
               accommodation[0].owner,
@@ -280,7 +281,7 @@ export default class AccommodationController {
         await bookingHelper.updateAccomodation(req, remainingSpace);
       }
 
-      await notifSender(subject, booking, booking.userId, APP_URL_BACKEND, activity, 'booking', host);
+      await notifSender(req, subject, booking, booking.userId, APP_URL_BACKEND, activity, 'booking', host);
       return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.accommodations.error.BOOKING_NOT_FOUND, null, 404);
@@ -343,7 +344,7 @@ export default class AccommodationController {
   }
 
   static async viewTopRated(req, res) {
-    const accommodations = await getAllAccommodations();
+    const accommodations = await getAllAccommodations({ isActivated: true });
     const values = [];
 
     accommodations.forEach(accommodation => {

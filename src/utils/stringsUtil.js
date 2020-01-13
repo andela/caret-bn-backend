@@ -7,7 +7,7 @@ const strings = {
       SUCCESS_VERIFIED: 'You have been verified',
       SEND_EMAIL: 'please check your email to see the link for reseting password',
       PASSWORD_CHANGED: 'password changed successfully',
-      SUCCESS_UPDATE: 'User Updated',
+      SUCCESS_UPDATE: 'User profile updated successfully',
       SUCCESSFUL_LOGIN: 'User logged in successfully!',
       SUCCESSFUL_ASSIGN: 'you have assigned the role to this user',
       ROLE_ADDED: 'role added successfully',

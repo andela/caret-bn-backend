@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from 'regenerator-runtime';
 import dotenv from 'dotenv';
@@ -9,6 +10,7 @@ import errorhandler from 'errorhandler';
 import cors from 'cors';
 import allRoutes from './routes';
 import chatController from './controllers/chatController';
+import decodeToken from './middlewares/auth/decodeToken';
 
 // Create global app object
 dotenv.config();
@@ -50,6 +52,31 @@ io.on('connect', socket => {
   });
 });
 
+http.listen(port, () => console.log(`Barefoot Nomad is runnig server on port ${port}...`));
+
+const connectedClients = {};
+io.use((socket, next) => {
+  const { token } = socket.handshake.query;
+  try {
+    const userData = decodeToken(token);
+    if (userData) {
+      const clientKey = Number.parseInt(userData.payload.id, 10);
+      connectedClients[clientKey] = connectedClients[clientKey] || [];
+      connectedClients[clientKey].push(socket.id);
+    }
+    next();
+  } catch (error) {
+    return (error);
+  }
+});
+
+
+app.use((req, res, next) => {
+  req.io = io;
+  req.connectedClients = connectedClients;
+  next();
+});
+
 app.use('/', allRoutes);
 
 app.use('*', (req, res) => {
@@ -58,7 +85,7 @@ app.use('*', (req, res) => {
     message: 'Sorry this route does not exist !',
   });
 });
-// eslint-disable-next-line no-console
-http.listen(port, () => console.log(`Barefoot Nomad is runnig server on port ${port}...`));
+
+export { io };
 
 export default app;

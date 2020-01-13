@@ -22,6 +22,8 @@ import bookmarkTests from './bookmarkTests.spec';
 import unitTests from './unitTests.spec';
 import likeTests from './likeTests.spec';
 import logoutTests from './logoutTests.spec';
+import decocodeTokenTest from './helperTests/decodeTokenTest.spec';
+import socketNotifTest from './helperTests/socketNotifTest.spec';
 
 describe('Default Tests', defaultTests);
 describe('Edit Request Tests', editRequest);
@@ -50,4 +52,6 @@ describe('Accommodation Search Tests', accommodationSearchTests);
 describe('Bookmarks Tests', bookmarkTests);
 describe('Unit Tests', unitTests);
 describe('Likes Tests', likeTests);
+describe('DecodeToken Tests', decocodeTokenTest);
+describe('socketNotifTest Tests', socketNotifTest);
 describe('Logout Tests', logoutTests);

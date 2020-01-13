@@ -19,7 +19,8 @@ export default class InputValidation {
   static validateProfile(req, res, next) {
     const schema = Joi.object({
       username: Joi.string().trim().min(3).max(100),
-      phone: Joi.string().trim().regex(/^[0-9]{3,10}$/),
+      phone: Joi.string().trim().regex(/^[0-9]{3,10}$/)
+        .message('The phone number should be numbers of 3 to 10 digits.'),
       gender: Joi.string().valid('female', 'male'),
       language: Joi.string().min(2).max(15).regex(/^[a-zA-Z]/),
       dob: Joi.date(),

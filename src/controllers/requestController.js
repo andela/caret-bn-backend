@@ -76,7 +76,6 @@ export default class requestController {
       statusId, activity, subject, responseMessage
     } = req;
     const { host } = req.body;
-
     const requestToProcess = await findOneRequest({ id });
     const { userId } = requestToProcess;
     const user = await findUser({ id: userId });
@@ -95,7 +94,7 @@ export default class requestController {
 
       request = request[1][0].dataValues;
 
-      await notifSender(subject, request, request.userId, APP_URL_BACKEND, activity, 'request', host);
+      await notifSender(req, subject, request, request.userId, APP_URL_BACKEND, activity, 'request', host);
       return responseHelper(res, responseMessage, null, 200);
     }
     return responseHelper(res, strings.requests.NOT_FOUND, null, 404);
@@ -123,7 +122,7 @@ export default class requestController {
 
       const request = await allSearch({ id });
       const requestData = request[0].dataValues;
-      await notifSender('Request Edited', requestData, lineManager, APP_URL_BACKEND, 'edited', 'request');
+      await notifSender(req, 'Request Edited', requestData, lineManager, APP_URL_BACKEND, 'edited', 'request');
       return responseUtil(res, 200, strings.request.success.SUCCESS_UPDATE_REQUEST, request);
     } catch (error) {
       return res.status(500).json({ error: 'Something wrong' });

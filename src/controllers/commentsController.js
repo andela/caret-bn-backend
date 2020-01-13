@@ -29,7 +29,7 @@ export default class CommentsController {
         userNotiified,
         `A comment has been made on request ${requestId}. Click here to view: ${APP_URL_BACKEND}/api/v1/requests/${requestId}.`,
       );
-      await notifSaver(notification);
+      await notifSaver(req, notification);
       const {
         deleted, userId,
         ...data

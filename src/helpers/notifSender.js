@@ -16,7 +16,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const notifSender = async (subject, object, userId, APP_URL_BACKEND, activity, table, host) => {
+const notifSender = async (
+  req, subject, object, userId, APP_URL_BACKEND, activity, table, host
+) => {
   try {
     const user = await findUser({ id: userId });
     let URL;
@@ -33,7 +35,7 @@ const notifSender = async (subject, object, userId, APP_URL_BACKEND, activity, t
     if (user.appNotif) {
       const notification = await notifBuilder(table, object.id, userId, activityMessage);
       try {
-        await notifSaver(notification);
+        await notifSaver(req, notification);
       } catch (error) {
         return error;
       }

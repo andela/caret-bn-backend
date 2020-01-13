@@ -24,6 +24,7 @@ export default class UserController {
     const user = models.users.build({
       username,
       email,
+      company: 'Andela',
       password: hashPassword(password)
     });
     user.save().then(user => {
@@ -35,6 +36,7 @@ export default class UserController {
         userId: user.id,
         username: user.username,
         email: user.email,
+        company: user.company,
       });
     });
   }
