@@ -130,4 +130,5 @@ const viewPrivateChats = async (req, res) => {
     ? EMPTY_HISTORY : CHAT_HISTORY, privateChats);
 };
 
+
 export default { chat, viewChats , viewPrivateChats};

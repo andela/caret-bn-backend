@@ -173,6 +173,20 @@ describe("Signup Test Suite", () => {
       });
   });
 
+  it("user Should not reset password with exist password", done => {
+    chai
+      .request(app)
+      .patch(`/api/v1/users/resetpassword/${validTroken}`)
+      .send(testdata.passwordData2)
+      .end((err, res) => {
+        res.should.have.property("status").eql(409);
+        res.body.should.have
+          .property("message")
+          .eql("you can not change password with old password");
+        done();
+      });
+  });
+
   it("user Should not reset password with exist Missing password", done => {
     chai
       .request(app)
