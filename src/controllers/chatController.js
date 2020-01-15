@@ -108,6 +108,7 @@ const chat = (io, socket) => {
 
 const viewChats = async (req, res) => {
   const chats = await models.chats.findAll({
+    where: { receiverId: null },
     attributes: { exclude: ['userId'] },
     include: [{ model: models.users, as: 'user', attributes: ['id', 'username', 'email'] }]
   });

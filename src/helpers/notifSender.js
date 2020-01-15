@@ -27,7 +27,7 @@ const notifSender = async (
       URL = host ? `${host}/${table}s/${object.id}` : `${APP_URL_BACKEND}/api/v1/${table}s/${object.id}`;
       break;
     default:
-      URL = host ? `${host}/accommodations/${table}s/${object.id}` : `${APP_URL_BACKEND}/api/v1/accommodations/${table}s/${object.id}`;
+      URL = host ? `${host}/${table}s/${object.id}` : `${APP_URL_BACKEND}/api/v1/accommodations/${table}s/${object.id}`;
       break;
     }
     const activityMessage = `A ${table} has been ${activity}. Click here to view: ${URL}.`;
