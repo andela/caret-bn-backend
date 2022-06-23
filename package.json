@@ -103,7 +103,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "husky": "^3.0.7",
-    "jsdom": "15.1.1",
+    "jsdom": "16.5.0",
     "jsdom-global": "3.0.2",
     "passport-mock-strategy": "^2.0.0",
     "zombie": "^6.1.4"
